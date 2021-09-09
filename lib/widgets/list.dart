@@ -5,6 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:list/model/list.dart';
 
+
+Future<ListModel> fetchList() async {
+  await Future.delayed(Duration(seconds: 2));
+
+  String data = await rootBundle.loadString("assets/data/list_data.json");
+
+  return ListModel.fromJson(jsonDecode(data));
+}
+
+
 class ListWidget extends StatefulWidget {
   const ListWidget({Key? key}) : super(key: key);
 
@@ -14,81 +24,34 @@ class ListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<ListWidget> {
 
-  late ListModel list;
-
-  late final Future<String>_dataLoad;
-
-  _getData() async{
-    String data = await rootBundle.loadString("assets/data/list_data.json");
-
-    Map<String, dynamic> listMap = jsonDecode(data);
-
-     list = ListModel.fromJson(listMap);
-
-     _dataLoad = "Is Load"
-  }
-
-  // _ListWidgetState(){
-  //   _getData();
-  // }
-
+  late Future<ListModel> futureList;
 
 
   @override
+  void initState() {
+    super.initState();
+    futureList = fetchList();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       height: 200,
       width: 200,
       color: Colors.purple,
       // child: Text(list.name),
-      child: FutureBuilder(
-        future: _getData(),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+      child: FutureBuilder<ListModel>(
+        future: futureList,
+        builder: (context, snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            children = <Widget>[
-              const Icon(
-                Icons.check_circle_outline,
-                color: Colors.green,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Result: ${snapshot.data}'),
-              )
-            ];
+            return Text(snapshot.data!.name);
           } else if (snapshot.hasError) {
-            children = <Widget>[
-              const Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
-              )
-            ];
-          } else {
-            children = const <Widget>[
-              SizedBox(
-                child: CircularProgressIndicator(),
-                width: 60,
-                height: 60,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('Awaiting result...'),
-              )
-            ];
+            return Text('${snapshot.error}');
           }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: children,
-            ),
-          );
+
+          // By default, show a loading spinner.
+          return const CircularProgressIndicator();
         },
       ),
     );
