@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:list/screens/home.dart';
-import 'package:list/screens/new_list.dart';
 import 'package:list/screens/profile.dart';
+import 'package:list/screens/share_menu.dart';
+import 'package:list/style/ListIcons.dart';
+import 'package:list/style/theme.dart';
 
 class Application extends StatefulWidget {
   const Application({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class _ApplicationState extends State<Application> {
 
   static const List<Widget> _pagesOptions = <Widget>[
     Home(),
-    NewList(),
+    ShareMenu(),
     Profile(),
   ];
 
@@ -28,36 +30,105 @@ class _ApplicationState extends State<Application> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedPageIndex,
-        children: _pagesOptions,
+      backgroundColor: themeList.backgroundColor,
+      body: SafeArea(
+        child: IndexedStack(
+          index: _selectedPageIndex,
+          children: _pagesOptions,
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-            activeIcon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline_outlined),
-            label: 'New List',
-            activeIcon: Icon(Icons.add_circle),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outlined),
-            label: 'Profile',
-            activeIcon: Icon(
-              Icons.person,
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.035, 0, MediaQuery.of(context).size.width * 0.035, 10),
+          child: Container(
+            height: 55,
+            width: 10,
+            decoration: morphOut,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Spacer(),
+                InkWell(
+                  child: Container(
+                    decoration: _selectedPageIndex == 0
+                        ? morphOut.copyWith(
+                            borderRadius: BorderRadius.circular(15),
+                            gradient: primaryOut,
+                          )
+                        : morphOut.copyWith(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                    height: 30,
+                    width: 30,
+                    child: Icon(
+                      ListIcons.home,
+                      color: _selectedPageIndex == 0
+                          ? whiteText
+                          : themeList.primaryColor,
+                      size: 18,
+                    ),
+                  ),
+                  onTap: () => _onItemTapped(0),
+                ),
+                Spacer(
+                  flex: 2,
+                ),
+                InkWell(
+                  child: Container(
+                    decoration: _selectedPageIndex == 1
+                        ? morphOut.copyWith(
+                            borderRadius: BorderRadius.circular(15),
+                            gradient: primaryOut,
+                          )
+                        : morphOut.copyWith(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                    height: 30,
+                    width: 30,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 2),
+                      child:Icon(
+                      ListIcons.share,
+                      color: _selectedPageIndex == 1
+                          ? whiteText
+                          : themeList.primaryColor,
+                      size: 18,
+                    ),
+                  ),
+                  ),
+                  onTap: () => _onItemTapped(1),
+                ),
+                Spacer(
+                  flex: 2,
+                ),
+                InkWell(
+                  child: Container(
+                    decoration: _selectedPageIndex == 2
+                        ? morphOut.copyWith(
+                            borderRadius: BorderRadius.circular(15),
+                            gradient: primaryOut,
+                          )
+                        : morphOut.copyWith(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                    height: 30,
+                    width: 30,
+                    child: Icon(
+                      ListIcons.person,
+                      color: _selectedPageIndex == 2
+                          ? whiteText
+                          : themeList.primaryColor,
+                      size: 18,
+                    ),
+                  ),
+                  onTap: () => _onItemTapped(2),
+                ),
+                Spacer(),
+              ],
             ),
           ),
-        ],
-        selectedIconTheme: IconThemeData(size: 30),
-        showUnselectedLabels: false,
-        currentIndex: _selectedPageIndex,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey[800],
-        onTap: _onItemTapped,
+        ),
       ),
     );
   }

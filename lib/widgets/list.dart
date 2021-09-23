@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:list/model/list.dart';
-
+import 'package:list/model/list_model.dart';
+import 'package:list/style/theme.dart';
 
 Future<ListModel> fetchList() async {
   await Future.delayed(Duration(seconds: 2));
@@ -14,7 +13,6 @@ Future<ListModel> fetchList() async {
   return ListModel.fromJson(jsonDecode(data));
 }
 
-
 class ListWidget extends StatefulWidget {
   const ListWidget({Key? key}) : super(key: key);
 
@@ -23,9 +21,7 @@ class ListWidget extends StatefulWidget {
 }
 
 class _ListWidgetState extends State<ListWidget> {
-
   late Future<ListModel> futureList;
-
 
   @override
   void initState() {
@@ -38,12 +34,11 @@ class _ListWidgetState extends State<ListWidget> {
     return Container(
       height: 200,
       width: 200,
-      color: Colors.purple,
+      color: themeList.primaryColor,
       // child: Text(list.name),
       child: FutureBuilder<ListModel>(
         future: futureList,
         builder: (context, snapshot) {
-          List<Widget> children;
           if (snapshot.hasData) {
             return Text(snapshot.data!.name);
           } else if (snapshot.hasError) {
@@ -57,3 +52,4 @@ class _ListWidgetState extends State<ListWidget> {
     );
   }
 }
+
