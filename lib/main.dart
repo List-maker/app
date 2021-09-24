@@ -5,15 +5,11 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-
 
   final database = openDatabase(
     join(await getDatabasesPath(), 'database.db'),
-
     onCreate: (db, version) {
-
       return db.execute(
         'CREATE TABLE token(id INTEGER PRIMARY KEY, refresh_token TEXT, access_token TEXT)',
       );
@@ -22,7 +18,6 @@ void main() async {
   );
 
   final db = await database;
-
 
   return runApp(MyApp());
 }
@@ -33,7 +28,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Material App',
       theme: themeList,
-      home: StartPage(),
+      home: Scaffold(
+          resizeToAvoidBottomInset: false,
+        body: StartPage(),
+      ),
     );
   }
 }

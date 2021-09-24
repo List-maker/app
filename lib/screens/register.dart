@@ -40,7 +40,7 @@ class _RegisterNavigationState extends State<RegisterNavigation> {
   void initState() {
     _pagesOptions = <Widget>[
       RegisterPage(
-        changePages
+          changePages
       ),
       HelloPage(),
       Application(),
@@ -51,6 +51,7 @@ class _RegisterNavigationState extends State<RegisterNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: themeList.backgroundColor,
       body: IndexedStack(
         index: _pageIndex,
@@ -126,7 +127,10 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.90,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 0.90,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -147,7 +151,10 @@ class _RegisterPageState extends State<RegisterPage> {
               key: _allFormKey,
               child: Container(
                 height: 250,
-                width: MediaQuery.of(context).size.width * 0.70,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.70,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -167,8 +174,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 : null;
                           },
                           onFieldSubmitted: (String? value) {
-                            if (value != null && value.isEmpty) {
-                              _usernameFormKey.currentState!.validate();
+                            if (!_usernameFormKey.currentState!.validate()) {
                               _usernameFocus.requestFocus();
                             } else {
                               _emailFocus.requestFocus();
@@ -195,16 +201,16 @@ class _RegisterPageState extends State<RegisterPage> {
                             hintText: 'Enter your email',
                           ),
                           validator: (String? value) {
-                            if (value != null && value.isEmpty){
+                            if (value != null && value.isEmpty) {
                               return 'Please enter email';
-                            }else if (!(value!.contains('@') && value.contains('.'))){
+                            } else if (!(value!.contains('@') &&
+                                value.contains('.'))) {
                               return 'Please enter valid email';
                             }
                             return null;
                           },
                           onFieldSubmitted: (String? value) {
-                            if (value != null && value.isEmpty) {
-                              _emailFormKey.currentState!.validate();
+                            if (!_emailFormKey.currentState!.validate()) {
                               _emailFocus.requestFocus();
                             } else {
                               _passwordFocus.requestFocus();
@@ -236,8 +242,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 : null;
                           },
                           onFieldSubmitted: (String? value) {
-                            if (value != null && value.isEmpty) {
-                              _passwordFormKey.currentState!.validate();
+                            if (!_passwordFormKey.currentState!.validate()) {
                               _passwordFocus.requestFocus();
                             } else {
                               _onSubmit();

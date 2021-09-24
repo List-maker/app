@@ -27,6 +27,8 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
       backgroundColor: themeList.backgroundColor,
       body: Center(
         child: FutureBuilder<Object>(

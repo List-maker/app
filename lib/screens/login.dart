@@ -65,6 +65,7 @@ class _LoginNavigationState extends State<LoginNavigation> {
           index: _pageIndex,
           children: _pagesOptions,
         ),
+        resizeToAvoidBottomInset: false,
       ),
     );
   }
@@ -173,8 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                                   : null;
                             },
                             onFieldSubmitted: (String? value) {
-                              if (value != null && value.isEmpty) {
-                                _loginFormKey.currentState!.validate();
+                              if  (!_loginFormKey.currentState!.validate()) {
                                 _loginFocus.requestFocus();
                               } else {
                                 _passwordFocus.requestFocus();
@@ -206,8 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                                   : null;
                             },
                             onFieldSubmitted: (String? value) {
-                              if (value != null && value.isEmpty) {
-                                _passwordFormKey.currentState!.validate();
+                              if (!_passwordFormKey.currentState!.validate()) {
                                 _passwordFocus.requestFocus();
                               } else {
                                 _onSubmit();
