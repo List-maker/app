@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       theme: themeList,
       home: Scaffold(
-          resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         body: StartPage(),
       ),
     );

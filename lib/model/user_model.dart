@@ -5,7 +5,6 @@ class UserModel {
   final List pinnedLists;
   final Object settings;
 
-
   UserModel({
     required this.id,
     required this.username,

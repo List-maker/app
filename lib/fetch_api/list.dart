@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -11,7 +9,6 @@ import 'package:list/model/token_model.dart';
 import 'config.dart';
 
 Future<List<ListModel>> fetchList() async {
-
   TokenModel token = await getToken();
 
   String access_token = token.toMap()['access_token'];

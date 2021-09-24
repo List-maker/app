@@ -16,5 +16,4 @@ class ListModel {
       items: json['items'],
     );
   }
-
 }

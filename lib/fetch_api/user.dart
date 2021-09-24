@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -10,8 +9,7 @@ import 'package:list/model/user_model.dart';
 import 'config.dart';
 
 Future<UserModel> fetchUser() async {
-
-   TokenModel token = await getToken();
+  TokenModel token = await getToken();
 
   String access_token = token.toMap()['access_token'];
 

@@ -28,7 +28,6 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       backgroundColor: themeList.backgroundColor,
       body: Center(
         child: FutureBuilder<Object>(
@@ -49,8 +48,7 @@ class _StartPageState extends State<StartPage> {
                       return LoginNavigation();
                     } else {
                       //TODO : print error in alert
-                      print(
-                          'ERROR [call API](/api/user): ${snapshot.error}');
+                      print('ERROR [call API](/api/user): ${snapshot.error}');
                       return Text('${snapshot.error}');
                     }
                   }

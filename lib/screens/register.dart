@@ -39,9 +39,7 @@ class _RegisterNavigationState extends State<RegisterNavigation> {
   @override
   void initState() {
     _pagesOptions = <Widget>[
-      RegisterPage(
-          changePages
-      ),
+      RegisterPage(changePages),
       HelloPage(),
       Application(),
     ];
@@ -127,10 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * 0.90,
+        width: MediaQuery.of(context).size.width * 0.90,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -151,10 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
               key: _allFormKey,
               child: Container(
                 height: 250,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.70,
+                width: MediaQuery.of(context).size.width * 0.70,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

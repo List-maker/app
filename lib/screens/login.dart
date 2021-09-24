@@ -24,32 +24,26 @@ class _LoginNavigationState extends State<LoginNavigation> {
   int _pageIndex = 0;
 
   void changePages() async {
-
-      setState(() {
-        _pageIndex = 1;
-      });
-      await Future.delayed(Duration(seconds: 5));
-      setState(() {
-        _pageIndex = 2;
-      });
-
+    setState(() {
+      _pageIndex = 1;
+    });
+    await Future.delayed(Duration(seconds: 5));
+    setState(() {
+      _pageIndex = 2;
+    });
   }
+
   void goTorRegister() async {
     _pagesOptions.add(RegisterNavigation());
-      setState(() {
-        _pageIndex = 3;
-      });
-
-
+    setState(() {
+      _pageIndex = 3;
+    });
   }
 
   @override
   void initState() {
     _pagesOptions = <Widget>[
-      LoginPage(
-        changePages,
-        goTorRegister
-      ),
+      LoginPage(changePages, goTorRegister),
       HelloPage(),
       Application(),
     ];
@@ -174,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                                   : null;
                             },
                             onFieldSubmitted: (String? value) {
-                              if  (!_loginFormKey.currentState!.validate()) {
+                              if (!_loginFormKey.currentState!.validate()) {
                                 _loginFocus.requestFocus();
                               } else {
                                 _passwordFocus.requestFocus();
