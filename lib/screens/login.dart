@@ -9,7 +9,7 @@ import 'package:list/screens/helloPage.dart';
 import 'package:list/screens/register.dart';
 import 'package:list/style/theme.dart';
 
-typedef ParentFunctionCallback = void Function();
+typedef ParentFunctionCallback = void Function(bool);
 
 class LoginNavigation extends StatefulWidget {
   const LoginNavigation({Key? key}) : super(key: key);
@@ -42,6 +42,23 @@ class _LoginNavigationState extends State<LoginNavigation> {
 
 
   }
+  void changePages(bool goToRegister) async {
+    if (goToRegister){
+      _pagesOptions.add(RegisterNavigation());
+      setState(() {
+        _pageIndex = 3;
+      });
+    } else {
+      setState(() {
+        _pageIndex = 1;
+      });
+      await Future.delayed(Duration(seconds: 5));
+      setState(() {
+        _pageIndex = 2;
+      });
+    }
+  }
+
 
   @override
   void initState() {
@@ -50,6 +67,7 @@ class _LoginNavigationState extends State<LoginNavigation> {
         changePages,
         goTorRegister
       ),
+      LoginPage(changePages),
       HelloPage(),
       Application(),
     ];
@@ -71,10 +89,9 @@ class _LoginNavigationState extends State<LoginNavigation> {
 }
 
 class LoginPage extends StatefulWidget {
-  const LoginPage(this.changePage, this.goTorRegister);
+  const LoginPage(this.changePage);
 
   final ParentFunctionCallback changePage;
-  final ParentFunctionCallback goTorRegister;
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -103,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
       });
 
       if (!areErrorWhenFetch) {
-        widget.changePage();
+        widget.changePage(false);
       }
     } else {
       _passwordFormKey.currentState!.validate();
@@ -251,7 +268,7 @@ class _LoginPageState extends State<LoginPage> {
             Spacer(),
             InkWell(
               onTap: () {
-                widget.goTorRegister();
+                widget.changePage(true);
               },
               child: Container(
                 height: 50,

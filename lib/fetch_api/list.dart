@@ -12,20 +12,20 @@ import 'config.dart';
 
 Future<List<ListModel>> fetchList() async {
 
+Future<ListModel> fetchList(int id) async {
   TokenModel token = await getToken();
 
-  String access_token = token.toMap()['access_token'];
+  String accessToken = token.toMap()['access_token'];
 
   final response = await http.get(
-    Uri.parse(api_host + '/list'),
-    headers: {HttpHeaders.authorizationHeader: "Bearer ${access_token}"},
+    Uri.parse(api_host + '/list/$id'),
+    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
   );
 
   if (response.statusCode == 200) {
-    return List<ListModel>(jsonDecode(response.body)['data']);
+    return ListModel.fromJson(jsonDecode(response.body)['data']);
   } else {
     throw Exception(jsonDecode(response.body)['message']);
   }
 }
 
-}

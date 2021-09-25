@@ -2,31 +2,34 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:list/fetch_api/list.dart';
 import 'package:list/model/list_model.dart';
 import 'package:list/style/theme.dart';
 
-Future<ListModel> fetchList() async {
-  await Future.delayed(Duration(seconds: 2));
+typedef void ParentIntCallback(int id);
 
-  String data = await rootBundle.loadString("assets/data/list_data.json");
-
-  return ListModel.fromJson(jsonDecode(data));
-}
 
 class ListWidget extends StatefulWidget {
-  const ListWidget({Key? key}) : super(key: key);
+  final ParentIntCallback id;
+
+  const ListWidget({required this.id}) ;
+
 
   @override
   _ListWidgetState createState() => _ListWidgetState();
 }
 
+
+
 class _ListWidgetState extends State<ListWidget> {
   late Future<ListModel> futureList;
 
+
   @override
+  final id = 
   void initState() {
     super.initState();
-    futureList = fetchList();
+    futureList = fetchList(id);
   }
 
   @override

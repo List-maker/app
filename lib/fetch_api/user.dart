@@ -13,11 +13,11 @@ Future<UserModel> fetchUser() async {
 
    TokenModel token = await getToken();
 
-  String access_token = token.toMap()['access_token'];
+  String accessToken = token.toMap()['access_token'];
 
   final response = await http.get(
     Uri.parse(api_host + '/api/user'),
-    headers: {HttpHeaders.authorizationHeader: "Bearer ${access_token}"},
+    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
   );
 
   if (response.statusCode == 200) {
