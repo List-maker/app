@@ -6,10 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:list/fetch_api/auth.dart';
 import 'package:list/navigation/navigation.dart';
-import 'package:list/screens/register.dart';
 import 'package:list/screens/helloPage.dart';
+import 'package:list/screens/register.dart';
 import 'package:list/style/theme.dart';
-
 
 typedef ParentFunctionCallback = void Function();
 

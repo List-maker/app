@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:list/fetch_api/user.dart';
 import 'package:list/model/user_model.dart';
 
-
 class HelloPage extends StatefulWidget {
   const HelloPage({Key? key}) : super(key: key);
 

@@ -48,9 +48,11 @@ class _ShareMenuState extends State<ShareMenu> {
                         ),
                       ),
                       SizedBox(height: 50),
-                      Container(height: 4,
-                      width: 300,
-                      decoration: morphOut,),
+                      Container(
+                        height: 4,
+                        width: 300,
+                        decoration: morphOut,
+                      ),
                       SizedBox(height: 50),
                       InkWell(
                         onTap: () {

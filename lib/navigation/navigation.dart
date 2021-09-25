@@ -39,7 +39,11 @@ class _ApplicationState extends State<Application> {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.035, 0, MediaQuery.of(context).size.width * 0.035, 10),
+          padding: EdgeInsets.fromLTRB(
+              MediaQuery.of(context).size.width * 0.035,
+              0,
+              MediaQuery.of(context).size.width * 0.035,
+              10),
           child: Container(
             height: 55,
             width: 10,
@@ -88,14 +92,14 @@ class _ApplicationState extends State<Application> {
                     width: 30,
                     child: Padding(
                       padding: EdgeInsets.only(right: 2),
-                      child:Icon(
-                      ListIcons.share,
-                      color: _selectedPageIndex == 1
-                          ? whiteText
-                          : themeList.primaryColor,
-                      size: 18,
+                      child: Icon(
+                        ListIcons.share,
+                        color: _selectedPageIndex == 1
+                            ? whiteText
+                            : themeList.primaryColor,
+                        size: 18,
+                      ),
                     ),
-                  ),
                   ),
                   onTap: () => _onItemTapped(1),
                 ),
