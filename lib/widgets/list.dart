@@ -1,32 +1,26 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:list/fetch_api/list.dart';
 import 'package:list/model/list_model.dart';
 import 'package:list/style/theme.dart';
-
-typedef void ParentIntCallback(int id);
-
+import 'package:list/widgets/item.dart';
 
 class ListWidget extends StatefulWidget {
-  final ParentIntCallback id;
+  final int id;
 
-  const ListWidget({required this.id}) ;
-
+  ListWidget({required this.id});
 
   @override
-  _ListWidgetState createState() => _ListWidgetState();
+  _ListWidgetState createState() => _ListWidgetState(id);
 }
-
-
 
 class _ListWidgetState extends State<ListWidget> {
   late Future<ListModel> futureList;
 
+  final int id;
+
+  _ListWidgetState(this.id);
 
   @override
-  final id = 
   void initState() {
     super.initState();
     futureList = fetchList(id);
@@ -43,7 +37,8 @@ class _ListWidgetState extends State<ListWidget> {
         future: futureList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Text(snapshot.data!.name);
+            return Column(children: [Text(snapshot.data!.name),
+            ItemWidget(id: snapshot.data!.id)],);
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }

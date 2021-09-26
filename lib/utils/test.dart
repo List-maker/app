@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -263,24 +262,3 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-=======
-class SecondPage extends StatelessWidget {
-  final Data data;
-
-  SecondPage({this.data});
-
-  @override Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text(‘Constructor — second page’),),
-      body: Container(padding: EdgeInsets.all(12.0),
-          alignment: Alignment.center,
-          child: Column(children: <Widget>[ Container( height: 54.0,
-              padding: EdgeInsets.all(12.0),
-              child: Text(‘Data passed to this page:’, style: TextStyle(fontWeight: FontWeight.w700))),
-      Text(‘Text: ${data.text}’),
-      Text(‘Counter: ${data.counter}’),
-      Text(‘Date: ${data.dateTime}’), ],), )
-    ,
->>>>>>> Stashed changes
-    );
-  }
-}

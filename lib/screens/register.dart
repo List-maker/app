@@ -154,7 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       key: _usernameFormKey,
                       child: Container(
                         decoration: morphOut,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
                         child: TextFormField(
                           style: inputStyle,
                           decoration: inputDecoration.copyWith(
@@ -186,7 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       key: _emailFormKey,
                       child: Container(
                         decoration: morphOut,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
                         child: TextFormField(
                           style: inputStyle,
                           decoration: inputDecoration.copyWith(
@@ -221,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Form(
                       key: _passwordFormKey,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
                         decoration: morphOut,
                         child: TextFormField(
                           style: inputStyle,
