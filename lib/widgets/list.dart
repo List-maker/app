@@ -29,21 +29,32 @@ class _ListWidgetState extends State<ListWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
       width: 200,
+      height: 300,
       color: themeList.primaryColor,
-      // child: Text(list.name),
       child: FutureBuilder<ListModel>(
         future: futureList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Column(children: [Text(snapshot.data!.name),
-            ItemWidget(id: snapshot.data!.id)],);
+            return Column(
+              children: [
+                Text(snapshot.data!.name),
+                Container(
+                  constraints: BoxConstraints(maxHeight: 250),
+                  padding: const EdgeInsets.all(8),
+                  child: ListView.builder(
+                      itemCount: snapshot.data!.items.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ItemWidget(
+                            id: snapshot.data!.items.elementAt(index));
+                      }),
+                ),
+              ],
+            );
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }
 
-          // By default, show a loading spinner.
           return const CircularProgressIndicator();
         },
       ),

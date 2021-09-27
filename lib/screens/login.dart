@@ -24,8 +24,9 @@ class _LoginNavigationState extends State<LoginNavigation> {
   int _pageIndex = 0;
 
   void changePages(bool goToRegister) async {
-    if (goToRegister){
-      _pagesOptions.add(RegisterNavigation());
+    _pagesOptions.addAll([HelloPage(), Application(), RegisterNavigation()]);
+
+    if (goToRegister) {
       setState(() {
         _pageIndex = 3;
       });
@@ -33,20 +34,17 @@ class _LoginNavigationState extends State<LoginNavigation> {
       setState(() {
         _pageIndex = 1;
       });
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 2));
       setState(() {
         _pageIndex = 2;
       });
     }
   }
 
-
   @override
   void initState() {
     _pagesOptions = <Widget>[
       LoginPage(changePages),
-      HelloPage(),
-      Application(),
     ];
     super.initState();
   }
@@ -156,7 +154,9 @@ class _LoginPageState extends State<LoginPage> {
                         key: _loginFormKey,
                         child: Container(
                           decoration: morphOut,
-                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.05),
                           child: TextFormField(
                             style: inputStyle,
                             decoration: inputDecoration.copyWith(
@@ -187,7 +187,9 @@ class _LoginPageState extends State<LoginPage> {
                       Form(
                         key: _passwordFormKey,
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.05),
                           decoration: morphOut,
                           child: TextFormField(
                             style: inputStyle,

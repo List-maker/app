@@ -12,6 +12,11 @@ final themeList = ThemeData(
         fontFamily: 'Poppins',
         fontWeight: FontWeight.w800,
         fontSize: 20),
+    headline1: TextStyle(
+        color: Color.fromRGBO(72, 47, 247, 1),
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w800,
+        fontSize: 30),
   ),
   fontFamily: 'Poppins',
   textSelectionTheme: TextSelectionThemeData(

@@ -20,8 +20,9 @@ class _RegisterNavigationState extends State<RegisterNavigation> {
   int _pageIndex = 0;
 
   void changePages(bool goToLogin) async {
+    _pagesOptions.addAll([HelloPage(),Application(),LoginNavigation()]);
+
     if (goToLogin) {
-      _pagesOptions.add(LoginNavigation());
       setState(() {
         _pageIndex = 3;
       });
@@ -40,8 +41,6 @@ class _RegisterNavigationState extends State<RegisterNavigation> {
   void initState() {
     _pagesOptions = <Widget>[
       RegisterPage(changePages),
-      HelloPage(),
-      Application(),
     ];
     super.initState();
   }

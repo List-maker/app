@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:list/fetch_api/user.dart';
 import 'package:list/model/user_model.dart';
+import 'package:list/style/theme.dart';
 
 class HelloPage extends StatefulWidget {
   const HelloPage({Key? key}) : super(key: key);
@@ -25,7 +26,11 @@ class _HelloPageState extends State<HelloPage> {
         future: futureUser,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Text('Hello' + snapshot.data!.username);
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Text('Hello ' + snapshot.data!.username +  ' !',
+              style: themeList.textTheme.headline1,),
+            );
           }
 
           // By default, show a loading spinner.

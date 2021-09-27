@@ -26,7 +26,6 @@ class _ApplicationState extends State<Application> {
       _selectedPageIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
