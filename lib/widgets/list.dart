@@ -29,9 +29,9 @@ class _ListWidgetState extends State<ListWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
-      height: 300,
-      color: themeList.primaryColor,
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: MediaQuery.of(context).size.height * 0.4,
+      decoration: morphOut,
       child: FutureBuilder<ListModel>(
         future: futureList,
         builder: (context, snapshot) {
@@ -40,7 +40,8 @@ class _ListWidgetState extends State<ListWidget> {
               children: [
                 Text(snapshot.data!.name),
                 Container(
-                  constraints: BoxConstraints(maxHeight: 250),
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.3),
                   padding: const EdgeInsets.all(8),
                   child: ListView.builder(
                       itemCount: snapshot.data!.items.length,

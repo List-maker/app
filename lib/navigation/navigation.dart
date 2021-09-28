@@ -39,10 +39,10 @@ class _ApplicationState extends State<Application> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
-              MediaQuery.of(context).size.width * 0.035,
+              MediaQuery.of(context).size.width * 0.05,
               0,
-              MediaQuery.of(context).size.width * 0.035,
-              10),
+              MediaQuery.of(context).size.width * 0.05,
+              MediaQuery.of(context).size.height * 0.03),
           child: Container(
             height: 55,
             width: 10,
