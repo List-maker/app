@@ -41,14 +41,22 @@ class _ListWidgetState extends State<ListWidget> {
                 Text(snapshot.data!.name),
                 Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.3),
-                  padding: const EdgeInsets.all(8),
-                  child: ListView.builder(
-                      itemCount: snapshot.data!.items.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ItemWidget(
-                            id: snapshot.data!.items.elementAt(index));
-                      }),
+                      maxHeight: MediaQuery.of(context).size.height * 0.3,
+                    maxWidth: MediaQuery.of(context).size.width * 0.8,
+                  ),
+                  // padding: const EdgeInsets.all(8),
+                  child: ListView.separated(
+                    itemCount: snapshot.data!.items.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ItemWidget(
+                          id: snapshot.data!.items.elementAt(index));
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.03,
+                      );
+                    },
+                  ),
                 ),
               ],
             );
@@ -56,7 +64,9 @@ class _ListWidgetState extends State<ListWidget> {
             return Text('${snapshot.error}');
           }
 
-          return const CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );

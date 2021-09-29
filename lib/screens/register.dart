@@ -20,9 +20,11 @@ class _RegisterNavigationState extends State<RegisterNavigation> {
   int _pageIndex = 0;
 
   void changePages(bool goToLogin) async {
-    _pagesOptions.addAll([HelloPage(),Application(),LoginNavigation()]);
+    _pagesOptions.add(HelloPage());
 
     if (goToLogin) {
+      _pagesOptions.addAll([ Application(), LoginNavigation()]);
+
       setState(() {
         _pageIndex = 3;
       });
@@ -30,7 +32,9 @@ class _RegisterNavigationState extends State<RegisterNavigation> {
       setState(() {
         _pageIndex = 1;
       });
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 2));
+      _pagesOptions.addAll([ Application(), LoginNavigation()]);
+
       setState(() {
         _pageIndex = 2;
       });
