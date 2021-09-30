@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:list/fetch_api/auth.dart';
+import 'package:list/fetch_api/authCalls.dart';
 import 'package:list/navigation/navigation.dart';
 import 'package:list/screens/helloPage.dart';
 import 'package:list/screens/register.dart';

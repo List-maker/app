@@ -32,8 +32,8 @@ final grayOut = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
   colors: <Color>[
-    Color.fromRGBO(219, 218, 229, 1),
-    Color.fromRGBO(202, 200, 212, 1),
+    Color.fromRGBO(219, 217, 228, 1),
+    Color.fromRGBO(206, 204, 216, 1),
   ],
 );
 
@@ -41,8 +41,8 @@ final grayIn = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
   colors: <Color>[
-    Color.fromRGBO(202, 200, 212, 1),
-    Color.fromRGBO(219, 218, 229, 1),
+    Color.fromRGBO(206, 204, 216, 1),
+    Color.fromRGBO(219, 217, 228, 1),
   ],
 );
 final primaryOut = LinearGradient(
@@ -64,17 +64,19 @@ final primaryIn = LinearGradient(
 );
 
 final morphOut = BoxDecoration(
-  gradient: grayOut,
+  gradient: grayIn,
   borderRadius: BorderRadius.circular(15),
   boxShadow: [
     BoxShadow(
-        color: Color.fromRGBO(0, 0, 0, 0.25),
-        blurRadius: 7,
-        offset: Offset(3, 3)),
+      color: Color.fromRGBO(0, 0, 0, .15),
+      blurRadius: 8,
+      offset: Offset(2, 2),
+    ),
     BoxShadow(
-        color: Color.fromRGBO(255, 255, 255, 0.61),
-        blurRadius: 7,
-        offset: Offset(-3, -3)),
+      color: Color.fromRGBO(255, 255, 255, .45),
+      blurRadius: 8,
+      offset: Offset(-2, -2),
+    ),
   ],
 );
 

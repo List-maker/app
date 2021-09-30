@@ -28,8 +28,12 @@ class _ApplicationState extends State<Application> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: themeList.backgroundColor,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: grayIn,
+      ),
+      child: Scaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: IndexedStack(
           index: _selectedPageIndex,
@@ -132,6 +136,7 @@ class _ApplicationState extends State<Application> {
             ),
           ),
         ),
+      ),
       ),
     );
   }
