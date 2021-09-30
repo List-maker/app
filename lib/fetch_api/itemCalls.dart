@@ -9,7 +9,7 @@ import 'package:list/model/token_model.dart';
 
 import 'config.dart';
 
-Future<ItemModel> fetchItem(int id) async {
+Future<ItemModel> fetchCreateItem(int id) async {
   TokenModel token = await getToken();
 
   String accessToken = token.toMap()['access_token'];
@@ -25,4 +25,22 @@ Future<ItemModel> fetchItem(int id) async {
     throw Exception(jsonDecode(response.body)['message']);
   }
 }
+
+Future<ItemModel> fetchCheckItem(int id) async {
+  TokenModel token = await getToken();
+
+  String accessToken = token.toMap()['access_token'];
+
+  final response = await http.get(
+    Uri.parse(api_host + '/api/item/$id'),
+    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
+  );
+
+  if (response.statusCode == 200) {
+    return ItemModel.fromJson(jsonDecode(response.body)['data']);
+  } else {
+    throw Exception(jsonDecode(response.body)['message']);
+  }
+}
+
 
