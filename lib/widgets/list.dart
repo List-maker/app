@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:list/fetch_api/list.dart';
+import 'package:list/fetch_api/listCalls.dart';
 import 'package:list/model/list_model.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/item.dart';
@@ -29,19 +29,22 @@ class _ListWidgetState extends State<ListWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: morphOut,
+      padding: EdgeInsets.all( MediaQuery.of(context).size.width * 0.05,),
       width: MediaQuery.of(context).size.width * 0.9,
       height: MediaQuery.of(context).size.height * 0.4,
-      decoration: morphOut,
       child: FutureBuilder<ListModel>(
         future: futureList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.data!.name),
+                Spacer(),
                 Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.3,
+                      maxHeight: MediaQuery.of(context).size.height * 0.23,
                     maxWidth: MediaQuery.of(context).size.width * 0.8,
                   ),
                   // padding: const EdgeInsets.all(8),
@@ -58,6 +61,8 @@ class _ListWidgetState extends State<ListWidget> {
                     },
                   ),
                 ),
+                Spacer(),
+                ItemWidget(id: 2)
               ],
             );
           } else if (snapshot.hasError) {
