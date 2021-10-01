@@ -8,7 +8,7 @@ import 'config.dart';
 
 Future<void> fetchLogin(String login, String password) async {
   final response = await http.post(
-    Uri.parse(api_host + '/api/auth/login'),
+    Uri.parse(apiHost + '/api/auth/login'),
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -23,6 +23,7 @@ Future<void> fetchLogin(String login, String password) async {
     TokenModel token =
         TokenModel.fromJson(await jsonDecode(response.body)['data']);
     await saveToken(token);
+    return;
   } else {
     //TODO: print error
     throw Exception(jsonDecode(response.body)['message']);
@@ -32,7 +33,7 @@ Future<void> fetchLogin(String login, String password) async {
 Future<void> fetchRegister(
     String username, String email, String password) async {
   final response = await http.post(
-    Uri.parse(api_host + '/api/auth/register'),
+    Uri.parse(apiHost + '/api/auth/register'),
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },

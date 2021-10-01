@@ -20,6 +20,15 @@ class _ItemWidgetState extends State<ItemWidget> {
 
   _ItemWidgetState(this.id);
 
+  checkItem(int id) async{
+    await fetchCheckItem(id);
+
+    setState(() {
+      futureItem = fetchCreateItem(id);
+    });
+
+  }
+
   @override
   void initState() {
     super.initState();
@@ -30,7 +39,6 @@ class _ItemWidgetState extends State<ItemWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.05,
-      // width:  MediaQuery.of(context).size.width * 0.1,
       width: 15,
       decoration: morphOut.copyWith(borderRadius: BorderRadius.circular(7)),
       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -40,15 +48,22 @@ class _ItemWidgetState extends State<ItemWidget> {
           if (snapshot.hasData) {
             return Row(
               children: [
-                Text(snapshot.data!.name,style: TextStyle(fontSize: 18),),
+                Text(snapshot.data!.name,style: TextStyle(fontSize: 18, color: snapshot.data!.checked
+                    ? themeList.primaryColor
+                    : whiteText,),),
                 Spacer(),
                 InkWell(
-                  onTap: null,
+                  onTap: (){
+                    checkItem(snapshot.data!.id);
+                  },
+                  // onTap: null,
                   child: Icon(
                     snapshot.data!.checked
                         ? ListIcons.check
                         : ListIcons.no_check,
-                    color: whiteText,
+                    color: snapshot.data!.checked
+                        ? themeList.primaryColor
+                        : whiteText,
                   ),
                 )
               ],

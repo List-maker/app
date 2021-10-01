@@ -14,7 +14,7 @@ Future<UserModel> fetchUser() async {
   String accessToken = token.toMap()['access_token'];
 
   final response = await http.get(
-    Uri.parse(api_host + '/api/user'),
+    Uri.parse(apiHost + '/api/user'),
     headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
   );
 

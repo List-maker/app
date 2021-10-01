@@ -14,7 +14,7 @@ Future<ListModel> fetchList(int id) async {
   String accessToken = token.toMap()['access_token'];
 
   final response = await http.get(
-    Uri.parse(api_host + '/api/list/$id'),
+    Uri.parse(apiHost + '/api/list/$id'),
     headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
   );
 
