@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:list/call_db/token.dart';
 import 'package:list/style/theme.dart';
+import 'package:list/widgets/morph_out.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -28,14 +29,16 @@ class _ProfileState extends State<Profile> {
       child: Center(
         child: InkWell(
           onTap: _onLogOutPressed,
-          child: Container(
-            height: 50,
-            width: 200,
-            decoration: morphOut.copyWith(
-              gradient: primaryOut,
-              borderRadius: BorderRadius.circular(100),
+          child: MorphOut(
+            child: Container(
+              height: 50,
+              width: 200,
+              decoration: BoxDecoration(
+                gradient: primaryOut,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Center(child: Text('Log out')),
             ),
-            child: Center(child: Text('Log out')),
           ),
         ),
       ),

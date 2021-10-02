@@ -37,16 +37,16 @@ class _ItemWidgetState extends State<ItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.05,
-      width: 15,
-      decoration: morphOut.copyWith(borderRadius: BorderRadius.circular(7)),
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: FutureBuilder<ItemModel>(
+    return  FutureBuilder<ItemModel>(
         future: futureItem,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Row(
+            return Container(
+                height: MediaQuery.of(context).size.height * 0.05,
+                width: 15,
+                decoration: (snapshot.data!.checked ? morphIn : morphOut).copyWith(borderRadius: BorderRadius.circular(7)),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
               children: [
                 Text(snapshot.data!.name,style: TextStyle(fontSize: 18, color: snapshot.data!.checked
                     ? themeList.primaryColor
@@ -67,6 +67,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                   ),
                 )
               ],
+                ),
             );
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
@@ -75,7 +76,6 @@ class _ItemWidgetState extends State<ItemWidget> {
           // By default, show a loading spinner.
           return const CircularProgressIndicator();
         },
-      ),
     );
   }
 }

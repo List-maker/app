@@ -80,6 +80,21 @@ final morphOut = BoxDecoration(
   ],
 );
 
+final morphIn = BoxDecoration(
+  gradient: grayOut,
+  borderRadius: BorderRadius.circular(15),
+  boxShadow: [
+    BoxShadow(
+      color: Color.fromRGBO(0, 0, 0, 1),
+    ),
+    BoxShadow(
+      color: themeList.backgroundColor,
+      spreadRadius: -7.0,
+      blurRadius: 7.0,
+    ),
+  ],
+);
+
 const inputDecoration = InputDecoration(
   hintStyle: TextStyle(
     color: whiteText,
