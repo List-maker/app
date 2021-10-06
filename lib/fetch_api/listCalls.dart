@@ -25,3 +25,21 @@ Future<ListModel> fetchList(int id) async {
   }
 }
 
+
+Future<List> fetchLists() async {
+  TokenModel token = await getToken();
+
+  String accessToken = token.toMap()['access_token'];
+
+  final response = await http.get(
+    Uri.parse(apiHost + '/api/list/user'),
+    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
+  );
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body)['data'];
+  } else {
+    throw Exception(jsonDecode(response.body)['message']);
+  }
+}
+

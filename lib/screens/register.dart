@@ -4,6 +4,7 @@ import 'package:list/navigation/navigation.dart';
 import 'package:list/screens/helloPage.dart';
 import 'package:list/screens/login.dart';
 import 'package:list/style/theme.dart';
+import 'package:list/widgets/morph_out.dart';
 
 typedef ParentFunctionCallback = void Function(bool);
 
@@ -155,8 +156,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Form(
                       key: _usernameFormKey,
-                      child: Container(
-                        decoration: morphOut,
+                      child: MorphOut(
+
+                        child: Container(
                         padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
                         child: TextFormField(
                           style: inputStyle,
@@ -183,6 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           controller: _username,
                         ),
                       ),
+                    ),
                     ),
                     Spacer(),
                     Form(
