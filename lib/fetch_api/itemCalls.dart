@@ -25,7 +25,9 @@ Future<ItemModel> fetchCreateItem(int id) async {
   }
 }
 
-Future<void> fetchCheckItem(int id,) async {
+Future<void> fetchCheckItem(
+  int id,
+) async {
   TokenModel token = await getToken();
 
   String accessToken = token.toMap()['access_token'];
@@ -41,5 +43,3 @@ Future<void> fetchCheckItem(int id,) async {
     throw Exception(jsonDecode(response.body)['message']);
   }
 }
-
-

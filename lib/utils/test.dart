@@ -125,140 +125,141 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+        child: Container(
         width: MediaQuery.of(context).size.width * 0.90,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 28,
-                  color: themeList.primaryColor,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 150,
-            ),
-            Form(
-              key: _allFormKey,
-              child: Container(
-                height: 250,
-                width: MediaQuery.of(context).size.width * 0.70,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Form(
-                      key: _loginFormKey,
-                      child: Container(
-                        decoration: morphOut,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextFormField(
-                          style: inputStyle,
-                          decoration: inputDecoration.copyWith(
-                            hintText: 'Enter your name or email',
-                          ),
-                          validator: (String? value) {
-                            return (value != null && value.isEmpty)
-                                ? 'Please enter name or email'
-                                : null;
-                          },
-                          onFieldSubmitted: (String? value) {
-                            if (value != null && value.isEmpty) {
-                              _loginFormKey.currentState!.validate();
-                              _loginFocus.requestFocus();
-                            } else {
-                              _passwordFocus.requestFocus();
-                            }
-                          },
-                          autofillHints: [AutofillHints.username],
-                          focusNode: _loginFocus,
-                          autofocus: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          controller: _login,
-                        ),
-                      ),
-                    ),
-                    Spacer(),
-                    Form(
-                      key: _passwordFormKey,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        decoration: morphOut,
-                        child: TextFormField(
-                          style: inputStyle,
-                          decoration: inputDecoration.copyWith(
-                            hintText: 'Enter your password',
-                          ),
-                          validator: (String? value) {
-                            return (value != null && value.isEmpty)
-                                ? 'Please enter your password'
-                                : null;
-                          },
-                          onFieldSubmitted: (String? value) {
-                            if (value != null && value.isEmpty) {
-                              _passwordFormKey.currentState!.validate();
-                              _passwordFocus.requestFocus();
-                            } else {
-                              _onSubmit();
-                            }
-                          },
-                          autofillHints: [AutofillHints.password],
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          focusNode: _passwordFocus,
-                          controller: _password,
-                        ),
-                      ),
-                    ),
-                    Spacer(
-                      flex: 2,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        _onSubmit();
-                      },
-                      child: Container(
-                        height: 50,
-                        width: 200,
-                        decoration: morphOut.copyWith(
-                          gradient: primaryOut,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Center(child: Text('Login')),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Spacer(
-              flex: 10,
-            ),
-            Text('Don\'t have an account?'),
-            Spacer(),
-            InkWell(
-              onTap: () {
-                //TODO : go to register
-              },
-              child: Container(
-                height: 50,
-                width: 200,
-                decoration: morphOut.copyWith(
-                  gradient: primaryOut,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Center(
-                  child: Text('Register'),
-                ),
-              ),
-            ),
-            Spacer(),
-          ],
-        ),
-      ),
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    Container(
+    alignment: Alignment.centerLeft,
+    child: Text(
+    'Login',
+    style: TextStyle(
+    fontSize: 28,
+    color: themeList.primaryColor,
+    ),
+    ),
+    ),
+    SizedBox(
+    height: 150,
+    ),
+    Form(
+    key: _allFormKey,
+    child: Container(
+    height: 250,
+    width: MediaQuery.of(context).size.width * 0.70,
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    Form(
+    key: _loginFormKey,
+    child: Container(
+    decoration: morphOut,
+    padding: EdgeInsets.symmetric(horizontal: 20),
+    child: TextFormField(
+    style: inputStyle,
+    decoration: inputDecoration.copyWith(
+    hintText: 'Enter your name or email',
+    ),
+    validator: (String? value) {
+    return (value != null && value.isEmpty)
+    ? 'Please enter name or email'
+        : null;
+    },
+    onFieldSubmitted: (String? value) {
+    if (value != null && value.isEmpty) {
+    _loginFormKey.currentState!.validate();
+    _loginFocus.requestFocus();
+    } else {
+    _passwordFocus.requestFocus();
+    }
+    },
+    autofillHints: [AutofillHints.username],
+    focusNode: _loginFocus,
+    autofocus: true,
+    enableSuggestions: false,
+    autocorrect: false,
+    controller: _login,
+    ),
+    ),
+    ),
+    Spacer(),
+    Form(
+    key: _passwordFormKey,
+    child: Container(
+    padding: EdgeInsets.symmetric(horizontal: 20),
+    decoration: morphOut,
+    child: TextFormField(
+    style: inputStyle,
+    decoration: inputDecoration.copyWith(
+    hintText: 'Enter your password',
+    ),
+    validator: (String? value) {
+    return (value != null && value.isEmpty)
+    ? 'Please enter your password'
+        : null;
+    },
+    onFieldSubmitted: (String? value) {
+    if (value != null && value.isEmpty) {
+    _passwordFormKey.currentState!.validate();
+    _passwordFocus.requestFocus();
+    } else {
+    _onSubmit();
+    }
+    },
+    autofillHints: [AutofillHints.password],
+    obscureText: true,
+    enableSuggestions: false,
+    autocorrect: false,
+    focusNode: _passwordFocus,
+    controller: _password,
+    ),
+    ),
+    ),
+    Spacer(
+    flex: 2,
+    ),
+    InkWell(
+    onTap: () {
+    _onSubmit();
+    },
+    child: Container(
+    height: 50,
+    width: 200,
+    decoration: morphOut.copyWith(
+    gradient: primaryOut,
+    borderRadius: BorderRadius.circular(100),
+    ),
+    child: Center(child: Text('Login')),
+    ),
+    ),
+    ],
+    ),
+    ),
+    ),
+    Spacer(
+    flex: 10,
+    ),
+    Text('Don\'t have an account?'),
+    Spacer(),
+    InkWell(
+    onTap: () {
+    //TODO : go to register
+    },
+    child: Container(
+    height: 50,
+    width: 200,
+    decoration: morphOut.copyWith(
+    gradient: primaryOut,
+    borderRadius: BorderRadius.circular(100),
+    ),
+    child: Center(
+    child: Text('Register'),
+    ),
+    ),
+    ),
+    Spacer(),
+    ],
+    ),
+    )
+    ,

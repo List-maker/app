@@ -30,7 +30,9 @@ class _ListWidgetState extends State<ListWidget> {
   Widget build(BuildContext context) {
     return Container(
       decoration: morphOut,
-      padding: EdgeInsets.all( MediaQuery.of(context).size.width * 0.05,),
+      padding: EdgeInsets.all(
+        MediaQuery.of(context).size.width * 0.05,
+      ),
       width: MediaQuery.of(context).size.width * 0.9,
       height: MediaQuery.of(context).size.height * 0.4,
       child: FutureBuilder<ListModel>(
@@ -44,7 +46,7 @@ class _ListWidgetState extends State<ListWidget> {
                 Spacer(),
                 Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.23,
+                    maxHeight: MediaQuery.of(context).size.height * 0.23,
                     maxWidth: MediaQuery.of(context).size.width * 0.8,
                   ),
                   // padding: const EdgeInsets.all(8),

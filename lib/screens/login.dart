@@ -27,18 +27,17 @@ class _LoginNavigationState extends State<LoginNavigation> {
     _pagesOptions.add(HelloPage());
 
     if (goToRegister) {
-      _pagesOptions.addAll([ Application(), RegisterNavigation()]);
+      _pagesOptions.addAll([Application(), RegisterNavigation()]);
 
       setState(() {
         _pageIndex = 3;
       });
     } else {
-
       setState(() {
         _pageIndex = 1;
       });
       await Future.delayed(Duration(seconds: 2));
-      _pagesOptions.addAll([ Application(), RegisterNavigation()]);
+      _pagesOptions.addAll([Application(), RegisterNavigation()]);
 
       setState(() {
         _pageIndex = 2;

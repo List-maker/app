@@ -20,13 +20,12 @@ class _ItemWidgetState extends State<ItemWidget> {
 
   _ItemWidgetState(this.id);
 
-  checkItem(int id) async{
+  checkItem(int id) async {
     await fetchCheckItem(id);
 
     setState(() {
       futureItem = fetchCreateItem(id);
     });
-
   }
 
   @override
@@ -37,23 +36,30 @@ class _ItemWidgetState extends State<ItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return  FutureBuilder<ItemModel>(
-        future: futureItem,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Container(
-                height: MediaQuery.of(context).size.height * 0.05,
-                width: 15,
-                decoration: (snapshot.data!.checked ? morphIn : morphOut).copyWith(borderRadius: BorderRadius.circular(7)),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
+    return FutureBuilder<ItemModel>(
+      future: futureItem,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.05,
+            width: 15,
+            decoration: (snapshot.data!.checked ? morphIn : morphOut)
+                .copyWith(borderRadius: BorderRadius.circular(7)),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
               children: [
-                Text(snapshot.data!.name,style: TextStyle(fontSize: 18, color: snapshot.data!.checked
-                    ? themeList.primaryColor
-                    : whiteText,),),
+                Text(
+                  snapshot.data!.name,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: snapshot.data!.checked
+                        ? themeList.primaryColor
+                        : whiteText,
+                  ),
+                ),
                 Spacer(),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     checkItem(snapshot.data!.id);
                   },
                   // onTap: null,
@@ -67,15 +73,15 @@ class _ItemWidgetState extends State<ItemWidget> {
                   ),
                 )
               ],
-                ),
-            );
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
 
-          // By default, show a loading spinner.
-          return const CircularProgressIndicator();
-        },
+        // By default, show a loading spinner.
+        return const CircularProgressIndicator();
+      },
     );
   }
 }

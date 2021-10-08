@@ -25,7 +25,6 @@ Future<ListModel> fetchList(int id) async {
   }
 }
 
-
 Future<List> fetchLists() async {
   TokenModel token = await getToken();
 
@@ -42,4 +41,3 @@ Future<List> fetchLists() async {
     throw Exception(jsonDecode(response.body)['message']);
   }
 }
-

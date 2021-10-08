@@ -24,7 +24,7 @@ class _RegisterNavigationState extends State<RegisterNavigation> {
     _pagesOptions.add(HelloPage());
 
     if (goToLogin) {
-      _pagesOptions.addAll([ Application(), LoginNavigation()]);
+      _pagesOptions.addAll([Application(), LoginNavigation()]);
 
       setState(() {
         _pageIndex = 3;
@@ -34,7 +34,7 @@ class _RegisterNavigationState extends State<RegisterNavigation> {
         _pageIndex = 1;
       });
       await Future.delayed(Duration(seconds: 2));
-      _pagesOptions.addAll([ Application(), LoginNavigation()]);
+      _pagesOptions.addAll([Application(), LoginNavigation()]);
 
       setState(() {
         _pageIndex = 2;
@@ -157,42 +157,45 @@ class _RegisterPageState extends State<RegisterPage> {
                     Form(
                       key: _usernameFormKey,
                       child: MorphOut(
-
                         child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
-                        child: TextFormField(
-                          style: inputStyle,
-                          decoration: inputDecoration.copyWith(
-                            hintText: 'Enter your name',
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.05),
+                          child: TextFormField(
+                            style: inputStyle,
+                            decoration: inputDecoration.copyWith(
+                              hintText: 'Enter your name',
+                            ),
+                            validator: (String? value) {
+                              return (value != null && value.isEmpty)
+                                  ? 'Please enter name'
+                                  : null;
+                            },
+                            onFieldSubmitted: (String? value) {
+                              if (!_usernameFormKey.currentState!.validate()) {
+                                _usernameFocus.requestFocus();
+                              } else {
+                                _emailFocus.requestFocus();
+                              }
+                            },
+                            autofillHints: [AutofillHints.username],
+                            focusNode: _usernameFocus,
+                            autofocus: true,
+                            enableSuggestions: false,
+                            autocorrect: false,
+                            controller: _username,
                           ),
-                          validator: (String? value) {
-                            return (value != null && value.isEmpty)
-                                ? 'Please enter name'
-                                : null;
-                          },
-                          onFieldSubmitted: (String? value) {
-                            if (!_usernameFormKey.currentState!.validate()) {
-                              _usernameFocus.requestFocus();
-                            } else {
-                              _emailFocus.requestFocus();
-                            }
-                          },
-                          autofillHints: [AutofillHints.username],
-                          focusNode: _usernameFocus,
-                          autofocus: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          controller: _username,
                         ),
                       ),
-                    ),
                     ),
                     Spacer(),
                     Form(
                       key: _emailFormKey,
                       child: Container(
                         decoration: morphOut,
-                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.05),
                         child: TextFormField(
                           style: inputStyle,
                           decoration: inputDecoration.copyWith(
@@ -227,7 +230,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     Form(
                       key: _passwordFormKey,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.05),
                         decoration: morphOut,
                         child: TextFormField(
                           style: inputStyle,

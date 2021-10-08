@@ -28,8 +28,10 @@ class _HelloPageState extends State<HelloPage> {
           if (snapshot.hasData) {
             return Container(
               height: MediaQuery.of(context).size.height * 0.3,
-              child: Text('Hello ' + snapshot.data!.username +  ' !',
-              style: themeList.textTheme.headline1,),
+              child: Text(
+                'Hello ' + snapshot.data!.username + ' !',
+                style: themeList.textTheme.headline1,
+              ),
             );
           }
 
