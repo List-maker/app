@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:list/navigation/navigation.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
-void main() => runApp(MyApp());
+void main() async{
 
-class MyApp extends StatelessWidget {
+  WidgetsFlutterBinding.ensureInitialized();
+  final database = openDatabase(
+    join(await getDatabasesPath(), 'database.db'),
+    onCreate: (db, version) {
+      return db.execute(
+        'CREATE TABLE token(id INTEGER PRIMARY KEY, refresh_token TEXT, access_token TEXT)',
+      );
+    },
+    version: 1,
+  );
+  final db = await database;
+  // Create db for save token session
+
+  return runApp(List());
+}
+
+class List extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
-          ),
-        ),
-      ),
+      home: Navigation(),
     );
   }
 }
