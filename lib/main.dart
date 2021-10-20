@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:list/navigation/navigation.dart';
+import 'package:list/style/theme.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -24,8 +25,6 @@ void main() async{
 class List extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Navigation(),
-    );
+    return Navigation();
   }
 }
