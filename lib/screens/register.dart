@@ -1,78 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:list/fetch_api/authCalls.dart';
-import 'package:list/navigation/navigation.dart';
-import 'package:list/screens/helloPage.dart';
-import 'package:list/screens/login.dart';
 import 'package:list/style/theme.dart';
-import 'package:list/widgets/morph_out.dart';
+import 'package:list/widgets/primaryButton.dart';
+import 'package:list/widgets/safeScreen.dart';
 
-typedef ParentFunctionCallback = void Function(bool);
-
-class RegisterNavigation extends StatefulWidget {
-  const RegisterNavigation({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  _RegisterNavigationState createState() => _RegisterNavigationState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _RegisterNavigationState extends State<RegisterNavigation> {
-  late List<Widget> _pagesOptions;
-
-  int _pageIndex = 0;
-
-  void changePages(bool goToLogin) async {
-    _pagesOptions.add(HelloPage());
-
-    if (goToLogin) {
-      _pagesOptions.addAll([Application(), LoginNavigation()]);
-
-      setState(() {
-        _pageIndex = 3;
-      });
-    } else {
-      setState(() {
-        _pageIndex = 1;
-      });
-      await Future.delayed(Duration(seconds: 2));
-      _pagesOptions.addAll([Application(), LoginNavigation()]);
-
-      setState(() {
-        _pageIndex = 2;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    _pagesOptions = <Widget>[
-      RegisterPage(changePages),
-    ];
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: themeList.backgroundColor,
-      body: IndexedStack(
-        index: _pageIndex,
-        children: _pagesOptions,
-      ),
-    );
-  }
-}
-
-class RegisterPage extends StatefulWidget {
-  const RegisterPage(this.changePage);
-
-  final ParentFunctionCallback changePage;
-
-  @override
-  _RegisterPageState createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterState extends State<Register> {
   final _allFormKey = GlobalKey<FormState>();
   final _usernameFormKey = GlobalKey<FormState>();
   final _emailFormKey = GlobalKey<FormState>();
@@ -100,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
       });
 
       if (!areErrorWhenFetch) {
-        widget.changePage(false);
+        Navigator.pushNamed(context, '/hello');
       }
     }
   }
@@ -127,10 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.90,
-        child: Column(
+    return SafeScreen(child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
@@ -156,11 +92,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Form(
                       key: _usernameFormKey,
-                      child: MorphOut(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
+                      child: Container(
+                        decoration: morphOut,
+
+                        padding: EdgeInsets.symmetric(
                               horizontal:
-                                  MediaQuery.of(context).size.width * 0.05),
+                              MediaQuery.of(context).size.width * 0.05),
                           child: TextFormField(
                             style: inputStyle,
                             decoration: inputDecoration.copyWith(
@@ -186,7 +123,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             controller: _username,
                           ),
                         ),
-                      ),
                     ),
                     Spacer(),
                     Form(
@@ -195,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: morphOut,
                         padding: EdgeInsets.symmetric(
                             horizontal:
-                                MediaQuery.of(context).size.width * 0.05),
+                            MediaQuery.of(context).size.width * 0.05),
                         child: TextFormField(
                           style: inputStyle,
                           decoration: inputDecoration.copyWith(
@@ -232,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Container(
                         padding: EdgeInsets.symmetric(
                             horizontal:
-                                MediaQuery.of(context).size.width * 0.05),
+                            MediaQuery.of(context).size.width * 0.05),
                         decoration: morphOut,
                         child: TextFormField(
                           style: inputStyle,
@@ -263,20 +199,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     Spacer(
                       flex: 2,
                     ),
-                    InkWell(
-                      onTap: () {
-                        _onSubmit();
-                      },
-                      child: Container(
-                        height: 50,
-                        width: 200,
-                        decoration: morphOut.copyWith(
-                          gradient: primaryOut,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Center(child: Text('Register')),
-                      ),
-                    ),
+                    PrimaryButton(text: 'Register', onTap: (){
+                      _onSubmit();
+                    },)
                   ],
                 ),
               ),
@@ -286,26 +211,12 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             Text('You already have an account? '),
             Spacer(),
-            InkWell(
-              onTap: () {
-                widget.changePage(true);
-              },
-              child: Container(
-                height: 50,
-                width: 200,
-                decoration: morphOut.copyWith(
-                  gradient: primaryOut,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Center(
-                  child: Text('Login'),
-                ),
-              ),
-            ),
+            PrimaryButton(text: 'Login', onTap: (){
+              Navigator.pushNamed(context, '/login');
+            }),
             Spacer(),
           ],
         ),
-      ),
     );
   }
 }
