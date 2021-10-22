@@ -19,7 +19,7 @@ class _NavigationState extends State<Navigation> {
       routes: {
         '/': (context) => StartPage(),
         '/login': (context) => Login(),
-        '/register': (context) => Register(),»
+        '/register': (context) => Register(),
         '/hello': (context) => StartPage(),
         '/home': (context) => StartPage(),
         '/share': (context) => StartPage(),
