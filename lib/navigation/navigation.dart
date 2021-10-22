@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:list/navigation/startPage.dart';
 import 'package:list/screens/login.dart';
+import 'package:list/screens/register.dart';
 import 'package:list/style/theme.dart';
-
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
 
@@ -19,7 +19,7 @@ class _NavigationState extends State<Navigation> {
       routes: {
         '/': (context) => StartPage(),
         '/login': (context) => Login(),
-        '/register': (context) => StartPage(),
+        '/register': (context) => Register(),»
         '/hello': (context) => StartPage(),
         '/home': (context) => StartPage(),
         '/share': (context) => StartPage(),
