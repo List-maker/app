@@ -37,7 +37,7 @@ class _LoginState extends State<Login> {
       if (!areErrorWhenFetch) {
         Navigator.pushNamed(
           context,
-          '/',
+          '/hello',
         );
       }
     } else {
@@ -48,7 +48,6 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-
     _loginFocus = FocusNode();
     _passwordFocus = FocusNode();
   }
