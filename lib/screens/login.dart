@@ -31,7 +31,19 @@ class _LoginState extends State<Login> {
       await fetchLogin(_login.text, _password.text).catchError((error) {
         areErrorWhenFetch = true;
 
-        print(error);
+        if (error.toString() == 'Exception: user doesnt exist!') {
+          _loginFocus.requestFocus();
+          final tempText = _login.text;
+          _login.text = '### Bad username';
+          _loginFormKey.currentState!.validate();
+          _login.text = tempText;
+        } else if (error.toString() == 'Exception: invalid password !') {
+          _passwordFocus.requestFocus();
+          final tempText = _login.text;
+          _password.text = '### Bad password';
+          _passwordFormKey.currentState!.validate();
+          _password.text = tempText;
+        }
       });
 
       if (!areErrorWhenFetch) {
@@ -93,9 +105,12 @@ class _LoginState extends State<Login> {
                             hintText: 'Enter your name or email',
                           ),
                           validator: (String? value) {
-                            return (value != null && value.isEmpty)
-                                ? 'Please enter name or email'
-                                : null;
+                            if (value != null && value.isEmpty) {
+                              return 'Please enter name or email';
+                            } else if (value == '### Bad username') {
+                              return 'Bad login';
+                            }
+                            return null;
                           },
                           onFieldSubmitted: (String? value) {
                             if (!_loginFormKey.currentState!.validate()) {
@@ -127,9 +142,12 @@ class _LoginState extends State<Login> {
                             hintText: 'Enter your password',
                           ),
                           validator: (String? value) {
-                            return (value != null && value.isEmpty)
-                                ? 'Please enter your password'
-                                : null;
+                            if (value != null && value.isEmpty) {
+                              return 'Please enter your password';
+                            } else if (value == '### Bad password') {
+                              return 'Bad password';
+                            }
+                            return null;
                           },
                           onFieldSubmitted: (String? value) {
                             if (!_passwordFormKey.currentState!.validate()) {
