@@ -17,8 +17,6 @@ class _StartPageState extends State<StartPage> {
 
     await futureToken;
 
-    print('refresh_token');
-
     await Future.delayed(Duration(seconds: 2));
 
     Navigator.pushNamed(context, '/login');
