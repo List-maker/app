@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:list/fetch_api/authCalls.dart';
+import 'package:list/api/authCalls.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/pageTitle.dart';
 import 'package:list/widgets/primaryButton.dart';
@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
       await fetchLogin(_login.text, _password.text).catchError((error) {
         areErrorWhenFetch = true;
 
-        if (error.toString() == 'Exception: user doesnt exist!') {
+        if (error.toString() == 'Exception: user doesnt exist!') { //TODO: change condition
           _loginFocus.requestFocus();
           final tempText = _login.text;
           _login.text = '### Bad username';

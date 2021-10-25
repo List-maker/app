@@ -22,4 +22,14 @@ class UserModel {
       settings: json['settings'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': 1,
+      'username': username,
+      'email': email,
+      'pinned_lists': pinnedLists,
+      'settings': settings,
+    };
+  }
 }
