@@ -9,6 +9,7 @@ class SafeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: themeList.backgroundColor,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Center(
           child: Container(
