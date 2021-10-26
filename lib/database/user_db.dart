@@ -21,6 +21,7 @@ Future<void> saveUser(UserModel user) async {
 }
 
 Future<UserModel> getUser() async {
+  try{
   final database = openDatabase(
     join(await getDatabasesPath(), 'database.db'),
   );
@@ -36,6 +37,15 @@ Future<UserModel> getUser() async {
     pinnedLists: map['pinned_lists'],
     settings: map['settings'],
   );
+}catch(error){
+    return UserModel(
+      id: 0,
+      username: '',
+      email: '',
+      pinnedLists: [],
+      settings: '',
+    );
+  }
 }
 
 Future<void> deleteUser() async {

@@ -20,18 +20,26 @@ Future<void> saveToken(TokenModel token) async {
 }
 
 Future<TokenModel> getToken() async {
-  final database = openDatabase(
-    join(await getDatabasesPath(), 'database.db'),
-  );
 
-  final db = await database;
+  try {
+    final database = openDatabase(
+      join(await getDatabasesPath(), 'database.db'),
+    );
 
-  final Map<String, dynamic> map = (await db.query('token'))[0];
+    final db = await database;
 
-  return TokenModel(
-    refreshToken: map['refresh_token'],
-    accessToken: map['access_token'],
-  );
+    final Map<String, dynamic> map = (await db.query('token'))[0];
+
+    return TokenModel(
+      refreshToken: map['refresh_token'],
+      accessToken: map['access_token'],
+    );
+  } catch (error){
+    return TokenModel(
+      refreshToken: '',
+      accessToken: '',
+    );
+  }
 }
 
 Future<void> deleteToken() async {
