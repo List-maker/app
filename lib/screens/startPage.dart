@@ -16,27 +16,24 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   late Future<TokenModel> futureToken;
-  late Future<UserModel> futureUser;
 
   void goToNextPage() async{
 
     final token = await futureToken;
-    final user = await futureUser;
 
-    print(token.accessToken);
-    print(user.id);
     await Future.delayed(Duration(seconds: 2));
-    if (token.accessToken != 'null'){
-      Navigator.pushNamed(context, '/home');
-    } else {
+    if (token.accessToken == ''){
+      Navigator.pushNamed(context, '/register');
+    } else if (token.accessToken == 'null'){
       Navigator.pushNamed(context, '/login');
+    } else {
+      Navigator.pushNamed(context, '/hello');
     }
   }
 
   @override
   void initState() {
     futureToken = getToken();
-    futureUser = getUser();
     goToNextPage();
     super.initState();
   }
