@@ -31,8 +31,10 @@ class _LoginState extends State<Login> {
       await fetchLogin(_login.text, _password.text).catchError((error) {
         areErrorWhenFetch = true;
 
-        if (error.toString() == 'Exception: user doesnt exist!') { //TODO: change condition
+        if (error.toString() == 'Exception: user doesnt exist!') {
+          //TODO: change condition
           _loginFocus.requestFocus();
+
           final tempText = _login.text;
           _login.text = '### Bad username';
           _loginFormKey.currentState!.validate();
