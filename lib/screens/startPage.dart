@@ -16,10 +16,13 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   late Future<TokenModel> futureToken;
+  late Future<UserModel> futureUser;
 
   void goToNextPage() async{
 
     final token = await futureToken;
+
+
 
     await Future.delayed(Duration(seconds: 2));
     if (token.accessToken == ''){
@@ -27,7 +30,15 @@ class _StartPageState extends State<StartPage> {
     } else if (token.accessToken == 'null'){
       Navigator.pushNamed(context, '/login');
     } else {
-      Navigator.pushNamed(context, '/hello');
+      try{
+        futureUser = fetchUser();
+        final user = await futureUser;
+        await saveUser(user);
+        Navigator.pushNamed(context, '/hello');
+      } catch (error){
+        Navigator.pushNamed(context, '/login');
+
+      }
     }
   }
 
