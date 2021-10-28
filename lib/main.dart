@@ -11,7 +11,7 @@ void main() async{
     join(await getDatabasesPath(), 'database.db'),
     onCreate: (db, version) {
       return db.execute(
-        'CREATE TABLE token(id INTEGER PRIMARY KEY, refresh_token TEXT, access_token TEXT); CREATE TABLE user(id INTEGER PRIMARY KEY, username TEXT,	email TEXT, pinned_lists TEXT, settings TEXT);',
+        'CREATE TABLE token(id INTEGER PRIMARY KEY, refresh_token TEXT, access_token TEXT); CREATE TABLE user(id INTEGER PRIMARY KEY, username TEXT,	email TEXT, pinned_lists JSON, settings JSON);',
       //TODO : pined list c'est pas un text
       );
     },
