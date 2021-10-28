@@ -27,7 +27,7 @@ class _HelloState extends State<Hello> {
 
   @override
   void initState() {
-    futureUser = fetchUser();
+    futureUser = getUser();
     goToNextPage();
     super.initState();
   }
