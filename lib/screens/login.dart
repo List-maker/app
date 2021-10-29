@@ -31,6 +31,8 @@ class _LoginState extends State<Login> {
       await fetchLogin(_login.text, _password.text).catchError((error) {
         areErrorWhenFetch = true;
 
+        print(error); //TODO: remove
+
         if (error.toString() == 'Exception: user doesnt exist!') {
           //TODO: change condition
           _loginFocus.requestFocus();
