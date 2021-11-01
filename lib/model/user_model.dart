@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 class UserModel {
   final int id;
   final String username;
   final String email;
   final List pinnedLists;
-  final Object settings;
+  final Map settings;
 
   UserModel({
     required this.id,
@@ -28,8 +30,8 @@ class UserModel {
       'id': 1,
       'username': username,
       'email': email,
-      'pinned_lists': pinnedLists,
-      'settings': settings,
+      'pinned_lists': jsonEncode(pinnedLists),
+      'settings': jsonEncode(settings),
     };
   }
 }

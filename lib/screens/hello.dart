@@ -18,7 +18,7 @@ class _HelloState extends State<Hello> {
   late Future<UserModel> futureUser;
 
   void goToNextPage() async{
-    saveUser(await futureUser);
+    await saveUser(await futureUser);
     await Future.delayed(Duration(seconds: 2));
     Navigator.pushNamed(context, '/home');
   }
@@ -27,7 +27,7 @@ class _HelloState extends State<Hello> {
 
   @override
   void initState() {
-    futureUser = getUser();
+    futureUser = fetchUser();
     goToNextPage();
     super.initState();
   }
@@ -46,7 +46,7 @@ class _HelloState extends State<Hello> {
                   return             Text('Hello ' + snapshot.data!.username, style: TextStyle(fontSize: 40),);
 
                 }
-              return             Text('Hello', style: TextStyle(fontSize: 40),);
+              return Container();
 
             }),
             SizedBox(

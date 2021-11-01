@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:list/api/authCalls.dart';
+import 'package:list/database/user_db.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/pageTitle.dart';
 import 'package:list/widgets/primaryButton.dart';
@@ -33,8 +34,8 @@ class _LoginState extends State<Login> {
 
         print(error); //TODO: remove
 
-        if (error.toString() == 'Exception: user doesnt exist!') {
-          //TODO: change condition
+        if (error.toString() == 'Exception: user doesnt exist!') { //TODO: change condition
+
           _loginFocus.requestFocus();
 
           final tempText = _login.text;
@@ -43,7 +44,7 @@ class _LoginState extends State<Login> {
           _login.text = tempText;
         } else if (error.toString() == 'Exception: invalid password !') {
           _passwordFocus.requestFocus();
-          final tempText = _login.text;
+          final tempText = _password.text;
           _password.text = '### Bad password';
           _passwordFormKey.currentState!.validate();
           _password.text = tempText;
@@ -51,6 +52,7 @@ class _LoginState extends State<Login> {
       });
 
       if (!areErrorWhenFetch) {
+
         Navigator.pushNamed(
           context,
           '/hello',

@@ -31,13 +31,9 @@ class _StartPageState extends State<StartPage> {
       Navigator.pushNamed(context, '/login');
     } else {
       try{
-        futureUser = fetchUser();
-        final user = await futureUser;
-        await saveUser(user);
         Navigator.pushNamed(context, '/hello');
       } catch (error){
         Navigator.pushNamed(context, '/login');
-
       }
     }
   }
