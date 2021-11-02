@@ -26,7 +26,7 @@ final themeList = ThemeData(
   ),
 );
 
-const whiteText = Colors.white;
+final whiteText = Colors.white;
 
 final grayOut = LinearGradient(
   begin: Alignment.topLeft,
@@ -63,9 +63,10 @@ final primaryIn = LinearGradient(
   ],
 );
 
+
 final morphOut = BoxDecoration(
   gradient: grayIn,
-  borderRadius: BorderRadius.circular(15),
+  borderRadius:  BorderRadius.circular(15),
   boxShadow: [
     BoxShadow(
       color: Color.fromRGBO(0, 0, 0, .15),
@@ -95,7 +96,7 @@ final morphIn = BoxDecoration(
   ],
 );
 
-const inputDecoration = InputDecoration(
+final inputDecoration = InputDecoration(
   hintStyle: TextStyle(
     color: whiteText,
     fontWeight: FontWeight.bold,
