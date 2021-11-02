@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:list/style/theme.dart';
 
 class PageTitle extends StatelessWidget {
-  const PageTitle({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
+  const PageTitle({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override

@@ -3,6 +3,7 @@ import 'package:list/api/authCalls.dart';
 import 'package:list/api/userCalls.dart';
 import 'package:list/database/user_db.dart';
 import 'package:list/style/theme.dart';
+import 'package:list/widgets/morphOut.dart';
 import 'package:list/widgets/pageTitle.dart';
 import 'package:list/widgets/primaryButton.dart';
 import 'package:list/widgets/safeScreen.dart';
@@ -53,7 +54,6 @@ class _LoginState extends State<Login> {
       });
 
       if (!areErrorWhenFetch) {
-
         saveUser(await fetchUser());
         Navigator.pushNamed(
           context,
@@ -102,8 +102,9 @@ class _LoginState extends State<Login> {
                   children: [
                     Form(
                       key: _loginFormKey,
+
+                      child: MorphOut(
                       child: Container(
-                        decoration: morphOut,
                         padding: EdgeInsets.symmetric(
                             horizontal:
                                 MediaQuery.of(context).size.width * 0.05),
@@ -135,15 +136,16 @@ class _LoginState extends State<Login> {
                           controller: _login,
                         ),
                       ),
+                      ),
                     ),
                     Spacer(),
                     Form(
                       key: _passwordFormKey,
+                      child: MorphOut(
                       child: Container(
                         padding: EdgeInsets.symmetric(
                             horizontal:
                                 MediaQuery.of(context).size.width * 0.05),
-                        decoration: morphOut,
                         child: TextFormField(
                           style: inputStyle,
                           decoration: inputDecoration.copyWith(
@@ -171,6 +173,7 @@ class _LoginState extends State<Login> {
                           focusNode: _passwordFocus,
                           controller: _password,
                         ),
+                      ),
                       ),
                     ),
                     Spacer(

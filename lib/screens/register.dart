@@ -3,6 +3,7 @@ import 'package:list/api/authCalls.dart';
 import 'package:list/api/userCalls.dart';
 import 'package:list/database/user_db.dart';
 import 'package:list/style/theme.dart';
+import 'package:list/widgets/morphOut.dart';
 import 'package:list/widgets/primaryButton.dart';
 import 'package:list/widgets/safeScreen.dart';
 
@@ -69,72 +70,73 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeScreen(child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Register',
-                style: TextStyle(
-                  fontSize: 28,
-                  color: themeList.primaryColor,
-                ),
+    return SafeScreen(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Register',
+              style: TextStyle(
+                fontSize: 28,
+                color: themeList.primaryColor,
               ),
             ),
-            SizedBox(
-              height: 150,
-            ),
-            Form(
-              key: _allFormKey,
-              child: Container(
-                height: 250,
-                width: MediaQuery.of(context).size.width * 0.70,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Form(
-                      key: _usernameFormKey,
+          ),
+          SizedBox(
+            height: 150,
+          ),
+          Form(
+            key: _allFormKey,
+            child: Container(
+              height: 250,
+              width: MediaQuery.of(context).size.width * 0.70,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Form(
+                    key: _usernameFormKey,
+                    child: MorphOut(
                       child: Container(
-                        decoration: morphOut,
-
-                        padding: EdgeInsets.symmetric(
-                              horizontal:
-                              MediaQuery.of(context).size.width * 0.05),
-                          child: TextFormField(
-                            style: inputStyle,
-                            decoration: inputDecoration.copyWith(
-                              hintText: 'Enter your name',
-                            ),
-                            validator: (String? value) {
-                              return (value != null && value.isEmpty)
-                                  ? 'Please enter name'
-                                  : null;
-                            },
-                            onFieldSubmitted: (String? value) {
-                              if (!_usernameFormKey.currentState!.validate()) {
-                                _usernameFocus.requestFocus();
-                              } else {
-                                _emailFocus.requestFocus();
-                              }
-                            },
-                            autofillHints: [AutofillHints.username],
-                            focusNode: _usernameFocus,
-                            autofocus: true,
-                            enableSuggestions: false,
-                            autocorrect: false,
-                            controller: _username,
-                          ),
-                        ),
-                    ),
-                    Spacer(),
-                    Form(
-                      key: _emailFormKey,
-                      child: Container(
-                        decoration: morphOut,
                         padding: EdgeInsets.symmetric(
                             horizontal:
-                            MediaQuery.of(context).size.width * 0.05),
+                                MediaQuery.of(context).size.width * 0.05),
+                        child: TextFormField(
+                          style: inputStyle,
+                          decoration: inputDecoration.copyWith(
+                            hintText: 'Enter your name',
+                          ),
+                          validator: (String? value) {
+                            return (value != null && value.isEmpty)
+                                ? 'Please enter name'
+                                : null;
+                          },
+                          onFieldSubmitted: (String? value) {
+                            if (!_usernameFormKey.currentState!.validate()) {
+                              _usernameFocus.requestFocus();
+                            } else {
+                              _emailFocus.requestFocus();
+                            }
+                          },
+                          autofillHints: [AutofillHints.username],
+                          focusNode: _usernameFocus,
+                          autofocus: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          controller: _username,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Form(
+                    key: _emailFormKey,
+                    child: MorphOut(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.05),
                         child: TextFormField(
                           style: inputStyle,
                           decoration: inputDecoration.copyWith(
@@ -165,14 +167,15 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                     ),
-                    Spacer(),
-                    Form(
-                      key: _passwordFormKey,
+                  ),
+                  Spacer(),
+                  Form(
+                    key: _passwordFormKey,
+                    child: MorphOut(
                       child: Container(
                         padding: EdgeInsets.symmetric(
                             horizontal:
-                            MediaQuery.of(context).size.width * 0.05),
-                        decoration: morphOut,
+                                MediaQuery.of(context).size.width * 0.05),
                         child: TextFormField(
                           style: inputStyle,
                           decoration: inputDecoration.copyWith(
@@ -199,27 +202,33 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                     ),
-                    Spacer(
-                      flex: 2,
-                    ),
-                    PrimaryButton(text: 'Register', onTap: (){
+                  ),
+                  Spacer(
+                    flex: 2,
+                  ),
+                  PrimaryButton(
+                    text: 'Register',
+                    onTap: () {
                       _onSubmit();
-                    },)
-                  ],
-                ),
+                    },
+                  )
+                ],
               ),
             ),
-            Spacer(
-              flex: 10,
-            ),
-            Text('You already have an account? '),
-            Spacer(),
-            PrimaryButton(text: 'Login', onTap: (){
-              Navigator.pushNamed(context, '/login');
-            }),
-            Spacer(),
-          ],
-        ),
+          ),
+          Spacer(
+            flex: 10,
+          ),
+          Text('You already have an account? '),
+          Spacer(),
+          PrimaryButton(
+              text: 'Login',
+              onTap: () {
+                Navigator.pushNamed(context, '/login');
+              }),
+          Spacer(),
+        ],
+      ),
     );
   }
 }
