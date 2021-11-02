@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:list/api/authCalls.dart';
+import 'package:list/api/userCalls.dart';
+import 'package:list/database/user_db.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/primaryButton.dart';
 import 'package:list/widgets/safeScreen.dart';
@@ -39,6 +41,7 @@ class _RegisterState extends State<Register> {
       });
 
       if (!areErrorWhenFetch) {
+        saveUser(await fetchUser());
         Navigator.pushNamed(context, '/hello');
       }
     }

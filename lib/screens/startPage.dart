@@ -31,6 +31,7 @@ class _StartPageState extends State<StartPage> {
       Navigator.pushNamed(context, '/login');
     } else {
       try{
+        saveUser(await fetchUser());
         Navigator.pushNamed(context, '/hello');
       } catch (error){
         Navigator.pushNamed(context, '/login');

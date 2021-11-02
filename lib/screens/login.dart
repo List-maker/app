@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:list/api/authCalls.dart';
+import 'package:list/api/userCalls.dart';
 import 'package:list/database/user_db.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/pageTitle.dart';
@@ -53,6 +54,7 @@ class _LoginState extends State<Login> {
 
       if (!areErrorWhenFetch) {
 
+        saveUser(await fetchUser());
         Navigator.pushNamed(
           context,
           '/hello',
