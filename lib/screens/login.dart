@@ -84,10 +84,10 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return SafeScreen(
+      title: "Login",
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          PageTitle(title: 'Login'),
           SizedBox(
             height: 150,
           ),
