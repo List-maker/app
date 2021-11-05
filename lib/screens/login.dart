@@ -85,17 +85,18 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return SafeScreen(
       title: "Login",
+      child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 150,
+            height: MediaQuery.of(context).size.height * 0.15,
           ),
           Form(
             key: _allFormKey,
             child: AutofillGroup(
               child: Container(
-                height: 250,
+                height: MediaQuery.of(context).size.height * 0.25,
                 width: MediaQuery.of(context).size.width * 0.70,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -198,6 +199,7 @@ class _LoginState extends State<Login> {
           ),
           Spacer(),
         ],
+      ),
       ),
     );
   }

@@ -74,12 +74,12 @@ class _RegisterState extends State<Register> {
       title: "Register",
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         SizedBox(
-          height: 150,
+          height: MediaQuery.of(context).size.height * 0.15,
         ),
         Form(
           key: _allFormKey,
           child: Container(
-            height: 250,
+            height: MediaQuery.of(context).size.height * 0.3,
             width: MediaQuery.of(context).size.width * 0.70,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
