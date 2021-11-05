@@ -19,7 +19,8 @@ class SafeScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.90,
               child: title != null
                   ? Column(
-                      children: [PageTitle(title: title!), child],
+                      children: [PageTitle(title: title!),Expanded
+                        (child: child)],
                     )
                   : child),
         ),
