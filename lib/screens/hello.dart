@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:list/api/userCalls.dart';
 import 'package:list/database/user_db.dart';
 import 'package:list/model/user_model.dart';
-import 'package:list/style/ListIcons.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/safeScreen.dart';
 
