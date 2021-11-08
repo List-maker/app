@@ -4,7 +4,7 @@ import 'package:list/database/token_db.dart';
 import 'package:list/database/user_db.dart';
 import 'package:list/model/token_model.dart';
 import 'package:list/model/user_model.dart';
-import 'package:list/style/ListIcons.dart';
+import 'package:list/style/List_icons.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/morphOut.dart';
 import 'package:list/widgets/safeScreen.dart';
@@ -54,7 +54,7 @@ class _StartPageState extends State<StartPage> {
             Spacer(),
             MorphOut(
               child: Icon(
-                ListIcons.check,
+                IcList.check_checked,
                 size: 125,
                 color: themeList.primaryColor,
               ),
