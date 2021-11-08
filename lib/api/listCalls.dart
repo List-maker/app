@@ -25,7 +25,7 @@ Future<ListModel> fetchList(int id) async {
   }
 }
 
-Future<List> fetchLists() async {
+Future<List> fetchListsId() async {
   TokenModel token = await getToken();
 
   String accessToken = token.toMap()['access_token'];
