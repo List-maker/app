@@ -65,7 +65,7 @@ final primaryIn = LinearGradient(
 
 
 final morphOut = BoxDecoration(
-  gradient: grayIn,
+  gradient: grayOut,
   borderRadius:  BorderRadius.circular(15),
   boxShadow: [
     BoxShadow(
