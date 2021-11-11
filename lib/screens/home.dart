@@ -13,15 +13,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late Future<List> futureListsId;
 
-  test() async{
-
-    print( fetchListsId());
-  }
-
   @override
   void initState() {
     futureListsId = fetchListsId();
-    test();
     super.initState();
   }
 
