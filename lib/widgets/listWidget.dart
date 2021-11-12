@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:list/api/listCalls.dart';
 import 'package:list/model/list_model.dart';
 import 'package:list/style/List_icons.dart';
@@ -20,12 +21,10 @@ class _ListWidgetState extends State<ListWidget> {
   final int id;
   late Future<ListModel> futureList;
 
-
-  delete(){
+  delete() {
     print('call here ');
     deleteList(id);
   }
-
 
   @override
   void initState() {
@@ -58,18 +57,19 @@ class _ListWidgetState extends State<ListWidget> {
                         list.name,
                         style: TextStyle(color: themeList.primaryColor),
                       ),
-                        Spacer(),
-                        InkWell(
-                          child: Icon(
-                            IcList.remove,
-                            color: whiteText,
-                          ),
-                          onTap: (){delete();},
+                      Spacer(),
+                      InkWell(
+                        child: Icon(
+                          IcList.remove,
+                          color: whiteText,
+                        ),
+                        onTap: () {
+                          delete();
+                        },
                       ),
                     ],
                   ),
-                  ListView.separated(
-                    shrinkWrap: true,
+                  Expanded(child: ListView.separated(
                     itemCount: list.items.length,
                     itemBuilder: (context, index) {
                       return ItemWidget(
@@ -81,7 +81,8 @@ class _ListWidgetState extends State<ListWidget> {
                         height: MediaQuery.of(context).size.height * 0.01,
                       );
                     },
-                  ),
+                  ),)
+
                 ],
               ),
             ),
