@@ -10,10 +10,11 @@ class SafeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: themeList.backgroundColor,
+    return  Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
+      body:Container(
+        decoration: BoxDecoration(gradient: grayIn),
+        child: SafeArea(
         child: Center(
           child: Container(
               width: MediaQuery.of(context).size.width * 0.90,
@@ -23,6 +24,7 @@ class SafeScreen extends StatelessWidget {
                         (child: child)],
                     )
                   : child),
+        ),
         ),
       ),
     );
