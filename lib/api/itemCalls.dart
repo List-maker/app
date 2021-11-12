@@ -8,7 +8,7 @@ import 'package:list/model/token_model.dart';
 
 import 'config.dart';
 
-Future<ItemModel> fetchCreateItem(int id) async {
+Future<ItemModel> fetchItem(int id) async {
   TokenModel token = await getToken();
 
   String accessToken = token.toMap()['access_token'];
@@ -25,7 +25,7 @@ Future<ItemModel> fetchCreateItem(int id) async {
   }
 }
 
-Future<void> fetchCheckItem(
+Future<void> checkItem(
   int id,
 ) async {
   TokenModel token = await getToken();
