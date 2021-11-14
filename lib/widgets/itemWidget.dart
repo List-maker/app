@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:list/api/itemCalls.dart';
 import 'package:list/model/item_model.dart';
+import 'package:list/style/List_icons.dart';
+import 'package:list/style/theme.dart';
 
 import 'morphIn.dart';
 import 'morphOut.dart';
@@ -20,31 +22,73 @@ class _ItemWidgetState extends State<ItemWidget> {
 
   final int id;
 
+  check() async{
+    await checkItem(id);
+
+    setState(() {
+      futureItem = fetchItem(id);
+    });
+  }
+
   @override
   void initState() {
     futureItem = fetchItem(id);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ItemModel>(
+    return  Container(
+        padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.05,
+          vertical:  MediaQuery.of(context).size.height * 0.008,
+    ), child:FutureBuilder<ItemModel>(
       future: futureItem,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           ItemModel item = snapshot.data!;
           if (item.checked) {
-            return MorphIn(
-              child: Text(item.name),
+            return  MorphIn(
+              child: Container(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  padding: EdgeInsets.symmetric( horizontal: MediaQuery.of(context).size.width * 0.03),
+                  alignment: Alignment.centerLeft,
+                  child: Row(children: [Text(item.name),Spacer(), InkWell(
+                    child: Icon(
+                      item.checked ?
+                      IcList.check_checked : IcList.check_no_checked,
+                      color: whiteText,
+                    ),
+                    onTap: () {
+                      check();
+                    },
+                  ),],)
+              ),
             );
           } else {
             return MorphOut(
-              child: Text(item.name),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.05,
+              padding: EdgeInsets.symmetric( horizontal: MediaQuery.of(context).size.width * 0.03),
+              alignment: Alignment.centerLeft,
+              child: Row(children: [Text(item.name),Spacer(), InkWell(
+                child: Icon(
+                  item.checked ?
+                  IcList.check_checked : IcList.check_no_checked,
+                  color: whiteText,
+                ),
+                onTap: () {
+                  check();
+                },
+              ),],)
+              ),
             );
           }
         }
         return Text("data");
       },
+    ),
     );
   }
 }

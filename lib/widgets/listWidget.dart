@@ -41,48 +41,49 @@ class _ListWidgetState extends State<ListWidget> {
           var list = snapshot.data!;
           return MorphOut(
             child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.05,
-                vertical: MediaQuery.of(context).size.height * 0.01,
-              ),
               constraints: BoxConstraints(
                 maxHeight: MediaQuery.of(context).size.height * 0.23,
                 maxWidth: MediaQuery.of(context).size.width * 0.8,
               ),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        list.name,
-                        style: TextStyle(color: themeList.primaryColor),
-                      ),
-                      Spacer(),
-                      InkWell(
-                        child: Icon(
-                          IcList.remove,
-                          color: whiteText,
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.05,
+                      vertical: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          list.name,
+                          style: TextStyle(color: themeList.primaryColor),
                         ),
-                        onTap: () {
-                          delete();
+                        Spacer(),
+                        InkWell(
+                          child: Icon(
+                            IcList.remove,
+                            color: whiteText,
+                          ),
+                          onTap: () {
+                            delete();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+
+                      child: Container(
+                      child: ListView.builder(
+                        itemCount: list.items.length,
+                        itemBuilder: (context, index) {
+                          return ItemWidget(
+                            id: list.items.elementAt(index),
+                          );
                         },
                       ),
-                    ],
+                      ),
                   ),
-                  Expanded(child: ListView.separated(
-                    itemCount: list.items.length,
-                    itemBuilder: (context, index) {
-                      return ItemWidget(
-                        id: list.items.elementAt(index),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.01,
-                      );
-                    },
-                  ),)
-
                 ],
               ),
             ),

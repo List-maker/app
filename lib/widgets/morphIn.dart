@@ -11,13 +11,29 @@ class MorphIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: MediaQuery.of(context).size.height * 0.4,
       decoration: BoxDecoration(
         color: Color.fromRGBO(0, 0, 0, 1),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Container(
-        decoration: BoxDecoration(),
+        padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height * 0.002,
+            horizontal: MediaQuery.of(context).size.width * 0.03),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(206, 204, 216, 1),
+              blurRadius: 6,
+              offset: Offset(2, 2),
+            ),
+            BoxShadow(
+              color: Color.fromRGBO(219, 217, 228, 1),
+              blurRadius: 6,
+              offset: Offset(-2, -2),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Container(
           decoration: BoxDecoration(gradient: grayIn),
           child: child,
