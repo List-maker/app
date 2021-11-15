@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:list/style/theme.dart';
 
 class MorphIn extends StatelessWidget {
   const MorphIn({Key? key, required this.child, this.decorationOverride})
@@ -11,33 +10,33 @@ class MorphIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+      height: MediaQuery.of(context).size.height * 0.06,
       decoration: BoxDecoration(
-        color: Color.fromRGBO(0, 0, 0, 1),
-        borderRadius: BorderRadius.circular(15),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[
+              Color.fromRGBO(169, 169, 179, 1.0),
+              Color.fromRGBO(191, 189, 201, 1.0)
+            ],
+        ),
+        borderRadius: BorderRadius.circular(7),
       ),
       child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: MediaQuery.of(context).size.height * 0.002,
-            horizontal: MediaQuery.of(context).size.width * 0.03),
+        alignment: Alignment.centerLeft,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Color.fromRGBO(206, 204, 216, 1),
+              color: Color.fromRGBO(217, 215, 227, 0.80),
               blurRadius: 6,
-              offset: Offset(2, 2),
-            ),
-            BoxShadow(
-              color: Color.fromRGBO(219, 217, 228, 1),
-              blurRadius: 6,
-              offset: Offset(-2, -2),
+              spreadRadius: 12,
             ),
           ],
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(7),
         ),
-        child: Container(
-          decoration: BoxDecoration(gradient: grayIn),
-          child: child,
-        ),
+        child: child,
       ),
     );
   }
