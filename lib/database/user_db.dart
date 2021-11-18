@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:list/model/token_model.dart';
 import 'package:list/model/user_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -21,7 +22,8 @@ Future<void> saveUser(UserModel user) async {
 }
 
 Future<UserModel> getUser() async {
-  try{
+    try {
+
   final database = openDatabase(
     join(await getDatabasesPath(), 'database.db'),
   );
@@ -34,16 +36,16 @@ Future<UserModel> getUser() async {
     id: map['id'],
     username: map['username'],
     email: map['email'],
-    pinnedLists: map['pinned_lists'],
-    settings: map['settings'],
+    pinnedLists: jsonDecode(map['pinned_lists']),
+    settings: jsonDecode(map['settings']),
   );
-}catch(error){
+  } catch (error){
     return UserModel(
-      id: 0,
-      username: '',
-      email: '',
+      id: 1,
+      username: 'null',
+      email: 'null',
       pinnedLists: [],
-      settings: '',
+      settings: {},
     );
   }
 }
@@ -57,10 +59,5 @@ Future<void> deleteUser() async {
 
   final db = await database;
 
-
-  await db.update(
-    'user',
-    UserModel(id: 1, username: 'null', email: 'null', pinnedLists: [], settings: 'null').toMap(),
-    where: 'id = 1',
-  );
+  await db.delete('user', where: 'id = 1');
 }

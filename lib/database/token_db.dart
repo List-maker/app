@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:list/main.dart';
 import 'package:list/model/token_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -51,10 +52,5 @@ Future<void> deleteToken() async {
 
   final db = await database;
 
-
-  await db.update(
-    'token',
-    TokenModel(accessToken: 'null', refreshToken: 'null').toMap(),
-    where: 'id = 1',
-  );
+  await db.delete('token',where: 'id = 1');
 }

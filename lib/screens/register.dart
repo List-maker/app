@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:list/api/authCalls.dart';
+import 'package:list/api/userCalls.dart';
+import 'package:list/database/user_db.dart';
 import 'package:list/style/theme.dart';
+import 'package:list/widgets/morphOut.dart';
 import 'package:list/widgets/primaryButton.dart';
 import 'package:list/widgets/safeScreen.dart';
 
@@ -39,6 +42,7 @@ class _RegisterState extends State<Register> {
       });
 
       if (!areErrorWhenFetch) {
+        saveUser(await fetchUser());
         Navigator.pushNamed(context, '/hello');
       }
     }
@@ -66,157 +70,150 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeScreen(child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Register',
-                style: TextStyle(
-                  fontSize: 28,
-                  color: themeList.primaryColor,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 150,
-            ),
-            Form(
-              key: _allFormKey,
-              child: Container(
-                height: 250,
-                width: MediaQuery.of(context).size.width * 0.70,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Form(
-                      key: _usernameFormKey,
-                      child: Container(
-                        decoration: morphOut,
-
-                        padding: EdgeInsets.symmetric(
-                              horizontal:
-                              MediaQuery.of(context).size.width * 0.05),
-                          child: TextFormField(
-                            style: inputStyle,
-                            decoration: inputDecoration.copyWith(
-                              hintText: 'Enter your name',
-                            ),
-                            validator: (String? value) {
-                              return (value != null && value.isEmpty)
-                                  ? 'Please enter name'
-                                  : null;
-                            },
-                            onFieldSubmitted: (String? value) {
-                              if (!_usernameFormKey.currentState!.validate()) {
-                                _usernameFocus.requestFocus();
-                              } else {
-                                _emailFocus.requestFocus();
-                              }
-                            },
-                            autofillHints: [AutofillHints.username],
-                            focusNode: _usernameFocus,
-                            autofocus: true,
-                            enableSuggestions: false,
-                            autocorrect: false,
-                            controller: _username,
-                          ),
+    return SafeScreen(
+      title: "Register",
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.15,
+        ),
+        Form(
+          key: _allFormKey,
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            width: MediaQuery.of(context).size.width * 0.70,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Form(
+                  key: _usernameFormKey,
+                  child: MorphOut(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.05),
+                      child: TextFormField(
+                        style: inputStyle,
+                        decoration: inputDecoration.copyWith(
+                          hintText: 'Enter your name',
                         ),
-                    ),
-                    Spacer(),
-                    Form(
-                      key: _emailFormKey,
-                      child: Container(
-                        decoration: morphOut,
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                            MediaQuery.of(context).size.width * 0.05),
-                        child: TextFormField(
-                          style: inputStyle,
-                          decoration: inputDecoration.copyWith(
-                            hintText: 'Enter your email',
-                          ),
-                          validator: (String? value) {
-                            if (value != null && value.isEmpty) {
-                              return 'Please enter email';
-                            } else if (!(value!.contains('@') &&
-                                value.contains('.'))) {
-                              return 'Please enter valid email';
-                            }
-                            return null;
-                          },
-                          onFieldSubmitted: (String? value) {
-                            if (!_emailFormKey.currentState!.validate()) {
-                              _emailFocus.requestFocus();
-                            } else {
-                              _passwordFocus.requestFocus();
-                            }
-                          },
-                          autofillHints: [AutofillHints.email],
-                          focusNode: _emailFocus,
-                          autofocus: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          controller: _email,
-                        ),
+                        validator: (String? value) {
+                          return (value != null && value.isEmpty)
+                              ? 'Please enter name'
+                              : null;
+                        },
+                        onFieldSubmitted: (String? value) {
+                          if (!_usernameFormKey.currentState!.validate()) {
+                            _usernameFocus.requestFocus();
+                          } else {
+                            _emailFocus.requestFocus();
+                          }
+                        },
+                        autofillHints: [AutofillHints.username],
+                        focusNode: _usernameFocus,
+                        autofocus: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        controller: _username,
                       ),
                     ),
-                    Spacer(),
-                    Form(
-                      key: _passwordFormKey,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                            MediaQuery.of(context).size.width * 0.05),
-                        decoration: morphOut,
-                        child: TextFormField(
-                          style: inputStyle,
-                          decoration: inputDecoration.copyWith(
-                            hintText: 'Enter your password',
-                          ),
-                          validator: (String? value) {
-                            return (value != null && value.isEmpty)
-                                ? 'Please enter your password'
-                                : null;
-                          },
-                          onFieldSubmitted: (String? value) {
-                            if (!_passwordFormKey.currentState!.validate()) {
-                              _passwordFocus.requestFocus();
-                            } else {
-                              _onSubmit();
-                            }
-                          },
-                          autofillHints: [AutofillHints.password],
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          focusNode: _passwordFocus,
-                          controller: _password,
+                  ),
+                ),
+                Spacer(),
+                Form(
+                  key: _emailFormKey,
+                  child: MorphOut(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.05),
+                      child: TextFormField(
+                        style: inputStyle,
+                        decoration: inputDecoration.copyWith(
+                          hintText: 'Enter your email',
                         ),
+                        validator: (String? value) {
+                          if (value != null && value.isEmpty) {
+                            return 'Please enter email';
+                          } else if (!(value!.contains('@') &&
+                              value.contains('.'))) {
+                            return 'Please enter valid email';
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (String? value) {
+                          if (!_emailFormKey.currentState!.validate()) {
+                            _emailFocus.requestFocus();
+                          } else {
+                            _passwordFocus.requestFocus();
+                          }
+                        },
+                        autofillHints: [AutofillHints.email],
+                        focusNode: _emailFocus,
+                        autofocus: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        controller: _email,
                       ),
                     ),
-                    Spacer(
-                      flex: 2,
-                    ),
-                    PrimaryButton(text: 'Register', onTap: (){
-                      _onSubmit();
-                    },)
-                  ],
+                  ),
                 ),
-              ),
+                Spacer(),
+                Form(
+                  key: _passwordFormKey,
+                  child: MorphOut(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.05),
+                      child: TextFormField(
+                        style: inputStyle,
+                        decoration: inputDecoration.copyWith(
+                          hintText: 'Enter your password',
+                        ),
+                        validator: (String? value) {
+                          return (value != null && value.isEmpty)
+                              ? 'Please enter your password'
+                              : null;
+                        },
+                        onFieldSubmitted: (String? value) {
+                          if (!_passwordFormKey.currentState!.validate()) {
+                            _passwordFocus.requestFocus();
+                          } else {
+                            _onSubmit();
+                          }
+                        },
+                        autofillHints: [AutofillHints.password],
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        focusNode: _passwordFocus,
+                        controller: _password,
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(
+                  flex: 2,
+                ),
+                PrimaryButton(
+                  text: 'Register',
+                  onTap: () {
+                    _onSubmit();
+                  },
+                )
+              ],
             ),
-            Spacer(
-              flex: 10,
-            ),
-            Text('You already have an account? '),
-            Spacer(),
-            PrimaryButton(text: 'Login', onTap: (){
+          ),
+        ),
+        Spacer(
+          flex: 10,
+        ),
+        Text('You already have an account? '),
+        Spacer(),
+        PrimaryButton(
+            text: 'Login',
+            onTap: () {
               Navigator.pushNamed(context, '/login');
             }),
-            Spacer(),
-          ],
-        ),
+        Spacer(),
+      ]),
     );
   }
 }

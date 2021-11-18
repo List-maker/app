@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:list/database/token_db.dart';
-import 'package:list/widgets/primaryButton.dart';
+import 'package:list/api/listCalls.dart';
+import 'package:list/widgets/listWidget.dart';
 import 'package:list/widgets/safeScreen.dart';
 
 class Home extends StatefulWidget {
@@ -11,15 +11,41 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late Future<List> futureListsId;
 
-  _logout(){
-    deleteToken();
-    Navigator.pushNamed(context, '/');
+  @override
+  void initState() {
+    futureListsId = fetchListsId();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeScreen(child: PrimaryButton(text: 'Logout', onTap:_logout)
+    return SafeScreen(
+      title: "Home",
+      child: Center(
+        child: FutureBuilder<List>(
+          future: futureListsId,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Center(
+                child: ListView.separated(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListWidget(id: snapshot.data!.elementAt(index));
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.03,
+                    );
+                  },
+                ),
+              );
+            }
+            return Text("data");
+          },
+        ),
+      ),
     );
   }
 }
