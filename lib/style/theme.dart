@@ -63,10 +63,9 @@ final primaryIn = LinearGradient(
   ],
 );
 
-
 final morphOut = BoxDecoration(
   gradient: grayIn,
-  borderRadius:  BorderRadius.circular(15),
+  borderRadius: BorderRadius.circular(15),
   boxShadow: [
     BoxShadow(
       color: Color.fromRGBO(0, 0, 0, .15),
@@ -81,7 +80,7 @@ final morphOut = BoxDecoration(
   ],
 );
 
-final inputDecoration = InputDecoration(
+final inputDecoration = InputDecoration.collapsed(
   hintStyle: TextStyle(
     color: whiteText,
     fontWeight: FontWeight.bold,
@@ -89,6 +88,7 @@ final inputDecoration = InputDecoration(
   border: InputBorder.none,
   focusColor: Color.fromRGBO(72, 47, 247, 1),
   hoverColor: Color.fromRGBO(72, 47, 247, 1),
+  hintText: '',
 );
 
 final inputStyle = TextStyle(

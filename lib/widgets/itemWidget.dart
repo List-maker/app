@@ -33,6 +33,10 @@ class _ItemWidgetState extends State<ItemWidget> {
       futureItem = fetchItem(id);
     });
   }
+  _change(String? name) async{
+    name?? '';
+    updateItem(id, name!);
+  }
 
   @override
   void initState() {
@@ -58,18 +62,27 @@ class _ItemWidgetState extends State<ItemWidget> {
               return MorphIn(
                 child: Row(
                   children: [
-                    Text(item.name, style: TextStyle(color: isCheck
-                        ? themeList.primaryColor
-                        : whiteText,),),
+                    Expanded(
+                      child: TextFormField(
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: inputDecoration,
+                        initialValue: item.name,
+                        style: TextStyle(
+                            color: isCheck ? themeList.primaryColor : whiteText,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20),
+                        onChanged: (String? text){
+                          _change(text);
+                        },
+                      ),
+                    ),
                     Spacer(),
                     InkWell(
                       child: Icon(
                         isCheck
                             ? IcList.check_checked
                             : IcList.check_no_checked,
-                        color: isCheck
-                            ? themeList.primaryColor
-                            : whiteText,
+                        color: isCheck ? themeList.primaryColor : whiteText,
                       ),
                       onTap: () {
                         check();
@@ -80,7 +93,8 @@ class _ItemWidgetState extends State<ItemWidget> {
               );
             } else {
               return MorphOut(
-                decorationOverride: morphOut.copyWith(borderRadius: BorderRadius.circular(7)),
+                decorationOverride:
+                    morphOut.copyWith(borderRadius: BorderRadius.circular(7)),
                 child: Container(
                     height: MediaQuery.of(context).size.height * 0.06,
                     padding: EdgeInsets.symmetric(
@@ -88,7 +102,19 @@ class _ItemWidgetState extends State<ItemWidget> {
                     alignment: Alignment.centerLeft,
                     child: Row(
                       children: [
-                        Text(item.name),
+                        Expanded(
+                          child: TextFormField(
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration: inputDecoration,
+                            initialValue: item.name,
+                            style: TextStyle(
+                                color: isCheck
+                                    ? themeList.primaryColor
+                                    : whiteText,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20),
+                          ),
+                        ),
                         Spacer(),
                         InkWell(
                           child: Icon(
