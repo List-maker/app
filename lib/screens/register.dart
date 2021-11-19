@@ -89,7 +89,8 @@ class _RegisterState extends State<Register> {
                   child: MorphOut(
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.05),
+                          horizontal: MediaQuery.of(context).size.width * 0.05,
+                          vertical: MediaQuery.of(context).size.height * 0.015),
                       child: TextFormField(
                         style: inputStyle,
                         decoration: inputDecoration.copyWith(
@@ -123,7 +124,8 @@ class _RegisterState extends State<Register> {
                   child: MorphOut(
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.05),
+                          horizontal: MediaQuery.of(context).size.width * 0.05,
+                          vertical: MediaQuery.of(context).size.height * 0.015),
                       child: TextFormField(
                         style: inputStyle,
                         decoration: inputDecoration.copyWith(
@@ -161,7 +163,8 @@ class _RegisterState extends State<Register> {
                   child: MorphOut(
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.05),
+                          horizontal: MediaQuery.of(context).size.width * 0.05,
+                          vertical: MediaQuery.of(context).size.height * 0.015),
                       child: TextFormField(
                         style: inputStyle,
                         decoration: inputDecoration.copyWith(

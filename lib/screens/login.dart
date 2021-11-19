@@ -4,7 +4,6 @@ import 'package:list/api/userCalls.dart';
 import 'package:list/database/user_db.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/morphOut.dart';
-import 'package:list/widgets/pageTitle.dart';
 import 'package:list/widgets/primaryButton.dart';
 import 'package:list/widgets/safeScreen.dart';
 
@@ -36,7 +35,8 @@ class _LoginState extends State<Login> {
 
         print(error); //TODO: remove
 
-        if (error.toString() == 'Exception: user doesnt exist!') { //TODO: change condition
+        if (error.toString() == 'Exception: user doesnt exist!') {
+          //TODO: change condition
 
           _loginFocus.requestFocus();
 
@@ -86,120 +86,124 @@ class _LoginState extends State<Login> {
     return SafeScreen(
       title: "Login",
       child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.15,
-          ),
-          Form(
-            key: _allFormKey,
-            child: AutofillGroup(
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width * 0.70,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Form(
-                      key: _loginFormKey,
-
-                      child: MorphOut(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.05),
-                        child: TextFormField(
-                          style: inputStyle,
-                          decoration: inputDecoration.copyWith(
-                            hintText: 'Enter your name or email',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.15,
+            ),
+            Form(
+              key: _allFormKey,
+              child: AutofillGroup(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.70,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Form(
+                        key: _loginFormKey,
+                        child: MorphOut(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.of(context).size.width * 0.05,
+                                vertical:
+                                    MediaQuery.of(context).size.height * 0.015),
+                            child: TextFormField(
+                              style: inputStyle,
+                              decoration: inputDecoration.copyWith(
+                                hintText: 'Enter your name or email',
+                              ),
+                              validator: (String? value) {
+                                if (value != null && value.isEmpty) {
+                                  return 'Please enter name or email';
+                                } else if (value == '### Bad username') {
+                                  return 'Bad login';
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (String? value) {
+                                if (!_loginFormKey.currentState!.validate()) {
+                                  _loginFocus.requestFocus();
+                                } else {
+                                  _passwordFocus.requestFocus();
+                                }
+                              },
+                              autofillHints: [AutofillHints.username],
+                              focusNode: _loginFocus,
+                              autofocus: true,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              controller: _login,
+                            ),
                           ),
-                          validator: (String? value) {
-                            if (value != null && value.isEmpty) {
-                              return 'Please enter name or email';
-                            } else if (value == '### Bad username') {
-                              return 'Bad login';
-                            }
-                            return null;
-                          },
-                          onFieldSubmitted: (String? value) {
-                            if (!_loginFormKey.currentState!.validate()) {
-                              _loginFocus.requestFocus();
-                            } else {
-                              _passwordFocus.requestFocus();
-                            }
-                          },
-                          autofillHints: [AutofillHints.username],
-                          focusNode: _loginFocus,
-                          autofocus: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          controller: _login,
                         ),
                       ),
-                      ),
-                    ),
-                    Spacer(),
-                    Form(
-                      key: _passwordFormKey,
-                      child: MorphOut(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.05),
-                        child: TextFormField(
-                          style: inputStyle,
-                          decoration: inputDecoration.copyWith(
-                            hintText: 'Enter your password',
+                      Spacer(),
+                      Form(
+                        key: _passwordFormKey,
+                        child: MorphOut(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.of(context).size.width * 0.05,
+                                vertical:
+                                    MediaQuery.of(context).size.height * 0.015),
+                            child: TextFormField(
+                              style: inputStyle,
+                              decoration: inputDecoration.copyWith(
+                                hintText: 'Enter your password',
+                              ),
+                              validator: (String? value) {
+                                if (value != null && value.isEmpty) {
+                                  return 'Please enter your password';
+                                } else if (value == '### Bad password') {
+                                  return 'Bad password';
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (String? value) {
+                                if (!_passwordFormKey.currentState!
+                                    .validate()) {
+                                  _passwordFocus.requestFocus();
+                                } else {
+                                  _onSubmit();
+                                }
+                              },
+                              autofillHints: [AutofillHints.password],
+                              obscureText: true,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              focusNode: _passwordFocus,
+                              controller: _password,
+                            ),
                           ),
-                          validator: (String? value) {
-                            if (value != null && value.isEmpty) {
-                              return 'Please enter your password';
-                            } else if (value == '### Bad password') {
-                              return 'Bad password';
-                            }
-                            return null;
-                          },
-                          onFieldSubmitted: (String? value) {
-                            if (!_passwordFormKey.currentState!.validate()) {
-                              _passwordFocus.requestFocus();
-                            } else {
-                              _onSubmit();
-                            }
-                          },
-                          autofillHints: [AutofillHints.password],
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          focusNode: _passwordFocus,
-                          controller: _password,
                         ),
                       ),
+                      Spacer(
+                        flex: 2,
                       ),
-                    ),
-                    Spacer(
-                      flex: 2,
-                    ),
-                    PrimaryButton(text: 'Login', onTap: _onSubmit)
-                  ],
+                      PrimaryButton(text: 'Login', onTap: _onSubmit)
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Spacer(
-            flex: 10,
-          ),
-          Text('Don\'t have an account ?'),
-          Spacer(),
-          PrimaryButton(
-            text: 'Register',
-            onTap: () {
-              Navigator.pushNamed(context, '/register');
-            },
-          ),
-          Spacer(),
-        ],
-      ),
+            Spacer(
+              flex: 10,
+            ),
+            Text('Don\'t have an account ?'),
+            Spacer(),
+            PrimaryButton(
+              text: 'Register',
+              onTap: () {
+                Navigator.pushNamed(context, '/register');
+              },
+            ),
+            Spacer(),
+          ],
+        ),
       ),
     );
   }
