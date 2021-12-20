@@ -2,20 +2,19 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:list/database/token_db.dart';
 import 'package:list/model/list_model.dart';
-import 'package:list/model/token_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'config.dart';
 
 Future<ListModel> fetchList(int id) async {
-  TokenModel token = await getToken();
+  final prefs = await SharedPreferences.getInstance();
 
-  String accessToken = token.toMap()['access_token'];
+  final token = prefs.getString('access-token');
 
   final response = await http.get(
     Uri.parse(apiHost + '/api/list/$id'),
-    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
+    headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
   );
 
   if (response.statusCode == 200) {
@@ -26,13 +25,13 @@ Future<ListModel> fetchList(int id) async {
 }
 
 Future<List> fetchListsId() async {
-  TokenModel token = await getToken();
+  final prefs = await SharedPreferences.getInstance();
 
-  String accessToken = token.toMap()['access_token'];
+  final token = prefs.getString('access-token');
 
   final response = await http.get(
     Uri.parse(apiHost + '/api/list/user'),
-    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
+    headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
   );
 
   if (response.statusCode == 200) {
@@ -43,14 +42,13 @@ Future<List> fetchListsId() async {
 }
 
 Future<void> deleteList(int id) async {
+  final prefs = await SharedPreferences.getInstance();
 
-  TokenModel token = await getToken();
-
-  String accessToken = token.toMap()['access_token'];
+  final token = prefs.getString('access-token');
 
   final response = await http.delete(
     Uri.parse(apiHost + '/api/list/$id'),
-    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
+    headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
   );
 
   if (response.statusCode == 200) {
@@ -58,5 +56,4 @@ Future<void> deleteList(int id) async {
   } else {
     throw Exception(jsonDecode(response.body)['message']);
   }
-
 }

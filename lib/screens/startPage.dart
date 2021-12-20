@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:list/api/userCalls.dart';
-import 'package:list/database/token_db.dart';
 import 'package:list/database/user_db.dart';
 import 'package:list/model/token_model.dart';
 import 'package:list/model/user_model.dart';
@@ -8,6 +7,7 @@ import 'package:list/style/List_icons.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/morphOut.dart';
 import 'package:list/widgets/safeScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -21,18 +21,22 @@ class _StartPageState extends State<StartPage> {
   late Future<UserModel> futureUser;
 
   void goToNextPage() async {
-    final token = await futureToken;
+    final prefs = await SharedPreferences.getInstance();
+
+    await fetchUser();
+    final token = prefs.getString('access-token');
+    print(token);
 
     await Future.delayed(Duration(seconds: 2));
-    if (token.accessToken == ''){
+    if (token == null) {
       Navigator.pushNamed(context, '/register');
-    } else if (token.accessToken == 'null'){
+    } else if (token == 'null') {
       Navigator.pushNamed(context, '/login');
     } else {
-      try{
+      try {
         saveUser(await fetchUser());
         Navigator.pushNamed(context, '/hello');
-      } catch (error){
+      } catch (error) {
         Navigator.pushNamed(context, '/login');
       }
     }
@@ -40,7 +44,6 @@ class _StartPageState extends State<StartPage> {
 
   @override
   void initState() {
-    futureToken = getToken();
     goToNextPage();
     super.initState();
   }
@@ -74,16 +77,25 @@ class _StartPageState extends State<StartPage> {
                 ],
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
             Text(
               "List",
               style: TextStyle(color: themeList.primaryColor, fontSize: 50),
             ),
-
-            Spacer(flex: 2,),
-            Spacer(flex: 1,),
-            Text("made by Raphou.", style: TextStyle(fontWeight: FontWeight.w100, ),),
-
+            Spacer(
+              flex: 2,
+            ),
+            Spacer(
+              flex: 1,
+            ),
+            Text(
+              "made by Raphou.",
+              style: TextStyle(
+                fontWeight: FontWeight.w100,
+              ),
+            ),
           ],
         ),
       ),

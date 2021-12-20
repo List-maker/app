@@ -2,20 +2,19 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:list/database/token_db.dart';
 import 'package:list/model/item_model.dart';
-import 'package:list/model/token_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'config.dart';
 
 Future<ItemModel> fetchItem(int id) async {
-  TokenModel token = await getToken();
+  final prefs = await SharedPreferences.getInstance();
 
-  String accessToken = token.toMap()['access_token'];
+  final token = prefs.getString('access-token');
 
   final response = await http.get(
     Uri.parse(apiHost + '/api/item/$id'),
-    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
+    headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
   );
 
   if (response.statusCode == 200) {
@@ -26,13 +25,13 @@ Future<ItemModel> fetchItem(int id) async {
 }
 
 Future<void> checkItem(int id) async {
-  TokenModel token = await getToken();
+  final prefs = await SharedPreferences.getInstance();
 
-  String accessToken = token.toMap()['access_token'];
+  final token = prefs.getString('access-token');
 
   final response = await http.put(
     Uri.parse(apiHost + '/api/item/$id/check'),
-    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
+    headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
   );
 
   if (response.statusCode == 200) {
@@ -43,13 +42,14 @@ Future<void> checkItem(int id) async {
 }
 
 Future<void> updateItem(int id, String name) async {
-  TokenModel token = await getToken();
+  final prefs = await SharedPreferences.getInstance();
 
-  String accessToken = token.toMap()['access_token'];
+  final token = prefs.getString('access-token');
 
   final response = await http.put(
     Uri.parse(apiHost + '/api/item/$id'),
-    headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken",
+    headers: {
+      HttpHeaders.authorizationHeader: "Bearer $token",
       "Content-Type": "application/x-www-form-urlencoded",
     },
     encoding: Encoding.getByName('utf-8'),
@@ -64,4 +64,3 @@ Future<void> updateItem(int id, String name) async {
     throw Exception(jsonDecode(response.body)['message']);
   }
 }
-

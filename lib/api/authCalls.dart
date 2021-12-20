@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:list/database/token_db.dart';
 import 'package:list/model/token_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'config.dart';
 
@@ -22,7 +22,10 @@ Future<void> fetchLogin(String login, String password) async {
   if (response.statusCode == 200) {
     TokenModel token =
         TokenModel.fromJson(await jsonDecode(response.body)['data']);
-    await saveToken(token);
+
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setString('access-token', token.accessToken);
     return;
   } else {
     //TODO: print error
@@ -48,7 +51,10 @@ Future<void> fetchRegister(
   if (response.statusCode == 200) {
     TokenModel token =
         TokenModel.fromJson(await jsonDecode(response.body)['data']);
-    await saveToken(token);
+
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setString('access-token', token.accessToken);
   } else {
     //TODO: print error
     throw Exception(jsonDecode(response.body)['message']);

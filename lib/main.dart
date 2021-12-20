@@ -12,9 +12,6 @@ void main() async {
     join(await getDatabasesPath(), 'database.db'),
     onCreate: (db, version) {
       db.execute(
-        'CREATE TABLE token(id INTEGER PRIMARY KEY, refresh_token TEXT, access_token TEXT);',
-      );
-      db.execute(
         'CREATE TABLE user(id INTEGER PRIMARY KEY, username TEXT,	email TEXT, pinned_lists TEXT, settings TEXT);',
       );
     },
