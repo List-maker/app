@@ -5,7 +5,6 @@ import 'package:list/model/list_model.dart';
 import 'package:list/style/List_icons.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/itemWidget.dart';
-import 'package:list/widgets/morphIn.dart';
 import 'package:list/widgets/morphOut.dart';
 
 class ListWidget extends StatefulWidget {
@@ -22,10 +21,13 @@ class _ListWidgetState extends State<ListWidget> {
   final int id;
   late Future<ListModel> futureList;
 
+  double height = 0;
+
   delete() {
-    print('call here ');
     deleteList(id);
   }
+
+  void onTapDown(BuildContext context, TapDownDetails details) {}
 
   @override
   void initState() {
@@ -43,7 +45,7 @@ class _ListWidgetState extends State<ListWidget> {
           return MorphOut(
             child: Container(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.23,
+                maxHeight: MediaQuery.of(context).size.height * 0.26,
                 maxWidth: MediaQuery.of(context).size.width * 0.8,
               ),
               child: Column(
@@ -73,8 +75,7 @@ class _ListWidgetState extends State<ListWidget> {
                     ),
                   ),
                   Expanded(
-
-                      child: Container(
+                    child: Container(
                       child: ListView.builder(
                         itemCount: list.items.length,
                         itemBuilder: (context, index) {
@@ -83,8 +84,21 @@ class _ListWidgetState extends State<ListWidget> {
                           );
                         },
                       ),
-                      ),
+                    ),
                   ),
+                  Container(
+                    // height: MediaQuery.of(context).size.height * 0.,
+                    color: Colors.red,
+                    child: Row(children: [
+                      Text(this.height.toString()),
+                      Expanded(
+                          child: InkWell(
+                        child: Center(
+                          child: Text('='),
+                        ),
+                      )),
+                    ]),
+                  )
                 ],
               ),
             ),

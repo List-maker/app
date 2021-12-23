@@ -3,11 +3,11 @@ import 'package:list/api/userCalls.dart';
 import 'package:list/database/user_db.dart';
 import 'package:list/model/token_model.dart';
 import 'package:list/model/user_model.dart';
+import 'package:list/persistence/token.dart';
 import 'package:list/style/List_icons.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/morphOut.dart';
 import 'package:list/widgets/safeScreen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -21,17 +21,11 @@ class _StartPageState extends State<StartPage> {
   late Future<UserModel> futureUser;
 
   void goToNextPage() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await fetchUser();
-    final token = prefs.getString('access-token');
-    print(token);
+    TokenModel token = await getToken();
 
     await Future.delayed(Duration(seconds: 2));
-    if (token == null) {
+    if (token.accessToken == 'null') {
       Navigator.pushNamed(context, '/register');
-    } else if (token == 'null') {
-      Navigator.pushNamed(context, '/login');
     } else {
       try {
         saveUser(await fetchUser());

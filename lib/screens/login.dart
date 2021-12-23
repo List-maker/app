@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
       });
 
       if (!areErrorWhenFetch) {
-        saveUser(await fetchUser());
+        await saveUser(await fetchUser());
         Navigator.pushNamed(
           context,
           '/hello',
