@@ -21,7 +21,6 @@ class _ListWidgetState extends State<ListWidget> {
 
   final int id;
   late Future<ListModel> futureList;
-
   double height = 0;
   double initialHeight = 0;
 
@@ -76,7 +75,7 @@ class _ListWidgetState extends State<ListWidget> {
                       children: [
                         Text(
                           list.name,
-                          style: TextStyle(color: themeList.primaryColor),
+                          style: TextStyle(color: primary),
                         ),
                         Spacer(),
                         InkWell(

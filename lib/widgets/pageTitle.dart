@@ -13,7 +13,7 @@ class PageTitle extends StatelessWidget {
         title,
         style: TextStyle(
           fontSize: 28,
-          color: themeList.primaryColor,
+          color: primary,
         ),
       ),
     );

@@ -71,9 +71,7 @@ class _ApplicationState extends State<Application> {
                       width: 30,
                       child: Icon(
                         ListIcons.home,
-                        color: _selectedPageIndex == 0
-                            ? whiteText
-                            : themeList.primaryColor,
+                        color: _selectedPageIndex == 0 ? whiteText : primary,
                         size: 18,
                       ),
                     ),

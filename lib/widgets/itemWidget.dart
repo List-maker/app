@@ -69,7 +69,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                         decoration: inputDecoration,
                         initialValue: item.name,
                         style: TextStyle(
-                            color: isCheck ? themeList.primaryColor : whiteText,
+                            color: isCheck ? primary : whiteText,
                             fontWeight: FontWeight.w800,
                             fontSize: 20),
                         onChanged: (String? text) {
@@ -83,7 +83,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                         isCheck
                             ? IcList.check_checked
                             : IcList.check_no_checked,
-                        color: isCheck ? themeList.primaryColor : whiteText,
+                        color: isCheck ? primary : whiteText,
                       ),
                       onTap: () {
                         check();
@@ -109,9 +109,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                             decoration: inputDecoration,
                             initialValue: item.name,
                             style: TextStyle(
-                                color: isCheck
-                                    ? themeList.primaryColor
-                                    : whiteText,
+                                color: isCheck ? primary : whiteText,
                                 fontWeight: FontWeight.w800,
                                 fontSize: 20),
                           ),

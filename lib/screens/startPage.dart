@@ -53,7 +53,7 @@ class _StartPageState extends State<StartPage> {
               child: Icon(
                 IcList.check_checked,
                 size: 125,
-                color: themeList.primaryColor,
+                color: primary,
               ),
               decorationOverride: morphOut.copyWith(
                 borderRadius: BorderRadius.circular(20),
@@ -76,7 +76,7 @@ class _StartPageState extends State<StartPage> {
             ),
             Text(
               "List",
-              style: TextStyle(color: themeList.primaryColor, fontSize: 50),
+              style: TextStyle(color: primary, fontSize: 50),
             ),
             Spacer(
               flex: 2,

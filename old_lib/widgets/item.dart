@@ -52,9 +52,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                   snapshot.data!.name,
                   style: TextStyle(
                     fontSize: 18,
-                    color: snapshot.data!.checked
-                        ? themeList.primaryColor
-                        : whiteText,
+                    color: snapshot.data!.checked ? primary : whiteText,
                   ),
                 ),
                 Spacer(),
@@ -67,9 +65,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                     snapshot.data!.checked
                         ? ListIcons.check
                         : ListIcons.no_check,
-                    color: snapshot.data!.checked
-                        ? themeList.primaryColor
-                        : whiteText,
+                    color: snapshot.data!.checked ? primary : whiteText,
                   ),
                 )
               ],

@@ -4,29 +4,33 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 
 final themeList = ThemeData(
-  primaryColor: Color.fromRGBO(72, 47, 247, 1),
-  backgroundColor: Color.fromRGBO(217, 215, 227, 1),
+  primaryColor: primary,
+  backgroundColor: backgroundColor,
   textTheme: TextTheme(
     bodyText2: TextStyle(
-        color: Colors.white,
+        color: whiteText,
         fontFamily: 'Poppins',
         fontWeight: FontWeight.w800,
         fontSize: 20),
     headline1: TextStyle(
-        color: Color.fromRGBO(72, 47, 247, 1),
+        color: primary,
         fontFamily: 'Poppins',
         fontWeight: FontWeight.w800,
         fontSize: 30),
   ),
   fontFamily: 'Poppins',
   textSelectionTheme: TextSelectionThemeData(
-    cursorColor: Color.fromRGBO(72, 47, 247, 1),
-    selectionColor: Color.fromRGBO(72, 47, 247, 0.2),
-    selectionHandleColor: Color.fromRGBO(72, 47, 247, 1),
+    cursorColor: primary,
+    selectionColor: darkPrimary,
+    selectionHandleColor: primary,
   ),
 );
 
-final whiteText = Colors.white;
+final primary = Color.fromRGBO(72, 47, 247, 1);
+final darkPrimary = Color.fromRGBO(72, 47, 247, 0.2);
+final backgroundColor = Color.fromRGBO(217, 215, 227, 1);
+final whiteText = Color.fromRGBO(255, 255, 255, 1);
+final gray = Color.fromRGBO(127, 127, 127, 1.0);
 
 final grayOut = LinearGradient(
   begin: Alignment.topLeft,
@@ -86,12 +90,12 @@ final inputDecoration = InputDecoration.collapsed(
     fontWeight: FontWeight.bold,
   ),
   border: InputBorder.none,
-  focusColor: Color.fromRGBO(72, 47, 247, 1),
-  hoverColor: Color.fromRGBO(72, 47, 247, 1),
+  focusColor: primary,
+  hoverColor: primary,
   hintText: '',
 );
 
 final inputStyle = TextStyle(
-  color: themeList.primaryColor,
+  color: primary,
   fontWeight: FontWeight.bold,
 );
