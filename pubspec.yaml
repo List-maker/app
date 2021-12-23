@@ -56,7 +56,7 @@ flutter:
         - asset: assets/fonts/Poppins/Poppins-BoldItalic.ttf
         - asset: assets/fonts/Poppins/Poppins-Medium.ttf
         - asset: assets/fonts/Poppins/Poppins-MediumItalic.ttf
-    - family: List
+    - family: IcList
       fonts:
-        - asset: assets/fonts/List.ttf
+        - asset: assets/fonts/IcList.ttf
 

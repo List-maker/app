@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:list/api/itemCalls.dart';
 import 'package:list/model/item_model.dart';
-import 'package:list/style/List_icons.dart';
+import 'package:list/style/IcList_icons.dart';
 import 'package:list/style/theme.dart';
 
 import 'morphIn.dart';

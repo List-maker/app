@@ -1,8 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:list/api/listCalls.dart';
 import 'package:list/model/list_model.dart';
-import 'package:list/style/List_icons.dart';
+import 'package:list/style/IcList_icons.dart';
 import 'package:list/style/theme.dart';
 import 'package:list/widgets/itemWidget.dart';
 import 'package:list/widgets/morphOut.dart';
@@ -22,12 +23,28 @@ class _ListWidgetState extends State<ListWidget> {
   late Future<ListModel> futureList;
 
   double height = 0;
+  double initialHeight = 0;
 
   delete() {
     deleteList(id);
   }
 
-  void onTapDown(BuildContext context, TapDownDetails details) {}
+  void onLongPressDown(BuildContext context, LongPressDownDetails details) {
+    setState(() {
+      initialHeight = details.globalPosition.dy - height;
+    });
+  }
+
+  void onLongPressMoveUpdate(
+      BuildContext context, LongPressMoveUpdateDetails details) {
+    if ((details.globalPosition.dy - initialHeight) > 0 &&
+        (details.globalPosition.dy - initialHeight) <
+            MediaQuery.of(context).size.height * 0.5) {
+      setState(() {
+        height = details.globalPosition.dy - initialHeight;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -45,7 +62,7 @@ class _ListWidgetState extends State<ListWidget> {
           return MorphOut(
             child: Container(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.26,
+                maxHeight: MediaQuery.of(context).size.height * 0.26 + height,
                 maxWidth: MediaQuery.of(context).size.width * 0.8,
               ),
               child: Column(
@@ -88,13 +105,18 @@ class _ListWidgetState extends State<ListWidget> {
                   ),
                   Container(
                     // height: MediaQuery.of(context).size.height * 0.,
-                    color: Colors.red,
                     child: Row(children: [
-                      Text(this.height.toString()),
                       Expanded(
-                          child: InkWell(
+                          child: GestureDetector(
+                        onLongPressDown: (event) =>
+                            onLongPressDown(context, event),
+                        onLongPressMoveUpdate: (event) =>
+                            onLongPressMoveUpdate(context, event),
                         child: Center(
-                          child: Text('='),
+                          child: Icon(
+                            IcList.drag,
+                            color: whiteText,
+                          ),
                         ),
                       )),
                     ]),
