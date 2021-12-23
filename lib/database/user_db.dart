@@ -22,24 +22,23 @@ Future<void> saveUser(UserModel user) async {
 }
 
 Future<UserModel> getUser() async {
-    try {
+  try {
+    final database = openDatabase(
+      join(await getDatabasesPath(), 'database.db'),
+    );
 
-  final database = openDatabase(
-    join(await getDatabasesPath(), 'database.db'),
-  );
+    final db = await database;
 
-  final db = await database;
+    final Map<String, dynamic> map = (await db.query('user'))[0];
 
-  final Map<String, dynamic> map = (await db.query('user'))[0];
-
-  return UserModel(
-    id: map['id'],
-    username: map['username'],
-    email: map['email'],
-    pinnedLists: jsonDecode(map['pinned_lists']),
-    settings: jsonDecode(map['settings']),
-  );
-  } catch (error){
+    return UserModel(
+      id: map['id'],
+      username: map['username'],
+      email: map['email'],
+      pinnedLists: jsonDecode(map['pinned_lists']),
+      settings: jsonDecode(map['settings']),
+    );
+  } catch (error) {
     return UserModel(
       id: 1,
       username: 'null',

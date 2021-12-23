@@ -15,12 +15,12 @@ class MorphIn extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.06,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[
-              Color.fromRGBO(169, 169, 179, 1.0),
-              Color.fromRGBO(193, 191, 201, 0.8)
-            ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: <Color>[
+            Color.fromRGBO(169, 169, 179, 1.0),
+            Color.fromRGBO(193, 191, 201, 0.8)
+          ],
         ),
         borderRadius: BorderRadius.circular(7),
       ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:list/api/userCalls.dart';
 import 'package:list/database/user_db.dart';
 import 'package:list/model/user_model.dart';
-import 'package:list/style/theme.dart';
 import 'package:list/widgets/safeScreen.dart';
 
 class Hello extends StatefulWidget {
@@ -13,15 +11,12 @@ class Hello extends StatefulWidget {
 }
 
 class _HelloState extends State<Hello> {
-
   late Future<UserModel> futureUser;
 
-  void goToNextPage() async{
+  void goToNextPage() async {
     await Future.delayed(Duration(seconds: 2));
     Navigator.pushNamed(context, '/home');
   }
-
-
 
   @override
   void initState() {
@@ -38,15 +33,16 @@ class _HelloState extends State<Hello> {
           children: [
             Spacer(),
             FutureBuilder<UserModel>(
-              future: futureUser,
-                builder: (context, snapshot){
-                if (snapshot.hasData){
-                  return             Text('Hello ' + snapshot.data!.username, style: TextStyle(fontSize: 40),);
-
-                }
-              return Container();
-
-            }),
+                future: futureUser,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(
+                      'Hello ' + snapshot.data!.username,
+                      style: TextStyle(fontSize: 40),
+                    );
+                  }
+                  return Container();
+                }),
             SizedBox(
               height: 250,
             ),

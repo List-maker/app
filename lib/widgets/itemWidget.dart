@@ -33,8 +33,9 @@ class _ItemWidgetState extends State<ItemWidget> {
       futureItem = fetchItem(id);
     });
   }
-  _change(String? name) async{
-    name?? '';
+
+  _change(String? name) async {
+    name ?? '';
     updateItem(id, name!);
   }
 
@@ -71,7 +72,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                             color: isCheck ? themeList.primaryColor : whiteText,
                             fontWeight: FontWeight.w800,
                             fontSize: 20),
-                        onChanged: (String? text){
+                        onChanged: (String? text) {
                           _change(text);
                         },
                       ),
