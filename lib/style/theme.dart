@@ -84,6 +84,29 @@ final morphOut = BoxDecoration(
   ],
 );
 
+final morphIn1 = BoxDecoration(
+  gradient: LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: <Color>[
+      Color.fromRGBO(169, 169, 179, 1.0),
+      Color.fromRGBO(193, 191, 201, 0.8)
+    ],
+  ),
+  borderRadius: BorderRadius.circular(7),
+);
+
+final morphIn2 = BoxDecoration(
+  boxShadow: [
+    BoxShadow(
+      color: Color.fromRGBO(217, 215, 227, 0.80),
+      blurRadius: 6,
+      spreadRadius: 12,
+    ),
+  ],
+  borderRadius: BorderRadius.circular(7),
+);
+
 final inputDecoration = InputDecoration.collapsed(
   hintStyle: TextStyle(
     color: whiteText,

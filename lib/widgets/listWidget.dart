@@ -28,6 +28,13 @@ class _ListWidgetState extends State<ListWidget> {
     deleteList(id);
   }
 
+  update() async {
+    futureList = fetchList(id);
+    await futureList;
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {});
+  }
+
   void onLongPressDown(BuildContext context, LongPressDownDetails details) {
     setState(() {
       initialHeight = details.globalPosition.dy - height;
@@ -41,6 +48,15 @@ class _ListWidgetState extends State<ListWidget> {
             MediaQuery.of(context).size.height * 0.5) {
       setState(() {
         height = details.globalPosition.dy - initialHeight;
+      });
+    } else if ((details.globalPosition.dy - initialHeight) < 0) {
+      setState(() {
+        height = 0;
+      });
+    } else if ((details.globalPosition.dy - initialHeight) >
+        MediaQuery.of(context).size.height * 0.5) {
+      setState(() {
+        height = MediaQuery.of(context).size.height * 0.5;
       });
     }
   }
@@ -56,77 +72,84 @@ class _ListWidgetState extends State<ListWidget> {
     return FutureBuilder<ListModel>(
       future: futureList,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          var list = snapshot.data!;
-          return MorphOut(
-            child: Container(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.26 + height,
-                maxWidth: MediaQuery.of(context).size.width * 0.8,
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.05,
-                      vertical: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          list.name,
-                          style: TextStyle(color: primary),
-                        ),
-                        Spacer(),
-                        InkWell(
-                          child: Icon(
-                            IcList.remove,
-                            color: whiteText,
-                          ),
-                          onTap: () {
-                            delete();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        itemCount: list.items.length,
-                        itemBuilder: (context, index) {
-                          return ItemWidget(
-                            id: list.items.elementAt(index),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    // height: MediaQuery.of(context).size.height * 0.,
-                    child: Row(children: [
-                      Expanded(
-                          child: GestureDetector(
-                        onLongPressDown: (event) =>
-                            onLongPressDown(context, event),
-                        onLongPressMoveUpdate: (event) =>
-                            onLongPressMoveUpdate(context, event),
-                        child: Center(
-                          child: Icon(
-                            IcList.drag,
-                            color: whiteText,
-                          ),
-                        ),
-                      )),
-                    ]),
-                  )
-                ],
-              ),
-            ),
-          );
+        if (snapshot.connectionState != ConnectionState.done) {
+          return Text("Loading ...");
         }
 
-        return Text("DATA");
+        if (snapshot.hasError) {
+          return Text("Error");
+        }
+
+        var list = snapshot.data!;
+        return MorphOut(
+          child: Container(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.26 + height,
+              maxWidth: MediaQuery.of(context).size.width * 0.8,
+            ),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.05,
+                    vertical: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        list.name,
+                        style: TextStyle(color: primary),
+                      ),
+                      Spacer(),
+                      InkWell(
+                        child: Icon(
+                          IcList.remove,
+                          color: whiteText,
+                        ),
+                        onTap: () {
+                          delete();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: ListView.builder(
+                      itemCount: list.items.length,
+                      itemBuilder: (context, index) {
+                        return ItemWidget(
+                          id: list.items.elementAt(index),
+                          update: () {
+                            update();
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  // height: MediaQuery.of(context).size.height * 0.,
+                  child: Row(children: [
+                    Expanded(
+                        child: GestureDetector(
+                      onLongPressDown: (event) =>
+                          onLongPressDown(context, event),
+                      onLongPressMoveUpdate: (event) =>
+                          onLongPressMoveUpdate(context, event),
+                      child: Center(
+                        child: Icon(
+                          IcList.drag,
+                          color: whiteText,
+                        ),
+                      ),
+                    )),
+                  ]),
+                )
+              ],
+            ),
+          ),
+        );
       },
     );
   }

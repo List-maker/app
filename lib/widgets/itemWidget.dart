@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:list/api/itemCalls.dart';
 import 'package:list/model/item_model.dart';
@@ -8,19 +9,75 @@ import 'morphIn.dart';
 import 'morphOut.dart';
 
 class ItemWidget extends StatefulWidget {
-  const ItemWidget({Key? key, required this.id}) : super(key: key);
+  const ItemWidget({Key? key, required this.id, required this.update})
+      : super(key: key);
   final int id;
+  final Function update;
 
   @override
-  _ItemWidgetState createState() => _ItemWidgetState(id: id);
+  _ItemWidgetState createState() => _ItemWidgetState(
+        id: id,
+      );
 }
 
 class _ItemWidgetState extends State<ItemWidget> {
   _ItemWidgetState({required this.id});
 
+  final int id;
+
   late Future<ItemModel> futureItem;
   late bool isCheck;
-  final int id;
+
+  bool toggleDelete = false;
+  double swipeWidth = 0;
+  double initialSwipeWidth = 0;
+
+  onLongPressDown(BuildContext context, LongPressDownDetails details) {
+    setState(() {
+      initialSwipeWidth = details.globalPosition.dx - swipeWidth;
+    });
+  }
+
+  onLongPressMoveUpdate(
+      BuildContext context, LongPressMoveUpdateDetails details) {
+    if ((initialSwipeWidth - details.globalPosition.dx) > 0 &&
+        (initialSwipeWidth - details.globalPosition.dx) <
+            MediaQuery.of(context).size.width * 0.14) {
+      setState(() {
+        swipeWidth = initialSwipeWidth - details.globalPosition.dx;
+      });
+      if (swipeWidth > MediaQuery.of(context).size.width * 0.10) {
+        setState(() {
+          toggleDelete = true;
+        });
+      } else {
+        setState(() {
+          toggleDelete = false;
+        });
+      }
+    } else if ((initialSwipeWidth - details.globalPosition.dx) < 0) {
+      setState(() {
+        swipeWidth = 0;
+      });
+    } else if ((initialSwipeWidth - details.globalPosition.dx) >
+        MediaQuery.of(context).size.width * 0.14) {
+      setState(() {
+        toggleDelete = true;
+        swipeWidth = MediaQuery.of(context).size.width * 0.14;
+      });
+    }
+  }
+
+  onLongPressUp() {
+    if (toggleDelete) {
+      deleteItem(id);
+      widget.update();
+    } else {
+      setState(() {
+        swipeWidth = 0;
+      });
+    }
+  }
 
   check() async {
     setState(() {
@@ -42,7 +99,6 @@ class _ItemWidgetState extends State<ItemWidget> {
   @override
   void initState() {
     futureItem = fetchItem(id);
-
     super.initState();
   }
 
@@ -59,39 +115,77 @@ class _ItemWidgetState extends State<ItemWidget> {
           if (snapshot.hasData) {
             ItemModel item = snapshot.data!;
             isCheck = item.checked;
-            if (item.checked) {
-              return MorphIn(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        textAlignVertical: TextAlignVertical.center,
-                        decoration: inputDecoration,
-                        initialValue: item.name,
-                        style: TextStyle(
-                            color: isCheck ? primary : whiteText,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 20),
-                        onChanged: (String? text) {
-                          _change(text);
-                        },
-                      ),
+            if (isCheck) {
+              return Row(children: [
+                Expanded(
+                  child: MorphIn(
+                    decoration1Override: morphIn1.copyWith(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(7),
+                          bottomLeft: Radius.circular(7)),
                     ),
-                    Spacer(),
-                    InkWell(
-                      child: Icon(
-                        isCheck
-                            ? IcList.check_checked
-                            : IcList.check_no_checked,
-                        color: isCheck ? primary : whiteText,
-                      ),
-                      onTap: () {
-                        check();
-                      },
+                    decoration2Override: morphIn2.copyWith(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(7),
+                          bottomLeft: Radius.circular(7)),
                     ),
-                  ],
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration: inputDecoration,
+                            initialValue: item.name,
+                            style: TextStyle(
+                                color: primary,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20),
+                            onChanged: (String? text) {
+                              _change(text);
+                            },
+                          ),
+                        ),
+                        Spacer(),
+                        GestureDetector(
+                          child: Icon(
+                            IcList.check_checked,
+                            color: primary,
+                          ),
+                          onTap: () {
+                            check();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              );
+                GestureDetector(
+                  onLongPressDown: (event) => onLongPressDown(context, event),
+                  onLongPressMoveUpdate: (event) =>
+                      onLongPressMoveUpdate(context, event),
+                  onLongPressUp: () => onLongPressUp(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: primary,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(7),
+                          bottomRight: Radius.circular(7)),
+                    ),
+                    width:
+                        MediaQuery.of(context).size.width * 0.02 + swipeWidth,
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    child: toggleDelete
+                        ? Center(
+                            child: Icon(
+                              IcList.remove,
+                              // size: 15,
+                              color: Colors.white,
+                            ),
+                          )
+                        : null,
+                  ),
+                ),
+              ]);
             } else {
               return MorphOut(
                 decorationOverride:
@@ -109,17 +203,18 @@ class _ItemWidgetState extends State<ItemWidget> {
                             decoration: inputDecoration,
                             initialValue: item.name,
                             style: TextStyle(
-                                color: isCheck ? primary : whiteText,
+                                color: whiteText,
                                 fontWeight: FontWeight.w800,
                                 fontSize: 20),
+                            onChanged: (String? text) {
+                              _change(text);
+                            },
                           ),
                         ),
                         Spacer(),
                         InkWell(
                           child: Icon(
-                            item.checked
-                                ? IcList.check_checked
-                                : IcList.check_no_checked,
+                            IcList.check_no_checked,
                             color: whiteText,
                           ),
                           onTap: () {

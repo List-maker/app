@@ -59,3 +59,18 @@ Future<void> updateItem(int id, String name) async {
     throw Exception(jsonDecode(response.body)['message']);
   }
 }
+
+Future<void> deleteItem(int id) async {
+  TokenModel token = await getToken();
+
+  final response = await http.delete(
+    Uri.parse(apiHost + '/api/item/$id'),
+    headers: {HttpHeaders.authorizationHeader: "Bearer ${token.accessToken}"},
+  );
+
+  if (response.statusCode == 200) {
+    return;
+  } else {
+    throw Exception(jsonDecode(response.body)['message']);
+  }
+}
