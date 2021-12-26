@@ -15,16 +15,10 @@ class ItemWidget extends StatefulWidget {
   final Function update;
 
   @override
-  _ItemWidgetState createState() => _ItemWidgetState(
-        id: id,
-      );
+  _ItemWidgetState createState() => _ItemWidgetState();
 }
 
 class _ItemWidgetState extends State<ItemWidget> {
-  _ItemWidgetState({required this.id});
-
-  final int id;
-
   late Future<ItemModel> futureItem;
   late bool isCheck;
 
@@ -68,10 +62,14 @@ class _ItemWidgetState extends State<ItemWidget> {
     }
   }
 
+  delete() async {
+    await deleteItem(widget.id);
+    widget.update();
+  }
+
   onLongPressUp() {
     if (toggleDelete) {
-      deleteItem(id);
-      widget.update();
+      delete();
     } else {
       setState(() {
         swipeWidth = 0;
@@ -84,21 +82,21 @@ class _ItemWidgetState extends State<ItemWidget> {
       isCheck = !isCheck;
     });
 
-    await checkItem(id);
+    await checkItem(widget.id);
 
     setState(() {
-      futureItem = fetchItem(id);
+      futureItem = fetchItem(widget.id);
     });
   }
 
   _change(String? name) async {
     name ?? '';
-    updateItem(id, name!);
+    updateItem(widget.id, name!);
   }
 
   @override
   void initState() {
-    futureItem = fetchItem(id);
+    futureItem = fetchItem(widget.id);
     super.initState();
   }
 
@@ -112,41 +110,50 @@ class _ItemWidgetState extends State<ItemWidget> {
       child: FutureBuilder<ItemModel>(
         future: futureItem,
         builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            Text("Loading ... ");
+          }
+          if (snapshot.hasError) {
+            return Text("Error");
+          }
           if (snapshot.hasData) {
             ItemModel item = snapshot.data!;
             isCheck = item.checked;
             if (isCheck) {
-              return Row(children: [
-                Expanded(
-                  child: MorphIn(
-                    decoration1Override: morphIn1.copyWith(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(7),
-                          bottomLeft: Radius.circular(7)),
-                    ),
-                    decoration2Override: morphIn2.copyWith(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(7),
-                          bottomLeft: Radius.circular(7)),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            textAlignVertical: TextAlignVertical.center,
-                            decoration: inputDecoration,
-                            initialValue: item.name,
-                            style: TextStyle(
-                                color: primary,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 20),
-                            onChanged: (String? text) {
-                              _change(text);
-                            },
-                          ),
+              return Stack(children: [
+                MorphIn(
+                  decoration1Override: morphIn1.copyWith(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(7),
+                        bottomLeft: Radius.circular(7)),
+                  ),
+                  decoration2Override: morphIn2.copyWith(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(7),
+                        bottomLeft: Radius.circular(7)),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          textAlignVertical: TextAlignVertical.center,
+                          decoration: inputDecoration,
+                          initialValue: item.name,
+                          style: TextStyle(
+                              color: primary,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20),
+                          onChanged: (String? text) {
+                            _change(text);
+                          },
                         ),
-                        Spacer(),
-                        GestureDetector(
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
                           child: Icon(
                             IcList.check_checked,
                             color: primary,
@@ -155,34 +162,37 @@ class _ItemWidgetState extends State<ItemWidget> {
                             check();
                           },
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onLongPressDown: (event) => onLongPressDown(context, event),
-                  onLongPressMoveUpdate: (event) =>
-                      onLongPressMoveUpdate(context, event),
-                  onLongPressUp: () => onLongPressUp(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: primary,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(7),
-                          bottomRight: Radius.circular(7)),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onLongPressDown: (event) => onLongPressDown(context, event),
+                    onLongPressMoveUpdate: (event) =>
+                        onLongPressMoveUpdate(context, event),
+                    onLongPressUp: () => onLongPressUp(),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: primary,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(7),
+                            bottomRight: Radius.circular(7)),
+                      ),
+                      width:
+                          MediaQuery.of(context).size.width * 0.02 + swipeWidth,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      child: toggleDelete
+                          ? Center(
+                              child: Icon(
+                                IcList.remove,
+                                // size: 15,
+                                color: Colors.white,
+                              ),
+                            )
+                          : null,
                     ),
-                    width:
-                        MediaQuery.of(context).size.width * 0.02 + swipeWidth,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    child: toggleDelete
-                        ? Center(
-                            child: Icon(
-                              IcList.remove,
-                              // size: 15,
-                              color: Colors.white,
-                            ),
-                          )
-                        : null,
                   ),
                 ),
               ]);
@@ -211,22 +221,27 @@ class _ItemWidgetState extends State<ItemWidget> {
                             },
                           ),
                         ),
-                        Spacer(),
-                        InkWell(
-                          child: Icon(
-                            IcList.check_no_checked,
-                            color: whiteText,
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            child: Icon(
+                              IcList.check_no_checked,
+                              color: whiteText,
+                            ),
+                            onTap: () {
+                              check();
+                            },
                           ),
-                          onTap: () {
-                            check();
-                          },
                         ),
                       ],
                     )),
               );
             }
           }
-          return Text("data");
+          return Text("Loading ...");
         },
       ),
     );

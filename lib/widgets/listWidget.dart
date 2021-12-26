@@ -31,7 +31,6 @@ class _ListWidgetState extends State<ListWidget> {
   update() async {
     futureList = fetchList(id);
     await futureList;
-    await Future.delayed(Duration(seconds: 3));
     setState(() {});
   }
 
@@ -120,9 +119,7 @@ class _ListWidgetState extends State<ListWidget> {
                       itemBuilder: (context, index) {
                         return ItemWidget(
                           id: list.items.elementAt(index),
-                          update: () {
-                            update();
-                          },
+                          update: update,
                         );
                       },
                     ),
