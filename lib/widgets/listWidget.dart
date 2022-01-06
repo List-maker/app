@@ -8,6 +8,8 @@ import 'package:list/style/theme.dart';
 import 'package:list/widgets/itemWidget.dart';
 import 'package:list/widgets/morphOut.dart';
 
+Set<int> savedGlobal = new Set<int>();
+
 class ListWidget extends StatefulWidget {
   const ListWidget({Key? key, required this.id}) : super(key: key);
   final int id;
@@ -23,15 +25,14 @@ class _ListWidgetState extends State<ListWidget> {
   late Future<ListModel> futureList;
   double height = 0;
   double initialHeight = 0;
+  late List itemsList;
 
   delete() {
-    deleteList(id);
+    //TODO:
   }
 
-  update() async {
-    futureList = fetchList(id);
-    await futureList;
-    setState(() {});
+  removeItem(itemId) {
+    savedGlobal.remove(itemId);
   }
 
   void onLongPressDown(BuildContext context, LongPressDownDetails details) {
@@ -115,11 +116,11 @@ class _ListWidgetState extends State<ListWidget> {
                 Expanded(
                   child: Container(
                     child: ListView.builder(
-                      itemCount: list.items.length,
-                      itemBuilder: (context, index) {
+                      itemCount: itemsList.length,
+                      itemBuilder: (context, itemId) {
                         return ItemWidget(
-                          id: list.items.elementAt(index),
-                          update: update,
+                          id: itemsList.elementAt(itemId),
+                          update: removeItem(itemId),
                         );
                       },
                     ),
