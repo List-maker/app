@@ -31,13 +31,6 @@ class _ListWidgetState extends State<ListWidget> {
     //TODO:
   }
 
-  removeItem(itemId) {
-    print("herererwr!!!");
-    setState(() {
-      itemSet.remove(itemId);
-    });
-  }
-
   void onLongPressDown(BuildContext context, LongPressDownDetails details) {
     setState(() {
       initialHeight = details.globalPosition.dy - height;
@@ -163,6 +156,7 @@ class _TTestState extends State<TTest> {
       return ItemWidget(
         id: itemId,
         remove: () {
+          print(itemId);
           setState(() {
             itemSet.remove(itemId);
           });
