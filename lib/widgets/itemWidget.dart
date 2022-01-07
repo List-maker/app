@@ -9,10 +9,10 @@ import 'morphIn.dart';
 import 'morphOut.dart';
 
 class ItemWidget extends StatefulWidget {
-  const ItemWidget({Key? key, required this.id, required this.update})
+  const ItemWidget({Key? key, required this.id, required this.remove})
       : super(key: key);
   final int id;
-  final Function update;
+  final Function remove;
 
   @override
   _ItemWidgetState createState() => _ItemWidgetState();
@@ -64,7 +64,7 @@ class _ItemWidgetState extends State<ItemWidget> {
 
   delete() async {
     await deleteItem(widget.id);
-    widget.update();
+    widget.remove();
   }
 
   onLongPressUp() {
