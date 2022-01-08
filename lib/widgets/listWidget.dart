@@ -5,11 +5,8 @@ import 'package:list/api/listCalls.dart';
 import 'package:list/model/list_model.dart';
 import 'package:list/style/IcList_icons.dart';
 import 'package:list/style/theme.dart';
+import 'package:list/widgets/itemWidget.dart';
 import 'package:list/widgets/morphOut.dart';
-
-import 'itemWidget.dart';
-
-Set<int> itemSet = new Set<int>();
 
 class ListWidget extends StatefulWidget {
   const ListWidget({Key? key, required this.id}) : super(key: key);
@@ -22,13 +19,21 @@ class ListWidget extends StatefulWidget {
 class _ListWidgetState extends State<ListWidget> {
   _ListWidgetState({required this.id});
 
+  final listKey = GlobalKey();
   final int id;
   late Future<ListModel> futureList;
   double height = 0;
   double initialHeight = 0;
+  late ListModel list;
 
   delete() {
     //TODO:
+  }
+
+  removeItem(element) {
+    print(element);
+    list.items.remove(element);
+    setState(() {});
   }
 
   void onLongPressDown(BuildContext context, LongPressDownDetails details) {
@@ -76,11 +81,7 @@ class _ListWidgetState extends State<ListWidget> {
           return Text("Error");
         }
 
-        var list = snapshot.data!;
-
-        list.items.forEach((element) {
-          itemSet.add(element);
-        });
+        list = snapshot.data!;
 
         return MorphOut(
           child: Container(
@@ -114,9 +115,22 @@ class _ListWidgetState extends State<ListWidget> {
                     ],
                   ),
                 ),
-                Expanded(child: TTest()),
+                Expanded(
+                  child: ListView.builder(
+                    key: listKey,
+                    itemCount: list.items.length,
+                    itemBuilder: (context, index) {
+                      return ItemWidget(
+                        key: ObjectKey(index),
+                        id: list.items.elementAt(index),
+                        remove: () {
+                          removeItem(list.items.elementAt(index));
+                        },
+                      );
+                    },
+                  ),
+                ),
                 Container(
-                  // height: MediaQuery.of(context).size.height * 0.,
                   child: Row(children: [
                     Expanded(
                         child: GestureDetector(
@@ -138,39 +152,6 @@ class _ListWidgetState extends State<ListWidget> {
           ),
         );
       },
-    );
-  }
-}
-
-class TTest extends StatefulWidget {
-  const TTest({Key? key}) : super(key: key);
-
-  @override
-  _TTestState createState() => _TTestState();
-}
-
-class _TTestState extends State<TTest> {
-  @override
-  Widget build(BuildContext context) {
-    Iterable<ItemWidget> items = itemSet.map((int itemId) {
-      return ItemWidget(
-        id: itemId,
-        remove: () {
-          print(itemId);
-          setState(() {
-            itemSet.remove(itemId);
-          });
-        },
-      );
-    });
-
-    final List<Widget> divided = ListTile.divideTiles(
-      context: context,
-      tiles: items,
-    ).toList();
-
-    return Container(
-      child: ListView(children: divided),
     );
   }
 }

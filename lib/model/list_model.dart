@@ -1,9 +1,9 @@
 class ListModel {
-  final int id;
-  final String name;
-  final List items;
-  final List editors;
-  final List viewers;
+  int id;
+  String name;
+  List items;
+  List editors;
+  List viewers;
 
   ListModel({
     required this.id,
