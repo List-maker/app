@@ -12,6 +12,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late Future<List> futureListsId;
+  late List<dynamic> listsIds;
+  late Map<String, Widget> lists = {};
+
+  removeList(int listId) {
+    listsIds.remove(listId);
+    lists.remove(listId.toString());
+    lists.remove('00' + listId.toString());
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -25,26 +34,36 @@ class _HomeState extends State<Home> {
       title: "Home",
       child: Center(
         child: FutureBuilder<List>(
-          future: futureListsId,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Center(
-                child: ListView.separated(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListWidget(id: snapshot.data!.elementAt(index));
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    );
-                  },
+            future: futureListsId,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return Text("Loading ...");
+              }
+
+              if (snapshot.hasError) {
+                return Text("Error");
+              }
+
+              listsIds = snapshot.data!;
+              listsIds.forEach((listId) {
+                lists[listId.toString()] = ListWidget(
+                    key: ObjectKey(listId),
+                    id: listId,
+                    remove: () {
+                      removeList(listId);
+                    });
+                lists['00' + listId.toString()] = SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.007,
+                );
+              });
+
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                child: ListView(
+                  children: lists.values.toList(),
                 ),
               );
-            }
-            return Text("data");
-          },
-        ),
+            }),
       ),
     );
   }

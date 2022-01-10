@@ -26,9 +26,9 @@ class _NavigationState extends State<Navigation> {
         '/login': (context) => Login(),
         '/register': (context) => Register(),
         '/hello': (context) => Hello(),
-        '/home': (context) => Home(),
-        '/share': (context) => Share(),
-        '/profile': (context) => Profile(),
+        '/app/home': (context) => Home(),
+        '/app/share': (context) => Share(),
+        '/app/profile': (context) => Profile(),
       },
       // initialize all routes
     );

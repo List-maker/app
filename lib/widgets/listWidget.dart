@@ -9,31 +9,32 @@ import 'package:list/widgets/itemWidget.dart';
 import 'package:list/widgets/morphOut.dart';
 
 class ListWidget extends StatefulWidget {
-  const ListWidget({Key? key, required this.id}) : super(key: key);
+  const ListWidget({Key? key, required this.id, required this.remove})
+      : super(key: key);
   final int id;
+  final Function remove;
 
   @override
-  _ListWidgetState createState() => _ListWidgetState(id: id);
+  _ListWidgetState createState() => _ListWidgetState();
 }
 
 class _ListWidgetState extends State<ListWidget> {
-  _ListWidgetState({required this.id});
-
-  final int id;
   late Future<ListModel> futureList;
   double height = 0;
   double initialHeight = 0;
   late ListModel list;
-  late Map<int, ItemWidget> items = {};
+  late Map<String, Widget> items = {};
 
-  delete() {
-    //TODO:
+  delete() async {
+    await deleteList(widget.id);
+    widget.remove();
   }
 
-  removeItem(itemId) {
-    setState(() {
-      items.remove(itemId);
-    });
+  removeItem(int itemId) {
+    list.items.remove(itemId);
+    items.remove(itemId.toString());
+    items.remove('00' + itemId.toString());
+    setState(() {});
   }
 
   void onLongPressDown(BuildContext context, LongPressDownDetails details) {
@@ -46,7 +47,7 @@ class _ListWidgetState extends State<ListWidget> {
       BuildContext context, LongPressMoveUpdateDetails details) {
     if ((details.globalPosition.dy - initialHeight) > 0 &&
         (details.globalPosition.dy - initialHeight) <
-            MediaQuery.of(context).size.height * 0.5) {
+            MediaQuery.of(context).size.height * 0.7) {
       setState(() {
         height = details.globalPosition.dy - initialHeight;
       });
@@ -55,104 +56,110 @@ class _ListWidgetState extends State<ListWidget> {
         height = 0;
       });
     } else if ((details.globalPosition.dy - initialHeight) >
-        MediaQuery.of(context).size.height * 0.5) {
+        MediaQuery.of(context).size.height * 0.7) {
       setState(() {
-        height = MediaQuery.of(context).size.height * 0.5;
+        height = MediaQuery.of(context).size.height * 0.7;
       });
     }
   }
 
   @override
   void initState() {
-    futureList = fetchList(id);
+    futureList = fetchList(widget.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ListModel>(
-      future: futureList,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return Text("Loading ...");
-        }
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.04,
+        vertical: MediaQuery.of(context).size.height * 0.01,
+      ),
+      child: FutureBuilder<ListModel>(
+        future: futureList,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Text("Loading ...");
+          }
 
-        if (snapshot.hasError) {
-          return Text("Error");
-        }
+          if (snapshot.hasError) {
+            return Text("Error");
+          }
 
-        list = snapshot.data!;
-        list.items.forEach((itemId) {
-          items[itemId] = ItemWidget(
-            key: ObjectKey(itemId),
-            id: itemId,
-            remove: () {
-              removeItem(itemId);
-            },
+          list = snapshot.data!;
+          list.items.forEach((itemId) {
+            items[itemId.toString()] = ItemWidget(
+              key: ObjectKey(itemId),
+              id: itemId,
+              remove: () {
+                removeItem(itemId);
+              },
+            );
+            items['00' + itemId.toString()] = SizedBox(
+              height: MediaQuery.of(context).size.height * 0.005,
+            );
+          });
+
+          return MorphOut(
+            child: Container(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height * 0.2,
+                maxHeight: MediaQuery.of(context).size.height * 0.7,
+              ),
+              height: MediaQuery.of(context).size.height * 0.2 + height,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.05,
+                      vertical: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          list.name,
+                          style: TextStyle(color: primary),
+                        ),
+                        Spacer(),
+                        InkWell(
+                          child: Icon(
+                            IcList.remove,
+                            color: whiteText,
+                          ),
+                          onTap: () {
+                            delete();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView(
+                      children: items.values.toList(),
+                    ),
+                  ),
+                  Container(
+                      child: GestureDetector(
+                    onLongPressDown: (event) {
+                      onLongPressDown(context, event);
+                    },
+                    onLongPressMoveUpdate: (event) {
+                      onLongPressMoveUpdate(context, event);
+                    },
+                    child: Center(
+                      child: Icon(
+                        IcList.drag,
+                        color: whiteText,
+                      ),
+                    ),
+                  ))
+                ],
+              ),
+            ),
           );
-        });
-
-        return MorphOut(
-          child: Container(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.26 + height,
-              maxWidth: MediaQuery.of(context).size.width * 0.8,
-            ),
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.05,
-                    vertical: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        list.name,
-                        style: TextStyle(color: primary),
-                      ),
-                      Spacer(),
-                      InkWell(
-                        child: Icon(
-                          IcList.remove,
-                          color: whiteText,
-                        ),
-                        onTap: () {
-                          delete();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: ListView(
-                    children: items.values.toList(),
-                  ),
-                ),
-                Container(
-                  child: Row(children: [
-                    Expanded(
-                        child: GestureDetector(
-                      onLongPressDown: (event) {
-                        onLongPressDown(context, event);
-                      },
-                      onLongPressMoveUpdate: (event) {
-                        onLongPressMoveUpdate(context, event);
-                      },
-                      child: Center(
-                        child: Icon(
-                          IcList.drag,
-                          color: whiteText,
-                        ),
-                      ),
-                    )),
-                  ]),
-                )
-              ],
-            ),
-          ),
-        );
-      },
+        },
+      ),
     );
   }
 }

@@ -15,7 +15,7 @@ class _HelloState extends State<Hello> {
 
   void goToNextPage() async {
     await Future.delayed(Duration(seconds: 2));
-    Navigator.pushNamed(context, '/home');
+    Navigator.pushNamed(context, '/app/home');
   }
 
   @override

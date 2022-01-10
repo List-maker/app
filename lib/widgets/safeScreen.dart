@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:list/style/theme.dart';
-import 'package:list/widgets/pageTitle.dart';
 
 class SafeScreen extends StatelessWidget {
   const SafeScreen({Key? key, required this.child, this.title})
@@ -17,11 +16,22 @@ class SafeScreen extends StatelessWidget {
         child: SafeArea(
           child: Center(
             child: Container(
-                width: MediaQuery.of(context).size.width * 0.90,
                 child: title != null
                     ? Column(
                         children: [
-                          PageTitle(title: title!),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.90,
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                title!,
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  color: primary,
+                                ),
+                              ),
+                            ),
+                          ),
                           Expanded(child: child)
                         ],
                       )
