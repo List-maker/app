@@ -19,21 +19,21 @@ class ListWidget extends StatefulWidget {
 class _ListWidgetState extends State<ListWidget> {
   _ListWidgetState({required this.id});
 
-  final listKey = GlobalKey();
   final int id;
   late Future<ListModel> futureList;
   double height = 0;
   double initialHeight = 0;
   late ListModel list;
+  late Map<int, ItemWidget> items = {};
 
   delete() {
     //TODO:
   }
 
-  removeItem(element) {
-    print(element);
-    list.items.remove(element);
-    setState(() {});
+  removeItem(itemId) {
+    setState(() {
+      items.remove(itemId);
+    });
   }
 
   void onLongPressDown(BuildContext context, LongPressDownDetails details) {
@@ -82,6 +82,15 @@ class _ListWidgetState extends State<ListWidget> {
         }
 
         list = snapshot.data!;
+        list.items.forEach((itemId) {
+          items[itemId] = ItemWidget(
+            key: ObjectKey(itemId),
+            id: itemId,
+            remove: () {
+              removeItem(itemId);
+            },
+          );
+        });
 
         return MorphOut(
           child: Container(
@@ -116,28 +125,20 @@ class _ListWidgetState extends State<ListWidget> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    key: listKey,
-                    itemCount: list.items.length,
-                    itemBuilder: (context, index) {
-                      return ItemWidget(
-                        key: ObjectKey(index),
-                        id: list.items.elementAt(index),
-                        remove: () {
-                          removeItem(list.items.elementAt(index));
-                        },
-                      );
-                    },
+                  child: ListView(
+                    children: items.values.toList(),
                   ),
                 ),
                 Container(
                   child: Row(children: [
                     Expanded(
                         child: GestureDetector(
-                      onLongPressDown: (event) =>
-                          onLongPressDown(context, event),
-                      onLongPressMoveUpdate: (event) =>
-                          onLongPressMoveUpdate(context, event),
+                      onLongPressDown: (event) {
+                        onLongPressDown(context, event);
+                      },
+                      onLongPressMoveUpdate: (event) {
+                        onLongPressMoveUpdate(context, event);
+                      },
                       child: Center(
                         child: Icon(
                           IcList.drag,
