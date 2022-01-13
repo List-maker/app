@@ -103,108 +103,45 @@ class _ItemWidgetState extends State<ItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(
+      padding: EdgeInsets.symmetric(
         horizontal: MediaQuery.of(context).size.width * 0.05,
-    vertical: MediaQuery.of(context).size.height * 0.008,
-    ),
-    child: FutureBuilder<ItemModel>(
-      future: futureItem,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          Text("Loading ... ");
-        }
-        if (snapshot.hasError) {
-          return Text("Error");
-        }
-        if (snapshot.hasData) {
-          ItemModel item = snapshot.data!;
-          isCheck = item.checked;
-          if (isCheck) {
-            return Stack(children: [
-              MorphIn(
-                decoration1Override: morphIn1.copyWith(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      bottomLeft: Radius.circular(8)),
-                ),
-                decoration2Override: morphIn2.copyWith(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      bottomLeft: Radius.circular(8)),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        textAlignVertical: TextAlignVertical.center,
-                        decoration: inputDecoration,
-                        initialValue: item.name,
-                        style: TextStyle(
-                            color: primary,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 20),
-                        onChanged: (String? text) {
-                          _change(text);
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        child: Icon(
-                          IcList.check_checked,
-                          color: primary,
-                        ),
-                        onTap: () {
-                          check();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onLongPressDown: (event) => onLongPressDown(context, event),
-                  onLongPressMoveUpdate: (event) =>
-                      onLongPressMoveUpdate(context, event),
-                  onLongPressUp: () => onLongPressUp(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: primary,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(8),
-                          bottomRight: Radius.circular(8)),
-                    ),
-                    width:
-                        MediaQuery.of(context).size.width * 0.02 + swipeWidth,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    child: toggleDelete
-                        ? Center(
-                            child: Icon(
-                              IcList.remove,
-                              // size: 15,
-                              color: Colors.white,
-                            ),
-                          )
-                        : null,
+        vertical: MediaQuery.of(context).size.height * 0.008,
+      ),
+      child: FutureBuilder<ItemModel>(
+        future: futureItem,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            Text("Loading ... ");
+          }
+          if (snapshot.hasError) {
+            return Text("Error");
+          }
+          if (snapshot.hasData) {
+            ItemModel item = snapshot.data!;
+            isCheck = item.checked;
+
+            if (isCheck) {
+              return Dismissible(
+                key: UniqueKey(),
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  widget.remove();
+                },
+                background: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: themeList.primaryColor,
                   ),
                 ),
-              ),
-            ]);
-          } else {
-            return MorphOut(
-              decorationOverride:
-                  morphOut.copyWith(borderRadius: BorderRadius.circular(8)),
-              child: Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.03),
-                  alignment: Alignment.centerLeft,
+                child: MorphIn(
+                  decoration1Override: morphIn1.copyWith(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  decoration2Override: morphIn2.copyWith(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        bottomLeft: Radius.circular(8)),
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -213,7 +150,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                           decoration: inputDecoration,
                           initialValue: item.name,
                           style: TextStyle(
-                              color: whiteText,
+                              color: primary,
                               fontWeight: FontWeight.w800,
                               fontSize: 20),
                           onChanged: (String? text) {
@@ -226,10 +163,10 @@ class _ItemWidgetState extends State<ItemWidget> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: InkWell(
+                        child: GestureDetector(
                           child: Icon(
-                            IcList.check_no_checked,
-                            color: whiteText,
+                            IcList.check_checked,
+                            color: primary,
                           ),
                           onTap: () {
                             check();
@@ -237,13 +174,71 @@ class _ItemWidgetState extends State<ItemWidget> {
                         ),
                       ),
                     ],
-                  )),
-            );
+                  ),
+                ),
+              );
+            } else {
+              return Dismissible(
+                direction: DismissDirection.endToStart,
+                key: UniqueKey(),
+                onDismissed: (direction) {
+                  widget.remove();
+                },
+                background: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: themeList.primaryColor,
+                  ),
+                ),
+                child: MorphOut(
+                  decorationOverride:
+                      morphOut.copyWith(borderRadius: BorderRadius.circular(8)),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.03),
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration: inputDecoration,
+                            initialValue: item.name,
+                            style: TextStyle(
+                                color: whiteText,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20),
+                            onChanged: (String? text) {
+                              _change(text);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            child: Icon(
+                              IcList.check_no_checked,
+                              color: whiteText,
+                            ),
+                            onTap: () {
+                              check();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
           }
-        }
-        return Text("Loading ...");
-      },
-    ),
+          return Text("Loading ...");
+        },
+      ),
     );
   }
 }
