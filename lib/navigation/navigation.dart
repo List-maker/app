@@ -19,6 +19,7 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: themeList,
       initialRoute: '/',
       routes: {
