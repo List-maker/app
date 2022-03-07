@@ -1,28 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:list/navigation/navigation.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:list/app/modules/login/binding.dart';
+import 'package:list/core/internationalization/translations.dart';
+import 'package:list/core/routes/app_pages.dart';
+import 'package:list/core/routes/app_routes.dart';
+import 'package:list/core/theme/themes.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() => runApp(MyApp());
 
-  final database = openDatabase(
-    join(await getDatabasesPath(), 'database.db'),
-    onCreate: (db, version) {
-      db.execute(
-        'CREATE TABLE user(id INTEGER PRIMARY KEY, username TEXT,	email TEXT, pinned_lists TEXT, settings TEXT);',
-      );
-    },
-    version: 1,
-  );
-  final db = await database;
-
-  return runApp(List());
-}
-
-class List extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Navigation();
+    return GetMaterialApp(
+      translations: Messages(),
+      theme: primaryTheme,
+      title: 'Material App',
+      locale: Get.deviceLocale,
+      initialBinding: LoginBinding(),
+      initialRoute: Routes.LOGIN,
+      getPages: AppPages.pages,
+      fallbackLocale: Locale('en', 'US'),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
