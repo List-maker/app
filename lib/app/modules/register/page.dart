@@ -8,41 +8,47 @@ import 'package:list/core/routes/app_routes.dart';
 
 import 'controller.dart';
 
-class LoginPage extends GetView<LoginController> {
+class RegisterPage extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return SafeScreen(
-        title: 'LOGIN'.tr,
+        title: ''.tr,
         child: Column(
           children: [
             SizedBox(
               height: 15.6.hp,
             ),
             TextInput(
-              hintText: 'LOGIN__login_hintText'.tr,
+              hintText: 'REGISTER__name_hintText'.tr,
             ),
             SizedBox(
               height: 2.0.hp,
             ),
             TextInput(
-              hintText: 'LOGIN__password_hintText'.tr,
+              hintText: 'REGISTER__email_hintText'.tr,
+            ),
+            SizedBox(
+              height: 2.0.hp,
+            ),
+            TextInput(
+              hintText: 'REGISTER__password_hintText'.tr,
             ),
             SizedBox(
               height: 4.0.hp,
             ),
             Button(
-              text: 'LOGIN'.tr,
+              text: 'REGISTER'.tr,
               onTap: () {},
             ),
             Spacer(),
-            Text('LOGIN__no_account'.tr),
+            Text('REGISTER__already_account'.tr),
             SizedBox(
               height: 2.0.hp,
             ),
             Button(
-              text: 'REGISTER'.tr,
+              text: 'LOGIN'.tr,
               onTap: () {
-                Get.toNamed(Routes.REGISTER);
+                Get.offNamed(Routes.LOGIN);
               },
             ),
             SizedBox(
