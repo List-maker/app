@@ -4,31 +4,32 @@ import 'package:list/core/extensions/size.dart';
 import 'package:list/core/theme/texts.dart';
 
 class TextInput extends StatelessWidget {
+
   const TextInput({
     Key? key,
-    this.style,
+    this.style = inputStyle,
     this.decoration,
     this.hintText,
     this.validator,
     this.onFieldSubmitted,
     this.autofillHints,
     this.focusNode,
-    this.autofocus,
-    this.enableSuggestions,
-    this.autocorrect,
+    this.autofocus = false,
+    this.enableSuggestions = true,
+    this.autocorrect = true,
     this.controller,
   }) : super(key: key);
 
-  final TextStyle? style;
+  final TextStyle style;
   final InputDecoration? decoration;
   final String? hintText;
   final String? Function(String?)? validator;
   final String? Function(String?)? onFieldSubmitted;
   final Iterable<String>? autofillHints;
   final FocusNode? focusNode;
-  final bool? autofocus;
-  final bool? enableSuggestions;
-  final bool? autocorrect;
+  final bool autofocus;
+  final bool enableSuggestions;
+  final bool autocorrect;
   final TextEditingController? controller;
 
   @override
@@ -40,7 +41,7 @@ class TextInput extends StatelessWidget {
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
         child: TextFormField(
-          style: style ?? inputStyle,
+          style: style,
           decoration: decoration ??
               inputDecoration.copyWith(
                 hintText: hintText,
@@ -49,9 +50,9 @@ class TextInput extends StatelessWidget {
           onFieldSubmitted: onFieldSubmitted,
           autofillHints: autofillHints,
           focusNode: focusNode,
-          autofocus: autofocus ?? false,
-          enableSuggestions: enableSuggestions ?? true,
-          autocorrect: autocorrect ?? true,
+          autofocus: autofocus,
+          enableSuggestions: enableSuggestions,
+          autocorrect: autocorrect,
           controller: controller,
         ),
       ),
