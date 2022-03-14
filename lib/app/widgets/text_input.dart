@@ -4,7 +4,6 @@ import 'package:list/core/extensions/size.dart';
 import 'package:list/core/theme/texts.dart';
 
 class TextInput extends StatelessWidget {
-
   const TextInput({
     Key? key,
     this.style = inputStyle,
@@ -18,6 +17,7 @@ class TextInput extends StatelessWidget {
     this.enableSuggestions = true,
     this.autocorrect = true,
     this.controller,
+    this.initialValue,
   }) : super(key: key);
 
   final TextStyle style;
@@ -31,6 +31,7 @@ class TextInput extends StatelessWidget {
   final bool enableSuggestions;
   final bool autocorrect;
   final TextEditingController? controller;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,8 @@ class TextInput extends StatelessWidget {
           enableSuggestions: enableSuggestions,
           autocorrect: autocorrect,
           controller: controller,
+          initialValue: initialValue,
+          cursorHeight: 20,
         ),
       ),
     );
