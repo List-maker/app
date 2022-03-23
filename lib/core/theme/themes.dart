@@ -7,7 +7,7 @@ final primaryTheme = ThemeData(
   backgroundColor: background,
   textTheme: TextTheme(
     bodyText2: TextStyle(
-        color: whiteText,
+        color: white,
         fontFamily: 'Poppins',
         fontWeight: FontWeight.w800,
         fontSize: 20),
