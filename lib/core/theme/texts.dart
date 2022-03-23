@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:list/core/theme/colors.dart';
 
-final TextStyle inputStyle = TextStyle(
+const TextStyle inputStyle = TextStyle(
   color: primary,
   fontWeight: FontWeight.bold,
+  fontSize: 18,
+  height: 1.25,
 );
 
-final InputDecoration inputDecoration = InputDecoration.collapsed(
+const InputDecoration inputDecoration = InputDecoration(
   hintStyle: TextStyle(
-    color: whiteText,
+    color: white,
     fontWeight: FontWeight.bold,
+    fontSize: 18,
   ),
   border: InputBorder.none,
   focusColor: primary,
   hoverColor: primary,
-  hintText: '',
 );

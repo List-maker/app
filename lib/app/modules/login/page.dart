@@ -12,21 +12,55 @@ class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return SafeScreen(
-        title: 'LOGIN'.tr,
+      title: 'LOGIN'.tr,
+      child: AutofillGroup(
         child: Column(
           children: [
             SizedBox(
               height: 15.6.hp,
             ),
-            TextInput(
-              hintText: 'LOGIN__login_hintText'.tr,
+            Form(
+              key: controller.loginKey,
+              child: TextInput(
+                autocorrect: false,
+                autofillHints: const [
+                  AutofillHints.username,
+                  AutofillHints.email
+                ],
+                autofocus: true,
+                textEditingController: controller.loginController,
+                focusNode: controller.loginFocus,
+                onFieldSubmitted: (String? value) {
+                  if (!controller.loginKey.currentState!.validate()) {
+                    controller.loginFocus.requestFocus();
+                  } else {
+                    controller.passwordFocus.requestFocus();
+                  }
+                },
+                decoration: controller.decoration,
+                hintTextColor: controller.hintTextColor,
+                validator: (String? value) {
+                  if (value != null && value.isEmpty) {
+                    controller.loginFocus.requestFocus();
+                    controller.errorColor();
+                  }
+                  return null;
+                },
+              ),
             ),
             SizedBox(
               height: 2.0.hp,
             ),
-            TextInput(
-              hintText: 'LOGIN__password_hintText'.tr,
-            ),
+            // TextInput(
+            //   hintText: 'LOGIN__password_hintText'.tr,
+            //   autocorrect: false,
+            //   validator: (String? value) {
+            //     if (value != null && value.isEmpty) {
+            //       return '';
+            //     }
+            //     return null;
+            //   },
+            // ),
             SizedBox(
               height: 4.0.hp,
             ),
@@ -42,13 +76,15 @@ class LoginPage extends GetView<LoginController> {
             Button(
               text: 'REGISTER'.tr,
               onTap: () {
-                Get.toNamed(Routes.REGISTER);
+                Get.offNamed(Routes.REGISTER);
               },
             ),
             SizedBox(
               height: 2.0.hp,
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

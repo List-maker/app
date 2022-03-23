@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:list/app/widgets/morph-out.dart';
 import 'package:list/core/extensions/size.dart';
+import 'package:list/core/theme/colors.dart';
 import 'package:list/core/theme/texts.dart';
 
-class TextInput extends StatelessWidget {
-  const TextInput({
-    Key? key,
-    this.style = inputStyle,
-    this.decoration,
-    this.hintText,
-    this.validator,
-    this.onFieldSubmitted,
-    this.autofillHints,
-    this.focusNode,
-    this.autofocus = false,
-    this.enableSuggestions = true,
-    this.autocorrect = true,
-    this.controller,
-    this.initialValue,
-  }) : super(key: key);
+class TextInput extends AnimatedWidget {
+  TextInput(
+      {Key? key,
+      this.style = inputStyle,
+      required this.decoration,
+      this.validator,
+      this.onFieldSubmitted,
+      this.autofillHints,
+      this.focusNode,
+      this.autofocus = false,
+      this.enableSuggestions = true,
+      this.autocorrect = true,
+      this.textEditingController,
+      this.initialValue,
+      required this.hintTextColor})
+      : super(key: key, listenable: hintTextColor);
 
   final TextStyle style;
-  final InputDecoration? decoration;
-  final String? hintText;
+  final InputDecoration decoration;
   final String? Function(String?)? validator;
   final String? Function(String?)? onFieldSubmitted;
   final Iterable<String>? autofillHints;
@@ -30,8 +30,9 @@ class TextInput extends StatelessWidget {
   final bool autofocus;
   final bool enableSuggestions;
   final bool autocorrect;
-  final TextEditingController? controller;
+  final TextEditingController? textEditingController;
   final String? initialValue;
+  final Animation<Color?> hintTextColor;
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +44,8 @@ class TextInput extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
         child: TextFormField(
           style: style,
-          decoration: decoration ??
-              inputDecoration.copyWith(
-                hintText: hintText,
-              ),
+          decoration: decoration.copyWith(
+              hintStyle: TextStyle(color: hintTextColor.value ?? white)),
           validator: validator,
           onFieldSubmitted: onFieldSubmitted,
           autofillHints: autofillHints,
@@ -54,7 +53,7 @@ class TextInput extends StatelessWidget {
           autofocus: autofocus,
           enableSuggestions: enableSuggestions,
           autocorrect: autocorrect,
-          controller: controller,
+          controller: textEditingController,
           initialValue: initialValue,
           cursorHeight: 20,
         ),

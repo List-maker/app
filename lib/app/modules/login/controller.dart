@@ -1,15 +1,55 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:list/core/theme/texts.dart';
 
-class LoginController extends GetxController {
-  final title = 'hello'.tr;
+import '../../../core/theme/colors.dart';
 
-  RxInt count = 1.obs;
+class LoginController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  final loginKey = GlobalKey<FormState>();
+  final passwordKey = GlobalKey<FormState>();
+  late FocusNode loginFocus;
+  late FocusNode passwordFocus;
+  final loginController = TextEditingController();
+  final passwordController = TextEditingController();
+  late Animation<Color?> hintTextColor;
+  late AnimationController _animationController;
+  late InputDecoration decoration = inputDecoration.copyWith(
+    hintText: 'LOGIN__login_hintText'.tr,
+  );
 
-  increment() {
-    count++;
+  errorColor() async {
+    _animationController.forward();
+
+    update();
   }
 
-  decrement() {
-    count--;
+  @override
+  void onInit() {
+    _animationController =
+        AnimationController(duration: Duration(seconds: 1), vsync: this);
+    hintTextColor =
+        ColorTween(begin: white, end: error).animate(_animationController)
+          ..addStatusListener(
+            (status) {
+              if (status == AnimationStatus.completed) {
+                _animationController.reverse();
+              }
+            },
+          );
+
+    loginFocus = FocusNode();
+    passwordFocus = FocusNode();
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    loginFocus.dispose();
+    passwordFocus.dispose();
+    loginController.dispose();
+    passwordController.dispose();
+    _animationController.dispose();
+    super.onClose();
   }
 }
