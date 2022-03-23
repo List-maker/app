@@ -37,12 +37,13 @@ class LoginPage extends GetView<LoginController> {
                     controller.passwordFocus.requestFocus();
                   }
                 },
-                decoration: controller.decoration,
-                hintTextColor: controller.hintTextColor,
+                decoration: controller.loginDecoration,
+                hintTextColor: controller.loginHintTextColor,
                 validator: (String? value) {
                   if (value != null && value.isEmpty) {
                     controller.loginFocus.requestFocus();
-                    controller.animationController.forward();
+                    controller.loginAnimationController.forward();
+                    return "";
                   }
                   return null;
                 },
@@ -51,16 +52,35 @@ class LoginPage extends GetView<LoginController> {
             SizedBox(
               height: 2.0.hp,
             ),
-            // TextInput(
-            //   hintText: 'LOGIN__password_hintText'.tr,
-            //   autocorrect: false,
-            //   validator: (String? value) {
-            //     if (value != null && value.isEmpty) {
-            //       return '';
-            //     }
-            //     return null;
-            //   },
-            // ),
+            Form(
+              key: controller.passwordKey,
+              child: TextInput(
+                autocorrect: false,
+                autofillHints: const [
+                  AutofillHints.username,
+                  AutofillHints.email
+                ],
+                autofocus: true,
+                textEditingController: controller.passwordController,
+                focusNode: controller.passwordFocus,
+                onFieldSubmitted: (String? value) {
+                  if (!controller.passwordKey.currentState!.validate()) {
+                    controller.passwordFocus.requestFocus();
+                  } else {
+                    controller.passwordFocus.requestFocus();
+                  }
+                },
+                decoration: controller.passwordDecoration,
+                hintTextColor: controller.passwordHintTextColor,
+                validator: (String? value) {
+                  if (value != null && value.isEmpty) {
+                    controller.passwordFocus.requestFocus();
+                    controller.passwordAnimationController.forward();
+                  }
+                  return null;
+                },
+              ),
+            ),
             SizedBox(
               height: 4.0.hp,
             ),

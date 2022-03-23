@@ -42,20 +42,23 @@ class TextInput extends AnimatedWidget {
         width: 75.0.wp,
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 4.0.wp),
-        child: TextFormField(
-          style: style,
-          decoration: decoration.copyWith(
-              hintStyle: TextStyle(color: hintTextColor.value ?? white)),
-          validator: validator,
-          onFieldSubmitted: onFieldSubmitted,
-          autofillHints: autofillHints,
-          focusNode: focusNode,
-          autofocus: autofocus,
-          enableSuggestions: enableSuggestions,
-          autocorrect: autocorrect,
-          controller: textEditingController,
-          initialValue: initialValue,
-          cursorHeight: 20,
+        child: SizedBox(
+          // height: 3.1.hp,
+          child: TextFormField(
+            style: style,
+            decoration: decoration.copyWith(
+                hintStyle: TextStyle(color: hintTextColor.value ?? white)),
+            validator: validator,
+            onFieldSubmitted: onFieldSubmitted,
+            autofillHints: autofillHints,
+            focusNode: focusNode,
+            autofocus: autofocus,
+            enableSuggestions: enableSuggestions,
+            autocorrect: autocorrect,
+            controller: textEditingController,
+            initialValue: initialValue,
+            cursorHeight: 20,
+          ),
         ),
       ),
     );

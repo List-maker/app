@@ -4,34 +4,55 @@ import 'package:list/core/theme/texts.dart';
 
 import '../../../core/theme/colors.dart';
 
-class LoginController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class LoginController extends GetxController with GetTickerProviderStateMixin {
   final loginKey = GlobalKey<FormState>();
   final passwordKey = GlobalKey<FormState>();
   late FocusNode loginFocus;
   late FocusNode passwordFocus;
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
-  late Animation<Color?> hintTextColor;
-  late AnimationController animationController;
-  late InputDecoration decoration = inputDecoration.copyWith(
+  late Animation<Color?> loginHintTextColor;
+  late AnimationController loginAnimationController;
+  late InputDecoration loginDecoration = inputDecoration.copyWith(
     hintText: 'LOGIN__login_hintText'.tr,
+  );
+  late Animation<Color?> passwordHintTextColor;
+  late AnimationController passwordAnimationController;
+
+  late InputDecoration passwordDecoration = inputDecoration.copyWith(
+    hintText: 'LOGIN__password_hintText'.tr,
   );
 
   @override
   void onInit() {
-    animationController =
+    loginAnimationController =
         AnimationController(duration: Duration(milliseconds: 500), vsync: this);
-    hintTextColor = ColorTween(begin: white, end: error).animate(
+    passwordAnimationController =
+        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+
+    loginHintTextColor = ColorTween(begin: white, end: error).animate(
       CurvedAnimation(
-        parent: animationController,
+        parent: loginAnimationController,
         curve: Curves.easeInOutQuart,
         reverseCurve: Curves.easeInOutQuart,
       ),
     )..addStatusListener(
         (status) {
           if (status == AnimationStatus.completed) {
-            animationController.reverse();
+            loginAnimationController.reverse();
+          }
+        },
+      );
+    passwordHintTextColor = ColorTween(begin: white, end: error).animate(
+      CurvedAnimation(
+        parent: passwordAnimationController,
+        curve: Curves.easeInOutQuart,
+        reverseCurve: Curves.easeInOutQuart,
+      ),
+    )..addStatusListener(
+        (status) {
+          if (status == AnimationStatus.completed) {
+            passwordAnimationController.reverse();
           }
         },
       );
@@ -47,7 +68,7 @@ class LoginController extends GetxController
     passwordFocus.dispose();
     loginController.dispose();
     passwordController.dispose();
-    animationController.dispose();
+    loginAnimationController.dispose();
     super.onClose();
   }
 }

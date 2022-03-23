@@ -17,4 +17,5 @@ const InputDecoration inputDecoration = InputDecoration(
   border: InputBorder.none,
   focusColor: primary,
   hoverColor: primary,
+  errorStyle: TextStyle(height: 0),
 );
