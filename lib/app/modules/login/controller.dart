@@ -13,30 +13,28 @@ class LoginController extends GetxController
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
   late Animation<Color?> hintTextColor;
-  late AnimationController _animationController;
+  late AnimationController animationController;
   late InputDecoration decoration = inputDecoration.copyWith(
     hintText: 'LOGIN__login_hintText'.tr,
   );
 
-  errorColor() async {
-    _animationController.forward();
-
-    update();
-  }
-
   @override
   void onInit() {
-    _animationController =
-        AnimationController(duration: Duration(seconds: 1), vsync: this);
-    hintTextColor =
-        ColorTween(begin: white, end: error).animate(_animationController)
-          ..addStatusListener(
-            (status) {
-              if (status == AnimationStatus.completed) {
-                _animationController.reverse();
-              }
-            },
-          );
+    animationController =
+        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+    hintTextColor = ColorTween(begin: white, end: error).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Curves.easeInOutQuart,
+        reverseCurve: Curves.easeInOutQuart,
+      ),
+    )..addStatusListener(
+        (status) {
+          if (status == AnimationStatus.completed) {
+            animationController.reverse();
+          }
+        },
+      );
 
     loginFocus = FocusNode();
     passwordFocus = FocusNode();
@@ -49,7 +47,7 @@ class LoginController extends GetxController
     passwordFocus.dispose();
     loginController.dispose();
     passwordController.dispose();
-    _animationController.dispose();
+    animationController.dispose();
     super.onClose();
   }
 }

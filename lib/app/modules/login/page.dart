@@ -42,7 +42,7 @@ class LoginPage extends GetView<LoginController> {
                 validator: (String? value) {
                   if (value != null && value.isEmpty) {
                     controller.loginFocus.requestFocus();
-                    controller.errorColor();
+                    controller.animationController.forward();
                   }
                   return null;
                 },
