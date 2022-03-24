@@ -23,6 +23,11 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
     hintText: 'LOGIN__password_hintText'.tr,
   );
 
+  void onSubmit() {
+    if (loginKey.currentState!.validate() &&
+        passwordKey.currentState!.validate()) {}
+  }
+
   @override
   void onInit() {
     loginAnimationController =

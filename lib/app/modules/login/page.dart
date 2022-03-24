@@ -67,7 +67,7 @@ class LoginPage extends GetView<LoginController> {
                   if (!controller.passwordKey.currentState!.validate()) {
                     controller.passwordFocus.requestFocus();
                   } else {
-                    controller.passwordFocus.requestFocus();
+                    controller.onSubmit();
                   }
                 },
                 decoration: controller.passwordDecoration,
@@ -76,6 +76,7 @@ class LoginPage extends GetView<LoginController> {
                   if (value != null && value.isEmpty) {
                     controller.passwordFocus.requestFocus();
                     controller.passwordAnimationController.forward();
+                    return "";
                   }
                   return null;
                 },
@@ -86,7 +87,9 @@ class LoginPage extends GetView<LoginController> {
             ),
             Button(
               text: 'LOGIN'.tr,
-              onTap: () {},
+              onTap: () {
+                controller.onSubmit();
+              },
             ),
             Spacer(),
             Text('LOGIN__no_account'.tr),
