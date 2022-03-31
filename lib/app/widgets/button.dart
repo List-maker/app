@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:list/core/extensions/size.dart';
+import 'package:list/core/extensions/number.dart';
 import 'package:list/core/theme/gradients.dart';
 import 'package:list/core/theme/morph.dart';
 

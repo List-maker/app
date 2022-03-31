@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:list/app/widgets/button.dart';
 import 'package:list/app/widgets/safe_screen.dart';
 import 'package:list/app/widgets/text_input.dart';
-import 'package:list/core/extensions/size.dart';
+import 'package:list/core/extensions/number.dart';
 import 'package:list/core/routes/app_routes.dart';
 
 import 'controller.dart';
@@ -11,6 +11,7 @@ import 'controller.dart';
 class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
+    final state = controller.state;
     return SafeScreen(
       title: 'LOGIN'.tr,
       child: AutofillGroup(
@@ -20,7 +21,7 @@ class LoginPage extends GetView<LoginController> {
               height: 15.6.hp,
             ),
             Form(
-              key: controller.loginKey,
+              key: state.loginKey,
               child: TextInput(
                 autocorrect: false,
                 autofillHints: const [
@@ -28,21 +29,21 @@ class LoginPage extends GetView<LoginController> {
                   AutofillHints.email
                 ],
                 autofocus: true,
-                textEditingController: controller.loginController,
-                focusNode: controller.loginFocus,
+                textEditingController: state.loginController,
+                focusNode: state.loginFocus,
                 onFieldSubmitted: (String? value) {
-                  if (!controller.loginKey.currentState!.validate()) {
-                    controller.loginFocus.requestFocus();
+                  if (!state.loginKey.currentState!.validate()) {
+                    state.loginFocus.requestFocus();
                   } else {
-                    controller.passwordFocus.requestFocus();
+                    state.passwordFocus.requestFocus();
                   }
                 },
-                decoration: controller.loginDecoration,
-                hintTextColor: controller.loginHintTextColor,
+                decoration: state.loginDecoration,
+                hintTextColor: state.loginHintTextColor,
                 validator: (String? value) {
                   if (value != null && value.isEmpty) {
-                    controller.loginFocus.requestFocus();
-                    controller.loginAnimationController.forward();
+                    state.loginFocus.requestFocus();
+                    state.loginAnimationController.forward();
                     return "";
                   }
                   return null;
@@ -53,33 +54,34 @@ class LoginPage extends GetView<LoginController> {
               height: 2.0.hp,
             ),
             Form(
-              key: controller.passwordKey,
+              key: state.passwordKey,
               child: TextInput(
                 autocorrect: false,
                 autofillHints: const [
-                  AutofillHints.username,
-                  AutofillHints.email
+                  AutofillHints.password,
                 ],
+                obscureText: true,
                 autofocus: true,
-                textEditingController: controller.passwordController,
-                focusNode: controller.passwordFocus,
+                textEditingController: state.passwordController,
+                focusNode: state.passwordFocus,
                 onFieldSubmitted: (String? value) {
-                  if (!controller.passwordKey.currentState!.validate()) {
-                    controller.passwordFocus.requestFocus();
+                  if (!state.passwordKey.currentState!.validate()) {
+                    state.passwordFocus.requestFocus();
                   } else {
                     controller.onSubmit();
                   }
                 },
-                decoration: controller.passwordDecoration,
-                hintTextColor: controller.passwordHintTextColor,
+                decoration: state.passwordDecoration,
+                hintTextColor: state.passwordHintTextColor,
                 validator: (String? value) {
                   if (value != null && value.isEmpty) {
-                    controller.passwordFocus.requestFocus();
-                    controller.passwordAnimationController.forward();
+                    state.passwordFocus.requestFocus();
+                    state.passwordAnimationController.forward();
                     return "";
                   }
                   return null;
                 },
+                keyboardType: TextInputType.visiblePassword,
               ),
             ),
             SizedBox(

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:list/app/widgets/button.dart';
 import 'package:list/app/widgets/safe_screen.dart';
-import 'package:list/core/extensions/size.dart';
+import 'package:list/core/extensions/number.dart';
 import 'package:list/core/routes/app_routes.dart';
 
 import 'controller.dart';

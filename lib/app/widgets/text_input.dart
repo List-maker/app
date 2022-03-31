@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:list/app/widgets/morph-out.dart';
-import 'package:list/core/extensions/size.dart';
+import 'package:list/core/extensions/number.dart';
 import 'package:list/core/theme/colors.dart';
 import 'package:list/core/theme/texts.dart';
 
 class TextInput extends AnimatedWidget {
-  TextInput(
-      {Key? key,
-      this.style = inputStyle,
-      required this.decoration,
-      this.validator,
-      this.onFieldSubmitted,
-      this.autofillHints,
-      this.focusNode,
-      this.autofocus = false,
-      this.enableSuggestions = true,
-      this.autocorrect = true,
-      this.textEditingController,
-      this.initialValue,
-      required this.hintTextColor})
-      : super(key: key, listenable: hintTextColor);
+  TextInput({
+    Key? key,
+    this.style = inputStyle,
+    required this.decoration,
+    this.validator,
+    this.onFieldSubmitted,
+    this.autofillHints,
+    this.focusNode,
+    this.autofocus = false,
+    this.enableSuggestions = true,
+    this.autocorrect = true,
+    this.textEditingController,
+    this.initialValue,
+    required this.hintTextColor,
+    this.keyboardType,
+    this.obscureText = false,
+  }) : super(key: key, listenable: hintTextColor);
 
   final TextStyle style;
   final InputDecoration decoration;
@@ -33,6 +35,8 @@ class TextInput extends AnimatedWidget {
   final TextEditingController? textEditingController;
   final String? initialValue;
   final Animation<Color?> hintTextColor;
+  final TextInputType? keyboardType;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +62,8 @@ class TextInput extends AnimatedWidget {
             controller: textEditingController,
             initialValue: initialValue,
             cursorHeight: 20,
+            keyboardType: keyboardType,
+            obscureText: obscureText,
           ),
         ),
       ),

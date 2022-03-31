@@ -1,79 +1,76 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:list/core/theme/texts.dart';
+import 'package:list/app/data/services/api/auth/auth_service.dart';
+import 'package:list/app/modules/login/state.dart';
 
 import '../../../core/theme/colors.dart';
 
 class LoginController extends GetxController with GetTickerProviderStateMixin {
-  final loginKey = GlobalKey<FormState>();
-  final passwordKey = GlobalKey<FormState>();
-  late FocusNode loginFocus;
-  late FocusNode passwordFocus;
-  final loginController = TextEditingController();
-  final passwordController = TextEditingController();
-  late Animation<Color?> loginHintTextColor;
-  late AnimationController loginAnimationController;
-  late InputDecoration loginDecoration = inputDecoration.copyWith(
-    hintText: 'LOGIN__login_hintText'.tr,
-  );
-  late Animation<Color?> passwordHintTextColor;
-  late AnimationController passwordAnimationController;
+  AuthServices authServices = AuthServices();
 
-  late InputDecoration passwordDecoration = inputDecoration.copyWith(
-    hintText: 'LOGIN__password_hintText'.tr,
-  );
+  LoginState state = LoginState();
 
-  void onSubmit() {
-    if (loginKey.currentState!.validate() &&
-        passwordKey.currentState!.validate()) {}
+  void onSubmit() async {
+    if (state.loginKey.currentState!.validate() &&
+        state.passwordKey.currentState!.validate()) {
+      var res = await authServices.login(
+          state.loginController.text, state.passwordController.text);
+      if (res.key == 200) {
+        log("IS CONNECTED !!!!!");
+      } else {
+        log(res.value!);
+      }
+    }
   }
 
   @override
   void onInit() {
-    loginAnimationController =
+    state.loginAnimationController =
         AnimationController(duration: Duration(milliseconds: 500), vsync: this);
-    passwordAnimationController =
+    state.passwordAnimationController =
         AnimationController(duration: Duration(milliseconds: 500), vsync: this);
 
-    loginHintTextColor = ColorTween(begin: white, end: error).animate(
+    state.loginHintTextColor = ColorTween(begin: white, end: error).animate(
       CurvedAnimation(
-        parent: loginAnimationController,
+        parent: state.loginAnimationController,
         curve: Curves.easeInOutQuart,
         reverseCurve: Curves.easeInOutQuart,
       ),
     )..addStatusListener(
         (status) {
           if (status == AnimationStatus.completed) {
-            loginAnimationController.reverse();
+            state.loginAnimationController.reverse();
           }
         },
       );
-    passwordHintTextColor = ColorTween(begin: white, end: error).animate(
+    state.passwordHintTextColor = ColorTween(begin: white, end: error).animate(
       CurvedAnimation(
-        parent: passwordAnimationController,
+        parent: state.passwordAnimationController,
         curve: Curves.easeInOutQuart,
         reverseCurve: Curves.easeInOutQuart,
       ),
     )..addStatusListener(
         (status) {
           if (status == AnimationStatus.completed) {
-            passwordAnimationController.reverse();
+            state.passwordAnimationController.reverse();
           }
         },
       );
 
-    loginFocus = FocusNode();
-    passwordFocus = FocusNode();
+    state.loginFocus = FocusNode();
+    state.passwordFocus = FocusNode();
     super.onInit();
   }
 
   @override
   void onClose() {
-    loginFocus.dispose();
-    passwordFocus.dispose();
-    loginController.dispose();
-    passwordController.dispose();
-    loginAnimationController.dispose();
+    state.loginFocus.dispose();
+    state.passwordFocus.dispose();
+    state.loginController.dispose();
+    state.passwordController.dispose();
+    state.loginAnimationController.dispose();
     super.onClose();
   }
 }
