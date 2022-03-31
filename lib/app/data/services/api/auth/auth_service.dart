@@ -6,7 +6,8 @@ class AuthServices extends GetxService {
   ApiProvider apiProvider = ApiProvider()..onInit();
 
   Future<MapEntry<int, String?>> login(String login, String password) async {
-    Response res = await apiProvider.login(login, password);
+    Response res = await apiProvider
+        .get('auth/login', query: {'login': login, 'password': password});
 
     if (res.statusCode == 200) {
       return MapEntry(200, null);
