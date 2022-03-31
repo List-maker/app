@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:list/app/widgets/morph-out.dart';
+import 'package:list/app/widgets/morph_out.dart';
 import 'package:list/core/extensions/number.dart';
 import 'package:list/core/theme/colors.dart';
 import 'package:list/core/theme/texts.dart';

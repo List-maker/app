@@ -103,6 +103,7 @@ class LoginPage extends GetView<LoginController> {
               onTap: () {
                 Get.offNamed(Routes.REGISTER);
               },
+              secondTheme: true,
             ),
             SizedBox(
               height: 2.0.hp,

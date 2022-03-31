@@ -50,6 +50,7 @@ class RegisterPage extends GetView<RegisterController> {
               onTap: () {
                 Get.offNamed(Routes.LOGIN);
               },
+              secondTheme: true,
             ),
             SizedBox(
               height: 2.0.hp,
