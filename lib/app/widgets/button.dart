@@ -28,7 +28,7 @@ class Button extends StatelessWidget {
           decorationOverride: morphOut.copyWith(
             gradient: secondTheme ? grayOut : primaryOut,
             borderRadius: BorderRadius.circular(100),
-            boxShadow: [
+            boxShadow: <BoxShadow>[
               BoxShadow(
                 color: secondTheme
                     ? const Color(0x41000000)

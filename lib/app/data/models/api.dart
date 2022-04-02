@@ -7,8 +7,8 @@ class ApiModel {
 
   factory ApiModel.fromJson(Response<dynamic> res) {
     return ApiModel(
-      jsonDecode(res.bodyString!)['message'],
-      jsonDecode(res.bodyString!)['data'],
+      (jsonDecode(res.bodyString!) as Map<String, dynamic>)['message'],
+      (jsonDecode(res.bodyString!) as Map<String, dynamic>)['data'],
     );
   }
 

@@ -15,13 +15,13 @@ class SafeScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: BoxDecoration(gradient: grayIn),
+        decoration: const BoxDecoration(gradient: grayIn),
         child: SafeArea(
           child: Center(
             child: Container(
                 child: title != null
                     ? Column(
-                        children: [
+                        children: <Widget>[
                           SizedBox(
                             width: 90.0.wp,
                             child: Container(

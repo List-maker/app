@@ -5,7 +5,7 @@ import 'gradients.dart';
 final BoxDecoration morphOut = BoxDecoration(
   gradient: grayIn,
   borderRadius: BorderRadius.circular(15),
-  boxShadow: const [
+  boxShadow: const <BoxShadow>[
     BoxShadow(
       color: Color(0x26000000),
       blurRadius: 6,
@@ -32,7 +32,7 @@ final BoxDecoration morphIn1 = BoxDecoration(
 );
 
 final BoxDecoration morphIn2 = BoxDecoration(
-  boxShadow: const [
+  boxShadow: const <BoxShadow>[
     BoxShadow(
       color: Color(0xDDD9D7E3),
       blurRadius: 6,

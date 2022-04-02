@@ -19,7 +19,7 @@ class LoginPage extends GetView<LoginController> {
       title: 'LOGIN'.tr,
       child: AutofillGroup(
         child: Column(
-          children: [
+          children: <Widget>[
             SizedBox(
               height: 15.6.hp,
             ),
@@ -27,7 +27,7 @@ class LoginPage extends GetView<LoginController> {
               key: state.loginKey,
               child: TextInput(
                 autocorrect: false,
-                autofillHints: const [
+                autofillHints: const <String>[
                   AutofillHints.username,
                   AutofillHints.email
                 ],
@@ -40,6 +40,7 @@ class LoginPage extends GetView<LoginController> {
                   } else {
                     state.passwordFocus.requestFocus();
                   }
+                  return null;
                 },
                 decoration: state.loginDecoration,
                 hintTextColor: state.loginHintTextColor,
@@ -60,7 +61,7 @@ class LoginPage extends GetView<LoginController> {
               key: state.passwordKey,
               child: TextInput(
                 autocorrect: false,
-                autofillHints: const [
+                autofillHints: const <String>[
                   AutofillHints.password,
                 ],
                 obscureText: true,
@@ -73,6 +74,7 @@ class LoginPage extends GetView<LoginController> {
                   } else {
                     controller.onSubmit();
                   }
+                  return null;
                 },
                 decoration: state.passwordDecoration,
                 hintTextColor: state.passwordHintTextColor,

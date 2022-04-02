@@ -20,7 +20,7 @@ class RegisterPage extends GetView<RegisterController> {
       title: 'REGISTER'.tr,
       child: AutofillGroup(
         child: Column(
-          children: [
+          children: <Widget>[
             SizedBox(
               height: 15.6.hp,
             ),
@@ -28,7 +28,7 @@ class RegisterPage extends GetView<RegisterController> {
               key: state.usernameKey,
               child: TextInput(
                 autocorrect: false,
-                autofillHints: const [AutofillHints.username],
+                autofillHints: const <String>[AutofillHints.username],
                 autofocus: true,
                 textEditingController: state.usernameController,
                 focusNode: state.usernameFocus,
@@ -38,6 +38,7 @@ class RegisterPage extends GetView<RegisterController> {
                   } else {
                     state.emailFocus.requestFocus();
                   }
+                  return null;
                 },
                 decoration: state.usernameDecoration,
                 hintTextColor: state.usernameHintTextColor,

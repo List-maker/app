@@ -5,7 +5,7 @@ import 'languages/fr_FR.dart';
 
 class Messages extends Translations {
   @override
-  Map<String, Map<String, String>> get keys => {
+  Map<String, Map<String, String>> get keys => <String, Map<String, String>>{
         'en_US': enUSKeys,
         'fr_FR': frFRKeys,
       };

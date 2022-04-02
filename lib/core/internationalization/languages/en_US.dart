@@ -1,4 +1,4 @@
-Map<String, String> get enUSKeys => {
+Map<String, String> get enUSKeys => <String, String>{
       'LOGIN': 'Login',
       'LOGIN__login_hintText': 'Enter your name or email',
       'LOGIN__password_hintText': 'Enter your password',
