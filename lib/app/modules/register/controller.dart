@@ -1,15 +1,7 @@
 import 'package:get/get.dart';
 
+import 'state.dart';
+
 class RegisterController extends GetxController {
-  final title = 'hello'.tr;
-
-  RxInt count = 1.obs;
-
-  increment() {
-    count++;
-  }
-
-  decrement() {
-    count--;
-  }
+  RegisterState state = RegisterState();
 }

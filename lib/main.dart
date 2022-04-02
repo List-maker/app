@@ -1,18 +1,21 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:list/app/modules/login/binding.dart';
-import 'package:list/core/internationalization/translations.dart';
-import 'package:list/core/routes/app_pages.dart';
-import 'package:list/core/routes/app_routes.dart';
-import 'package:list/core/theme/themes.dart';
 
-void main() async {
+import 'app/modules/login/binding.dart';
+import 'core/internationalization/translations.dart';
+import 'core/routes/app_pages.dart';
+import 'core/routes/app_routes.dart';
+import 'core/theme/themes.dart';
+
+Future<void> main() async {
   await GetStorage.init();
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -22,8 +25,8 @@ class App extends StatelessWidget {
       locale: Get.deviceLocale,
       initialBinding: LoginBinding(),
       initialRoute: Routes.LOGIN,
-      getPages: AppPages.pages,
-      fallbackLocale: Locale('en', 'US'),
+      getPages: AppPages().pages,
+      fallbackLocale: const Locale('en', 'US'),
       debugShowCheckedModeBanner: false,
     );
   }

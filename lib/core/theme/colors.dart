@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-const primary = Color(0xFF482FF7);
-const background = Color(0xFFD9D7E3);
-const white = Color(0xFFFFFFFF);
-const gray = Color(0xFF7F7F7F);
+const Color primary = Color(0xFF482FF7);
+const Color background = Color(0xFFD9D7E3);
+const Color white = Color(0xFFFFFFFF);
+const Color gray = Color(0xFF7F7F7F);
 
-const primarySelection = Color(0x33482FF7);
+const Color primarySelection = Color(0x33482FF7);
 
-const error = Color(0xFFFF2B2B);
+const Color error = Color(0xFFFF2B2B);

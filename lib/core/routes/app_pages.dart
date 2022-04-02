@@ -1,21 +1,21 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:list/app/modules/login/page.dart';
-import 'package:list/app/modules/register/binding.dart';
-import 'package:list/app/modules/register/page.dart';
 
 import '../../app/modules/login/binding.dart';
+import '../../app/modules/login/page.dart';
+import '../../app/modules/register/binding.dart';
+import '../../app/modules/register/page.dart';
 import 'app_routes.dart';
 
 class AppPages {
-  static final pages = [
-    GetPage(
+  final List<GetPage<dynamic>> pages = [
+    GetPage<dynamic>(
       name: Routes.LOGIN,
-      page: () => LoginPage(),
+      page: () => const LoginPage(),
       binding: LoginBinding(),
     ),
-    GetPage(
+    GetPage<dynamic>(
       name: Routes.REGISTER,
-      page: () => RegisterPage(),
+      page: () => const RegisterPage(),
       binding: RegisterBinding(),
     ),
   ];

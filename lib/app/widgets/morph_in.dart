@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:list/core/extensions/number.dart';
-import 'package:list/core/theme/morph.dart';
+
+import '../../core/extensions/number.dart';
+import '../../core/theme/morph.dart';
 
 class MorphIn extends StatelessWidget {
   const MorphIn({

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:list/core/config/api.dart';
+
+import '../../../core/config/api.dart';
 
 class ApiProvider extends GetConnect {
   @override
@@ -8,8 +10,8 @@ class ApiProvider extends GetConnect {
     httpClient.baseUrl = API_BASE_URL;
     httpClient.defaultContentType =
         'application/x-www-form-urlencoded ;charset=utf-8';
-    httpClient.addAuthenticator((dynamic request) async {
-      GetStorage storage = GetStorage();
+    httpClient.addAuthenticator((Request<dynamic> request) async {
+      final GetStorage storage = GetStorage();
       if (storage.hasData('token')) {
         request.headers['Authorization'] =
             'Bearer ${GetStorage().read('token')}';

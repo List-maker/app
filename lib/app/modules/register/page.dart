@@ -1,15 +1,21 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:list/app/widgets/button.dart';
-import 'package:list/app/widgets/safe_screen.dart';
-import 'package:list/core/extensions/number.dart';
-import 'package:list/core/routes/app_routes.dart';
 
+import '../../../core/extensions/number.dart';
+import '../../../core/routes/app_routes.dart';
+import '../../widgets/button.dart';
+import '../../widgets/safe_screen.dart';
+import '../../widgets/text_input.dart';
 import 'controller.dart';
+import 'state.dart';
 
 class RegisterPage extends GetView<RegisterController> {
+  const RegisterPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final RegisterState state = controller.state;
+
     return SafeScreen(
       title: 'REGISTER'.tr,
       child: AutofillGroup(
@@ -18,9 +24,33 @@ class RegisterPage extends GetView<RegisterController> {
             SizedBox(
               height: 15.6.hp,
             ),
-            // TextInput(
-            //   hintText: 'REGISTER__name_hintText'.tr,
-            // ),
+            Form(
+              key: state.usernameKey,
+              child: TextInput(
+                autocorrect: false,
+                autofillHints: const [AutofillHints.username],
+                autofocus: true,
+                textEditingController: state.usernameController,
+                focusNode: state.usernameFocus,
+                onFieldSubmitted: (String? value) {
+                  if (!state.usernameKey.currentState!.validate()) {
+                    state.usernameFocus.requestFocus();
+                  } else {
+                    state.emailFocus.requestFocus();
+                  }
+                },
+                decoration: state.usernameDecoration,
+                hintTextColor: state.usernameHintTextColor,
+                validator: (String? value) {
+                  if (value != null && value.isEmpty) {
+                    state.usernameFocus.requestFocus();
+                    state.usernameAnimationController.forward();
+                    return '';
+                  }
+                  return null;
+                },
+              ),
+            ),
             SizedBox(
               height: 2.0.hp,
             ),
@@ -40,7 +70,7 @@ class RegisterPage extends GetView<RegisterController> {
               text: 'REGISTER'.tr,
               onTap: () {},
             ),
-            Spacer(),
+            const Spacer(),
             Text('REGISTER__already_account'.tr),
             SizedBox(
               height: 2.0.hp,

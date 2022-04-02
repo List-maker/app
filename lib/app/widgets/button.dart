@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:list/core/extensions/number.dart';
-import 'package:list/core/theme/gradients.dart';
-import 'package:list/core/theme/morph.dart';
 
+import '../../core/extensions/number.dart';
+import '../../core/theme/gradients.dart';
+import '../../core/theme/morph.dart';
 import 'morph_out.dart';
 
 class Button extends StatelessWidget {
-  Button({
+  const Button({
     Key? key,
     required this.text,
     required this.onTap,
@@ -21,7 +21,7 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
+      child: SizedBox(
         height: 5.4.hp,
         width: 46.3.wp,
         child: MorphOut(
@@ -30,14 +30,18 @@ class Button extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
             boxShadow: [
               BoxShadow(
-                color: secondTheme ? Color(0x41000000) : Color(0x730A082F),
+                color: secondTheme
+                    ? const Color(0x41000000)
+                    : const Color(0x730A082F),
                 blurRadius: 8,
-                offset: Offset(2, 2),
+                offset: const Offset(2, 2),
               ),
               BoxShadow(
-                color: secondTheme ? Color(0xC0FFFFFF) : Color(0xFFDDDAFF),
+                color: secondTheme
+                    ? const Color(0xC0FFFFFF)
+                    : const Color(0xFFDDDAFF),
                 blurRadius: 8,
-                offset: Offset(-2, -2),
+                offset: const Offset(-2, -2),
               ),
             ],
           ),

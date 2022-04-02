@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-final primaryOut = LinearGradient(
+const LinearGradient primaryOut = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
   colors: <Color>[
@@ -9,7 +9,7 @@ final primaryOut = LinearGradient(
   ],
 );
 
-final primaryIn = LinearGradient(
+const LinearGradient primaryIn = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
   colors: <Color>[
@@ -18,7 +18,7 @@ final primaryIn = LinearGradient(
   ],
 );
 
-final grayOut = LinearGradient(
+const LinearGradient grayOut = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
   colors: <Color>[
@@ -27,7 +27,7 @@ final grayOut = LinearGradient(
   ],
 );
 
-final grayIn = LinearGradient(
+const LinearGradient grayIn = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
   colors: <Color>[

@@ -1,17 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:list/app/widgets/button.dart';
-import 'package:list/app/widgets/safe_screen.dart';
-import 'package:list/app/widgets/text_input.dart';
-import 'package:list/core/extensions/number.dart';
-import 'package:list/core/routes/app_routes.dart';
 
+import '../../../core/extensions/number.dart';
+import '../../../core/routes/app_routes.dart';
+import '../../widgets/button.dart';
+import '../../widgets/safe_screen.dart';
+import '../../widgets/text_input.dart';
 import 'controller.dart';
+import 'state.dart';
 
 class LoginPage extends GetView<LoginController> {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final state = controller.state;
+    final LoginState state = controller.state;
     return SafeScreen(
       title: 'LOGIN'.tr,
       child: AutofillGroup(
@@ -44,7 +47,7 @@ class LoginPage extends GetView<LoginController> {
                   if (value != null && value.isEmpty) {
                     state.loginFocus.requestFocus();
                     state.loginAnimationController.forward();
-                    return "";
+                    return '';
                   }
                   return null;
                 },
@@ -77,7 +80,7 @@ class LoginPage extends GetView<LoginController> {
                   if (value != null && value.isEmpty) {
                     state.passwordFocus.requestFocus();
                     state.passwordAnimationController.forward();
-                    return "";
+                    return '';
                   }
                   return null;
                 },
@@ -93,7 +96,7 @@ class LoginPage extends GetView<LoginController> {
                 controller.onSubmit();
               },
             ),
-            Spacer(),
+            const Spacer(),
             Text('LOGIN__no_account'.tr),
             SizedBox(
               height: 2.0.hp,

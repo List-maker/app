@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-import 'package:list/core/internationalization/languages/en_US.dart';
-import 'package:list/core/internationalization/languages/fr_FR.dart';
+
+import 'languages/en_US.dart';
+import 'languages/fr_FR.dart';
 
 class Messages extends Translations {
   @override

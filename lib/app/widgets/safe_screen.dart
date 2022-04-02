@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:list/core/extensions/number.dart';
-import 'package:list/core/theme/colors.dart';
 
+import '../../core/extensions/number.dart';
+import '../../core/theme/colors.dart';
 import '../../core/theme/gradients.dart';
 
 class SafeScreen extends StatelessWidget {
@@ -9,6 +9,7 @@ class SafeScreen extends StatelessWidget {
       : super(key: key);
   final Widget child;
   final String? title;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +22,13 @@ class SafeScreen extends StatelessWidget {
                 child: title != null
                     ? Column(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 90.0.wp,
                             child: Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 title!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 28,
                                   color: primary,
                                 ),

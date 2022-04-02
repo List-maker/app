@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 import 'gradients.dart';
 
-final morphOut = BoxDecoration(
+final BoxDecoration morphOut = BoxDecoration(
   gradient: grayIn,
   borderRadius: BorderRadius.circular(15),
-  boxShadow: [
+  boxShadow: const [
     BoxShadow(
       color: Color(0x26000000),
       blurRadius: 6,
@@ -19,8 +19,8 @@ final morphOut = BoxDecoration(
   ],
 );
 
-final morphIn1 = BoxDecoration(
-  gradient: LinearGradient(
+final BoxDecoration morphIn1 = BoxDecoration(
+  gradient: const LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: <Color>[
@@ -31,8 +31,8 @@ final morphIn1 = BoxDecoration(
   borderRadius: BorderRadius.circular(7),
 );
 
-final morphIn2 = BoxDecoration(
-  boxShadow: [
+final BoxDecoration morphIn2 = BoxDecoration(
+  boxShadow: const [
     BoxShadow(
       color: Color(0xDDD9D7E3),
       blurRadius: 6,

@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:list/core/theme/morph.dart';
+
+import '../../core/theme/morph.dart';
 
 class MorphOut extends StatelessWidget {
-  MorphOut({
+  const MorphOut({
     Key? key,
     required this.child,
     this.decorationOverride,
@@ -10,6 +11,7 @@ class MorphOut extends StatelessWidget {
 
   final Decoration? decorationOverride;
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return Container(

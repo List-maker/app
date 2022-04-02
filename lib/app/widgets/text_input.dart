@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:list/app/widgets/morph_out.dart';
-import 'package:list/core/extensions/number.dart';
-import 'package:list/core/theme/colors.dart';
-import 'package:list/core/theme/texts.dart';
+
+import '../../core/extensions/number.dart';
+import '../../core/theme/colors.dart';
+import '../../core/theme/texts.dart';
+import 'morph_out.dart';
 
 class TextInput extends AnimatedWidget {
-  TextInput({
+  const TextInput({
     Key? key,
     this.style = inputStyle,
     required this.decoration,

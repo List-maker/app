@@ -1,8 +1,8 @@
 abstract class Routes {
-  static const SPLASH_SCREEN = '/splash-screen';
-  static const LOGIN = '/auth/login';
-  static const REGISTER = '/auth/register';
-  static const HOME = '/app/home';
-  static const SHARE = '/app/share';
-  static const PROFILE = '/app/profile';
+  static const String SPLASH_SCREEN = '/splash-screen';
+  static const String LOGIN = '/auth/login';
+  static const String REGISTER = '/auth/register';
+  static const String HOME = '/app/home';
+  static const String SHARE = '/app/share';
+  static const String PROFILE = '/app/profile';
 }

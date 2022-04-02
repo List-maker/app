@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:list/core/theme/colors.dart';
+
+import 'colors.dart';
 
 const TextStyle inputStyle = TextStyle(
   color: primary,

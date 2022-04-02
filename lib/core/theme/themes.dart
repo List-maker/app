@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-final primaryTheme = ThemeData(
+final ThemeData primaryTheme = ThemeData(
   primaryColor: primary,
   backgroundColor: background,
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     bodyText2: TextStyle(
         color: white,
         fontFamily: 'Poppins',
@@ -18,7 +18,7 @@ final primaryTheme = ThemeData(
         fontSize: 30),
   ),
   fontFamily: 'Poppins',
-  textSelectionTheme: TextSelectionThemeData(
+  textSelectionTheme: const TextSelectionThemeData(
     cursorColor: primary,
     selectionColor: primarySelection,
     selectionHandleColor: primary,
