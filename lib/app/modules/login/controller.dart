@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/colors.dart';
-import '../../data/services/api/auth/auth_service.dart';
+import '../../data/services/api/auth/service.dart';
 import 'state.dart';
 
 class LoginController extends GetxController with GetTickerProviderStateMixin {
