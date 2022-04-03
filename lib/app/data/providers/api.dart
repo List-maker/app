@@ -9,15 +9,14 @@ class ApiProvider extends GetConnect {
   void onInit() {
     httpClient.baseUrl = API_BASE_URL;
     httpClient.defaultContentType =
-        'application/x-www-form-urlencoded ;charset=utf-8';
-    httpClient.addAuthenticator((Request<dynamic> request) async {
+        'application/x-www-form-urlencoded; charset=utf-8';
+    httpClient.addRequestModifier((Request<dynamic> request) async {
       final GetStorage storage = GetStorage();
       if (storage.hasData('token')) {
-        request.headers['Authorization'] =
-            'Bearer ${GetStorage().read('token')}';
+        request.headers['Authorization'] = 'Bearer ${storage.read('token')}';
       }
       return request;
     });
-    httpClient.maxAuthRetries = 3;
+    httpClient.maxAuthRetries = 1;
   }
 }

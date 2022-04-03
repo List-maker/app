@@ -3,8 +3,8 @@ class TokenModel {
 
   factory TokenModel.fromJson(Map<String, dynamic> json) {
     return TokenModel(
-      json['refreshToken'],
-      json['accessToken'],
+      json['refresh_token'],
+      json['access_token'],
     );
   }
 

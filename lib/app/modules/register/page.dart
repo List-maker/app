@@ -22,20 +22,18 @@ class RegisterPage extends GetView<RegisterController> {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: 15.6.hp,
+              height: 10.6.hp,
             ),
             Form(
               key: state.usernameKey,
               child: TextInput(
                 autocorrect: false,
                 autofillHints: const <String>[AutofillHints.username],
+                focusNode: state.usernameFocus,
                 autofocus: true,
                 textEditingController: state.usernameController,
-                focusNode: state.usernameFocus,
                 onFieldSubmitted: (String? value) {
-                  if (!state.usernameKey.currentState!.validate()) {
-                    state.usernameFocus.requestFocus();
-                  } else {
+                  if (state.usernameKey.currentState!.validate()) {
                     state.emailFocus.requestFocus();
                   }
                   return null;
@@ -55,15 +53,94 @@ class RegisterPage extends GetView<RegisterController> {
             SizedBox(
               height: 2.0.hp,
             ),
-            // TextInput(
-            //   hintText: 'REGISTER__email_hintText'.tr,
-            // ),
+            Form(
+              key: state.emailKey,
+              child: TextInput(
+                autocorrect: false,
+                autofillHints: const <String>[AutofillHints.email],
+                textEditingController: state.emailController,
+                focusNode: state.emailFocus,
+                onFieldSubmitted: (String? value) {
+                  if (state.emailKey.currentState!.validate()) {
+                    state.passwordFocus.requestFocus();
+                  }
+                  return null;
+                },
+                decoration: state.emailDecoration,
+                hintTextColor: state.emailHintTextColor,
+                validator: (String? value) {
+                  if (value != null && value.isEmpty) {
+                    state.emailFocus.requestFocus();
+                    state.emailAnimationController.forward();
+                    return '';
+                  }
+                  return null;
+                },
+              ),
+            ),
             SizedBox(
               height: 2.0.hp,
             ),
-            // TextInput(
-            //   hintText: 'REGISTER__password_hintText'.tr,
-            // ),
+            Form(
+              key: state.passwordKey,
+              child: TextInput(
+                autocorrect: false,
+                autofillHints: const <String>[AutofillHints.password],
+                textEditingController: state.passwordController,
+                focusNode: state.passwordFocus,
+                onFieldSubmitted: (String? value) {
+                  if (state.passwordKey.currentState!.validate()) {
+                    state.confirmPasswordFocus.requestFocus();
+                  }
+                  return null;
+                },
+                decoration: state.passwordDecoration,
+                hintTextColor: state.passwordHintTextColor,
+                validator: (String? value) {
+                  if (value != null && value.isEmpty) {
+                    state.passwordFocus.requestFocus();
+                    state.passwordAnimationController.forward();
+                    return '';
+                  }
+                  return null;
+                },
+                obscureText: true,
+              ),
+            ),
+            SizedBox(
+              height: 2.0.hp,
+            ),
+            Form(
+              key: state.confirmPasswordKey,
+              child: TextInput(
+                autocorrect: false,
+                autofillHints: const <String>[AutofillHints.password],
+                textEditingController: state.confirmPasswordController,
+                focusNode: state.confirmPasswordFocus,
+                onFieldSubmitted: (String? value) {
+                  if (state.confirmPasswordKey.currentState!.validate()) {
+                    controller.onSubmit();
+                  }
+                  return null;
+                },
+                decoration: state.confirmPasswordDecoration,
+                hintTextColor: state.confirmPasswordHintTextColor,
+                validator: (String? value) {
+                  if (value != null && value.isEmpty) {
+                    state.confirmPasswordFocus.requestFocus();
+                    state.confirmPasswordAnimationController.forward();
+                    return '';
+                  } else if (value != null &&
+                      value != state.passwordController.text) {
+                    state.confirmPasswordFocus.requestFocus();
+                    //Todo : manage not same password error here
+                    return '';
+                  }
+                  return null;
+                },
+                obscureText: true,
+              ),
+            ),
             SizedBox(
               height: 4.0.hp,
             ),

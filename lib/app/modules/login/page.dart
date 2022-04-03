@@ -35,9 +35,7 @@ class LoginPage extends GetView<LoginController> {
                 textEditingController: state.loginController,
                 focusNode: state.loginFocus,
                 onFieldSubmitted: (String? value) {
-                  if (!state.loginKey.currentState!.validate()) {
-                    state.loginFocus.requestFocus();
-                  } else {
+                  if (state.loginKey.currentState!.validate()) {
                     state.passwordFocus.requestFocus();
                   }
                   return null;
@@ -65,13 +63,10 @@ class LoginPage extends GetView<LoginController> {
                   AutofillHints.password,
                 ],
                 obscureText: true,
-                autofocus: true,
                 textEditingController: state.passwordController,
                 focusNode: state.passwordFocus,
                 onFieldSubmitted: (String? value) {
-                  if (!state.passwordKey.currentState!.validate()) {
-                    state.passwordFocus.requestFocus();
-                  } else {
+                  if (state.passwordKey.currentState!.validate()) {
                     controller.onSubmit();
                   }
                   return null;

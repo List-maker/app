@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/colors.dart';
-import '../../data/services/api/auth/service.dart';
+import '../../data/services/api/auth_service.dart';
 import 'state.dart';
 
 class LoginController extends GetxController with GetTickerProviderStateMixin {
-  AuthServices authServices = AuthServices();
+  final AuthServices _authServices = AuthServices();
   LoginState state = LoginState();
 
   Future<void> onSubmit() async {
     if (state.loginKey.currentState!.validate() &&
         state.passwordKey.currentState!.validate()) {
-      final MapEntry<int, String?> res = await authServices.login(
+      final MapEntry<int, String?> res = await _authServices.login(
           state.loginController.text, state.passwordController.text);
       if (res.key == 200) {
         log('IS CONNECTED !!!!!');
