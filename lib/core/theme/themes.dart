@@ -15,7 +15,17 @@ final ThemeData primaryTheme = ThemeData(
         color: primary,
         fontFamily: 'Poppins',
         fontWeight: FontWeight.w800,
-        fontSize: 30),
+        fontSize: 40),
+    headline2: TextStyle(
+        color: primary,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w800,
+        fontSize: 28),
+    labelMedium: TextStyle(
+        color: primary,
+        fontFamily: 'Poppins',
+        fontSize: 15,
+        fontWeight: FontWeight.w600),
   ),
   fontFamily: 'Poppins',
   textSelectionTheme: const TextSelectionThemeData(

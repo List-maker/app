@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../core/extensions/number.dart';
-import '../../core/theme/colors.dart';
 import '../../core/theme/gradients.dart';
 
 class SafeScreen extends StatelessWidget {
@@ -26,13 +26,8 @@ class SafeScreen extends StatelessWidget {
                             width: 90.0.wp,
                             child: Container(
                               alignment: Alignment.centerLeft,
-                              child: Text(
-                                title!,
-                                style: const TextStyle(
-                                  fontSize: 28,
-                                  color: primary,
-                                ),
-                              ),
+                              child:
+                                  Text(title!, style: Get.textTheme.headline2),
                             ),
                           ),
                           Expanded(child: child)

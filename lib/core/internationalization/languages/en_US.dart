@@ -1,8 +1,13 @@
 Map<String, String> get enUSKeys => <String, String>{
+      // SplashScreen page
+      // 'SPLASH_SCREEN'
+
+      // Login page
       'LOGIN': 'Login',
       'LOGIN__login_hintText': 'Enter your name or email',
       'LOGIN__password_hintText': 'Enter your password',
       'LOGIN__no_account': "Don't have an account ?",
+      // Register page
       'REGISTER': 'Register',
       'REGISTER__username_hintText': 'Enter your username',
       'REGISTER__email_hintText': 'Enter your email',

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'app/modules/login/binding.dart';
+import 'app/modules/splash_screen/binding.dart';
 import 'core/internationalization/translations.dart';
 import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
@@ -21,10 +21,10 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       translations: Messages(),
       theme: primaryTheme,
-      title: 'Material App',
+      title: 'List',
       locale: Get.deviceLocale,
-      initialBinding: LoginBinding(),
-      initialRoute: Routes.LOGIN,
+      initialBinding: SplashScreenBinding(),
+      initialRoute: Routes.SPLASH_SCREEN,
       getPages: AppPages().pages,
       fallbackLocale: const Locale('en', 'US'),
       debugShowCheckedModeBanner: false,

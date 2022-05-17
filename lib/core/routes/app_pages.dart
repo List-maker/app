@@ -4,10 +4,17 @@ import '../../app/modules/login/binding.dart';
 import '../../app/modules/login/page.dart';
 import '../../app/modules/register/binding.dart';
 import '../../app/modules/register/page.dart';
+import '../../app/modules/splash_screen/binding.dart';
+import '../../app/modules/splash_screen/page.dart';
 import 'app_routes.dart';
 
 class AppPages {
   final List<GetPage<dynamic>> pages = <GetPage<dynamic>>[
+    GetPage<dynamic>(
+      name: Routes.SPLASH_SCREEN,
+      page: () => const SplashScreenPage(),
+      binding: SplashScreenBinding(),
+    ),
     GetPage<dynamic>(
       name: Routes.LOGIN,
       page: () => const LoginPage(),
